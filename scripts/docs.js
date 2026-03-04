@@ -8,9 +8,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeBtn = document.getElementById('theme-btn');
     const html = document.documentElement;
     
-    const savedTheme = localStorage.getItem('standard-theme') || 'light';
+    const savedTheme = localStorage.getItem('standard-theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     html.setAttribute('data-theme', savedTheme);
     updateThemeIcon(savedTheme);
+
+    // Listen for system theme changes (when no manual override)
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('standard-theme')) {
+            const systemTheme = e.matches ? 'dark' : 'light';
+            html.setAttribute('data-theme', systemTheme);
+            updateThemeIcon(systemTheme);
+        }
+    });
 
     if (themeBtn) {
         themeBtn.addEventListener('click', () => {

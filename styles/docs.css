@@ -106,6 +106,7 @@
    DARK MODE
    ═══════════════════════════════════════ */
 [data-theme="dark"] {
+  /* Core semantic tokens */
   --bg: var(--g950);
   --bg-s: var(--g900);
   --bg-m: var(--g800);
@@ -117,12 +118,401 @@
   --bd: var(--g800);
   --bd-s: var(--g700);
   --bd-w: var(--g900);
+
+  /* Accent soft */
   --accent-s: oklch(25% 0.08 270);
 
+  /* Status soft backgrounds — dark-appropriate versions */
+  --ok-soft: oklch(22% 0.04 145);
+  --warn-soft: oklch(24% 0.04 85);
+  --err-soft: oklch(22% 0.04 25);
+
+  /* Shadows — stronger for dark surfaces */
   --sh-s: 0 1px 3px oklch(0% 0 0/.2);
   --sh-m: 0 4px 16px oklch(0% 0 0/.3);
   --sh-l: 0 12px 40px oklch(0% 0 0/.4);
   --sh-xl: 0 24px 64px oklch(0% 0 0/.5);
+}
+
+/* Auto-detect system preference (when no explicit theme set) */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) {
+    --bg: oklch(12% 0 0);
+    --bg-s: oklch(17% 0 0);
+    --bg-m: oklch(24% 0 0);
+    --bg-e: oklch(17% 0 0);
+    --fg: oklch(97% 0 0);
+    --fg-2: oklch(76% 0 0);
+    --fg-3: oklch(64% 0 0);
+    --fg-4: oklch(44% 0 0);
+    --bd: oklch(24% 0 0);
+    --bd-s: oklch(34% 0 0);
+    --bd-w: oklch(17% 0 0);
+    --accent-s: oklch(25% 0.08 270);
+    --ok-soft: oklch(22% 0.04 145);
+    --warn-soft: oklch(24% 0.04 85);
+    --err-soft: oklch(22% 0.04 25);
+    --sh-s: 0 1px 3px oklch(0% 0 0/.2);
+    --sh-m: 0 4px 16px oklch(0% 0 0/.3);
+    --sh-l: 0 12px 40px oklch(0% 0 0/.4);
+    --sh-xl: 0 24px 64px oklch(0% 0 0/.5);
+  }
+}
+
+/* ─── Dark mode: Badge adjustments ─── */
+[data-theme="dark"] .Badge--success {
+  color: oklch(75% 0.15 145);
+  border-color: oklch(75% 0.15 145 / .25);
+}
+
+[data-theme="dark"] .Badge--warning {
+  color: oklch(80% 0.12 85);
+  border-color: oklch(80% 0.12 85 / .25);
+}
+
+[data-theme="dark"] .Badge--error {
+  color: oklch(72% 0.16 25);
+  border-color: oklch(72% 0.16 25 / .25);
+}
+
+/* ─── Dark mode: Alert adjustments ─── */
+[data-theme="dark"] .Alert--warning .Alert-icon {
+  color: oklch(80% 0.12 85);
+}
+
+[data-theme="dark"] .Alert-close:hover {
+  background: oklch(100% 0 0 / .08);
+}
+
+/* ─── Dark mode: Chip adjustments ─── */
+[data-theme="dark"] .Chip--primary {
+  background: oklch(25% 0.08 270);
+  border-color: oklch(55% 0.20 270 / .3);
+  color: oklch(80% 0.14 270);
+}
+
+[data-theme="dark"] .Chip--success {
+  background: oklch(22% 0.04 145);
+  border-color: oklch(65% 0.18 145 / .3);
+  color: oklch(75% 0.15 145);
+}
+
+[data-theme="dark"] .Chip--warning {
+  background: oklch(24% 0.04 85);
+  border-color: oklch(75% 0.15 85 / .3);
+  color: oklch(80% 0.12 85);
+}
+
+[data-theme="dark"] .Chip--error {
+  background: oklch(22% 0.04 25);
+  border-color: oklch(60% 0.20 25 / .3);
+  color: oklch(72% 0.16 25);
+}
+
+[data-theme="dark"] .Chip-remove:hover {
+  background: oklch(100% 0 0 / .12);
+}
+
+/* ─── Dark mode: Toast warning (dark text on light bg needs inversion) ─── */
+[data-theme="dark"] .Toast--warning {
+  background: oklch(40% 0.12 70);
+  color: oklch(95% 0 0);
+}
+
+/* ─── Dark mode: Table hover ─── */
+[data-theme="dark"] .Table--hoverable tbody tr:hover {
+  background: var(--accent-s);
+}
+
+/* ─── Dark mode: Selection ─── */
+[data-theme="dark"] ::selection {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+/* ─── Dark mode: Scrollbar ─── */
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--g700);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--g600);
+}
+
+/* ─── Dark mode: Input placeholders ─── */
+[data-theme="dark"] .Input::placeholder,
+[data-theme="dark"] .Textarea::placeholder,
+[data-theme="dark"] .search-container input::placeholder {
+  color: var(--fg-4);
+}
+
+/* ─── Dark mode: Switch slider knob ─── */
+[data-theme="dark"] .Switch-slider::before {
+  background: var(--g200);
+}
+
+[data-theme="dark"] .Switch input:checked + .Switch-slider::before {
+  background: white;
+}
+
+/* ─── Dark mode: Slider track ─── */
+[data-theme="dark"] .Slider {
+  background: var(--g700);
+}
+
+/* ─── Dark mode: FileUpload ─── */
+[data-theme="dark"] .FileUpload {
+  border-color: var(--g700);
+}
+
+[data-theme="dark"] .FileUpload:hover,
+[data-theme="dark"] .FileUpload--dragover {
+  border-color: var(--accent);
+  background: var(--accent-s);
+}
+
+/* ─── Dark mode: Preview canvas default ─── */
+[data-theme="dark"] .Preview-canvas {
+  background: var(--bg-s);
+}
+
+/* ─── Dark mode: Icons grid items ─── */
+[data-theme="dark"] .Icons-item {
+  background: var(--bg-s);
+  border-color: var(--bd);
+}
+
+[data-theme="dark"] .Icons-item:hover {
+  border-color: var(--accent);
+  background: var(--accent-s);
+}
+
+/* ─── Dark mode: Stepper ─── */
+[data-theme="dark"] .Stepper-indicator {
+  background: var(--g800);
+  border-color: var(--g700);
+}
+
+[data-theme="dark"] .Stepper-connector {
+  background: var(--g700);
+}
+
+/* ─── Dark mode: Timeline ─── */
+[data-theme="dark"] .Timeline-item::before {
+  background: var(--g800);
+}
+
+[data-theme="dark"] .Timeline-dot {
+  background: var(--bg);
+  border-color: var(--g600);
+}
+
+/* ─── Dark mode: Rating stars ─── */
+[data-theme="dark"] .Rating-star {
+  color: var(--g700);
+}
+
+[data-theme="dark"] .Rating-star:hover,
+[data-theme="dark"] .Rating-star.active {
+  color: oklch(80% 0.15 85);
+}
+
+/* ─── Dark mode: Skeleton ─── */
+[data-theme="dark"] .Skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--g800) 0%,
+    var(--g700) 50%,
+    var(--g800) 100%
+  );
+  background-size: 200% 100%;
+}
+
+/* ─── Dark mode: Inline code ─── */
+[data-theme="dark"] .prose code:not([class*="language-"]),
+[data-theme="dark"] .ApiTable-prop {
+  background: var(--g800);
+  color: var(--pri-300);
+}
+
+/* ─── Dark mode: Modal overlay ─── */
+[data-theme="dark"] .Modal-overlay {
+  background: oklch(0% 0 0 / .7);
+}
+
+[data-theme="dark"] .Modal {
+  border: 1px solid var(--g800);
+}
+
+/* ─── Dark mode: Drawer overlay ─── */
+[data-theme="dark"] .Drawer-overlay {
+  background: oklch(0% 0 0 / .7);
+}
+
+[data-theme="dark"] .Drawer {
+  border-left: 1px solid var(--g800);
+}
+
+[data-theme="dark"] .Drawer--left {
+  border-left: none;
+  border-right: 1px solid var(--g800);
+}
+
+/* ─── Dark mode: Dropdown ─── */
+[data-theme="dark"] .Dropdown-menu {
+  background: var(--g900);
+  border-color: var(--g700);
+}
+
+[data-theme="dark"] .Dropdown-item:hover {
+  background: var(--g800);
+}
+
+[data-theme="dark"] .Dropdown-item--danger:hover {
+  background: oklch(22% 0.04 25);
+}
+
+/* ─── Dark mode: Menu ─── */
+[data-theme="dark"] .Menu {
+  background: var(--g900);
+  border-color: var(--g700);
+}
+
+[data-theme="dark"] .Menu-item:hover:not(:disabled) {
+  background: var(--g800);
+}
+
+[data-theme="dark"] .Menu-item--danger:hover:not(:disabled) {
+  background: oklch(22% 0.04 25);
+}
+
+/* ─── Dark mode: Search results dropdown ─── */
+[data-theme="dark"] .search-results {
+  background: var(--g900);
+  border-color: var(--g700);
+}
+
+[data-theme="dark"] .search-result-item:hover,
+[data-theme="dark"] .search-result-item.active {
+  background: var(--g800);
+}
+
+/* ─── Dark mode: Progress bar track ─── */
+[data-theme="dark"] .Progress {
+  background: var(--g800);
+}
+
+/* ─── Dark mode: Accordion borders ─── */
+[data-theme="dark"] .Accordion--bordered {
+  border-color: var(--g800);
+}
+
+[data-theme="dark"] .Accordion--bordered .Accordion-item + .Accordion-item {
+  border-top-color: var(--g800);
+}
+
+[data-theme="dark"] .Accordion-header:hover {
+  background: var(--g900);
+}
+
+/* ─── Dark mode: Pagination active ─── */
+[data-theme="dark"] .Pagination-item:hover:not(.disabled):not(.active) {
+  background: var(--g800);
+}
+
+/* ─── Dark mode: Toolbar ─── */
+[data-theme="dark"] .Toolbar {
+  background: var(--g900);
+  border-color: var(--g800);
+}
+
+[data-theme="dark"] .Toolbar-btn:hover {
+  background: var(--g800);
+}
+
+/* ─── Dark mode: Button adjustments ─── */
+[data-theme="dark"] .Button {
+  background: var(--g800);
+  color: var(--fg);
+}
+
+[data-theme="dark"] .Button:hover {
+  background: var(--g700);
+}
+
+[data-theme="dark"] .Button--secondary {
+  background: var(--g900);
+  border-color: var(--g700);
+}
+
+[data-theme="dark"] .Button--secondary:hover {
+  background: var(--g800);
+  border-color: var(--g600);
+}
+
+[data-theme="dark"] .Button--tertiary {
+  background: transparent;
+  color: var(--fg-2);
+}
+
+[data-theme="dark"] .Button--tertiary:hover {
+  background: var(--g800);
+}
+
+[data-theme="dark"] .Button--ghost:hover {
+  background: var(--g800);
+}
+
+/* ─── Dark mode: Card elevated ─── */
+[data-theme="dark"] .Card--elevated {
+  border-color: var(--g800);
+  box-shadow: 0 4px 16px oklch(0% 0 0/.4);
+}
+
+[data-theme="dark"] .Card--interactive:hover {
+  border-color: var(--g600);
+  box-shadow: 0 4px 16px oklch(0% 0 0/.4);
+}
+
+/* ─── Dark mode: List ─── */
+[data-theme="dark"] .List--bordered {
+  border-color: var(--g800);
+}
+
+[data-theme="dark"] .List--bordered .List-item {
+  border-bottom-color: var(--g800);
+}
+
+[data-theme="dark"] .List-item:hover {
+  background: var(--g900);
+}
+
+/* ─── Dark mode: Tabs ─── */
+[data-theme="dark"] .Tabs-list {
+  border-bottom-color: var(--g800);
+}
+
+[data-theme="dark"] .Tabs--pills .Tabs-tab {
+  background: var(--g900);
+}
+
+[data-theme="dark"] .Tabs--pills .Tabs-tab:hover:not(:disabled) {
+  background: var(--g800);
+}
+
+/* ─── Dark mode: EmptyState ─── */
+[data-theme="dark"] .EmptyState-icon {
+  background: var(--g800);
+}
+
+/* ─── Dark mode: Divider ─── */
+[data-theme="dark"] .Divider {
+  border-top-color: var(--g800);
+}
+
+[data-theme="dark"] .Divider--label::before,
+[data-theme="dark"] .Divider--label::after {
+  background: var(--g800);
 }
 
 /* ═══════════════════════════════════════
