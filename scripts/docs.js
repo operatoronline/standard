@@ -189,38 +189,76 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ═══════════════════════════════════════
-    // CODE COPY BUTTONS
+    // CODE BLOCKS — LANGUAGE LABELS + COPY
     // ═══════════════════════════════════════
+    const langNames = {
+        'html': 'HTML', 'css': 'CSS', 'javascript': 'JS', 'js': 'JS',
+        'typescript': 'TS', 'ts': 'TS', 'json': 'JSON', 'bash': 'Shell',
+        'shell': 'Shell', 'sh': 'Shell', 'markdown': 'Markdown', 'md': 'Markdown',
+        'xml': 'XML', 'svg': 'SVG', 'yaml': 'YAML', 'yml': 'YAML',
+        'python': 'Python', 'py': 'Python', 'jsx': 'JSX', 'tsx': 'TSX',
+        'scss': 'SCSS', 'sass': 'Sass', 'less': 'Less', 'sql': 'SQL',
+        'markup': 'HTML', 'plaintext': 'Text'
+    };
+
     document.querySelectorAll('pre[class*="language-"]:not(.Preview-pane pre)').forEach(pre => {
         // Don't double-wrap
         if (pre.parentElement.classList.contains('code-block-wrapper')) return;
         
+        // Detect language from class
+        const langMatch = pre.className.match(/language-(\w+)/);
+        const langKey = langMatch ? langMatch[1] : '';
+        const langLabel = langNames[langKey] || langKey.toUpperCase() || '';
+
         const wrapper = document.createElement('div');
         wrapper.className = 'code-block-wrapper';
         pre.parentNode.insertBefore(wrapper, pre);
-        wrapper.appendChild(pre);
 
+        // Create header if we have a language
+        if (langLabel) {
+            wrapper.classList.add('has-header');
+            const header = document.createElement('div');
+            header.className = 'code-block-header';
+
+            const label = document.createElement('span');
+            label.className = 'code-lang-label';
+            label.textContent = langLabel;
+            header.appendChild(label);
+
+            const copyBtn = createCopyBtn(pre);
+            header.appendChild(copyBtn);
+            wrapper.appendChild(header);
+        } else {
+            // No header — floating copy button
+            const copyBtn = createCopyBtn(pre);
+            wrapper.appendChild(copyBtn);
+        }
+
+        wrapper.appendChild(pre);
+    });
+
+    function createCopyBtn(pre) {
         const copyBtn = document.createElement('button');
         copyBtn.className = 'code-copy-btn';
-        copyBtn.innerHTML = '<i class="ph ph-copy"></i>';
+        copyBtn.innerHTML = '<i class="ph ph-copy"></i><span>Copy</span>';
         copyBtn.setAttribute('aria-label', 'Copy code');
-        wrapper.appendChild(copyBtn);
 
         copyBtn.addEventListener('click', async () => {
             const code = pre.querySelector('code')?.textContent || pre.textContent;
             try {
                 await navigator.clipboard.writeText(code);
-                copyBtn.innerHTML = '<i class="ph ph-check"></i>';
+                copyBtn.innerHTML = '<i class="ph ph-check"></i><span>Copied!</span>';
                 copyBtn.classList.add('copied');
                 setTimeout(() => {
-                    copyBtn.innerHTML = '<i class="ph ph-copy"></i>';
+                    copyBtn.innerHTML = '<i class="ph ph-copy"></i><span>Copy</span>';
                     copyBtn.classList.remove('copied');
                 }, 2000);
             } catch (err) {
                 console.error('Failed to copy:', err);
             }
         });
-    });
+        return copyBtn;
+    }
 
     // ═══════════════════════════════════════
     // ENHANCED PREVIEW COMPONENT (v0.2+)

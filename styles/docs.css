@@ -1756,7 +1756,9 @@ pre[class*="language-"],
 code[class*="language-"] {
   font-family: var(--ff-m);
   font-size: .8125rem;
-  line-height: 1.7;
+  line-height: 1.75;
+  -moz-tab-size: 2;
+  tab-size: 2;
 }
 
 pre[class*="language-"] {
@@ -1766,84 +1768,237 @@ pre[class*="language-"] {
   padding: var(--space-4);
   margin: var(--space-4) 0;
   overflow-x: auto;
-}
-
-[data-theme="dark"] pre[class*="language-"] {
-  background: var(--g900);
-  border-color: var(--g700);
-}
-
-.code-block-wrapper {
   position: relative;
 }
 
+/* Scrollbar styling inside code blocks */
+pre[class*="language-"]::-webkit-scrollbar {
+  height: 6px;
+}
+pre[class*="language-"]::-webkit-scrollbar-track {
+  background: transparent;
+}
+pre[class*="language-"]::-webkit-scrollbar-thumb {
+  background: oklch(50% 0 0 / .3);
+  border-radius: 3px;
+}
+pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
+  background: oklch(50% 0 0 / .5);
+}
+
+[data-theme="dark"] pre[class*="language-"] {
+  background: oklch(10% 0 0);
+  border-color: var(--g800);
+}
+
+/* ─── Code block wrapper with header ─── */
+.code-block-wrapper {
+  position: relative;
+  margin: var(--space-4) 0;
+}
+
+.code-block-wrapper pre[class*="language-"] {
+  margin: 0;
+}
+
+/* When wrapper has a header, adjust border-radius */
+.code-block-wrapper.has-header pre[class*="language-"] {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: none;
+}
+
+/* Code block header (language label + copy button) */
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-1) var(--space-2) var(--space-1) var(--space-3);
+  background: var(--g900);
+  border: 1px solid var(--g800);
+  border-bottom: none;
+  border-radius: var(--r-l) var(--r-l) 0 0;
+  min-height: 36px;
+}
+
+[data-theme="dark"] .code-block-header {
+  background: oklch(8% 0 0);
+  border-color: var(--g800);
+}
+
+/* Language label */
+.code-lang-label {
+  font-family: var(--ff-m);
+  font-size: .6875rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--g400);
+  user-select: none;
+}
+
+[data-theme="dark"] .code-lang-label {
+  color: var(--g500);
+}
+
+/* Copy button */
 .code-copy-btn {
-  position: absolute;
-  top: var(--space-2);
-  right: var(--space-2);
-  background: oklch(100% 0 0 / .1);
-  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  background: transparent;
+  border: 1px solid transparent;
   border-radius: var(--r-s);
   padding: var(--space-1) var(--space-2);
   cursor: pointer;
-  opacity: 0;
-  transition: all var(--dur-f);
-  color: oklch(100% 0 0 / .6);
-  font-size: 1rem;
+  transition: all var(--dur-f) ease;
+  color: var(--g500);
+  font-family: var(--ff-m);
+  font-size: .6875rem;
+  font-weight: 500;
+  letter-spacing: .02em;
+  line-height: 1;
 }
 
-.code-block-wrapper:hover .code-copy-btn {
-  opacity: 1;
+.code-copy-btn i {
+  font-size: .875rem;
 }
 
 .code-copy-btn:hover {
-  background: oklch(100% 0 0 / .15);
-  color: white;
+  background: oklch(100% 0 0 / .08);
+  border-color: oklch(100% 0 0 / .1);
+  color: var(--g300);
 }
 
 .code-copy-btn.copied {
   color: var(--ok);
+  background: oklch(75% 0.15 145 / .1);
+  border-color: oklch(75% 0.15 145 / .15);
 }
 
-/* Prism token colors */
+/* Fallback: wrapper without header (for code blocks without language class) */
+.code-block-wrapper:not(.has-header) .code-copy-btn {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  opacity: 0;
+}
+.code-block-wrapper:not(.has-header):hover .code-copy-btn {
+  opacity: 1;
+}
+
+/* ─── Prism syntax theme — Light mode (dark background) ─── */
+
+/* Comments: muted, italic */
 .token.comment,
 .token.prolog,
 .token.doctype,
-.token.cdata { color: oklch(55% 0 0); }
+.token.cdata {
+  color: oklch(50% 0 0);
+  font-style: italic;
+}
 
-.token.punctuation { color: oklch(70% 0 0); }
+/* Punctuation: subtle */
+.token.punctuation { color: oklch(65% 0 0); }
 
+/* Tags, properties, numbers: warm coral */
 .token.property,
 .token.tag,
 .token.boolean,
 .token.number,
 .token.constant,
 .token.symbol,
-.token.deleted { color: oklch(70% 0.18 25); }
+.token.deleted { color: oklch(72% 0.16 20); }
 
+/* Selectors, strings, attributes: green */
 .token.selector,
 .token.attr-name,
 .token.string,
 .token.char,
 .token.builtin,
-.token.inserted { color: oklch(70% 0.15 145); }
+.token.inserted { color: oklch(74% 0.14 150); }
 
+/* Operators, URLs: amber */
 .token.operator,
 .token.entity,
 .token.url,
 .language-css .token.string,
-.style .token.string { color: oklch(75% 0.12 80); }
+.style .token.string { color: oklch(78% 0.11 75); }
 
+/* Keywords: violet */
 .token.atrule,
 .token.attr-value,
-.token.keyword { color: oklch(75% 0.15 270); }
+.token.keyword { color: oklch(76% 0.14 280); }
 
+/* Functions, class names: cyan-blue */
 .token.function,
-.token.class-name { color: oklch(75% 0.12 200); }
+.token.class-name { color: oklch(78% 0.11 210); }
 
+/* Regex, variables: gold */
 .token.regex,
 .token.important,
-.token.variable { color: oklch(75% 0.12 50); }
+.token.variable { color: oklch(78% 0.11 55); }
+
+.token.important,
+.token.bold { font-weight: 600; }
+.token.italic { font-style: italic; }
+
+/* ─── Prism syntax — Dark mode overrides ─── */
+[data-theme="dark"] .token.comment,
+[data-theme="dark"] .token.prolog,
+[data-theme="dark"] .token.doctype,
+[data-theme="dark"] .token.cdata { color: oklch(45% 0 0); }
+
+[data-theme="dark"] .token.punctuation { color: oklch(60% 0 0); }
+
+[data-theme="dark"] .token.property,
+[data-theme="dark"] .token.tag,
+[data-theme="dark"] .token.boolean,
+[data-theme="dark"] .token.number,
+[data-theme="dark"] .token.constant,
+[data-theme="dark"] .token.symbol,
+[data-theme="dark"] .token.deleted { color: oklch(75% 0.17 15); }
+
+[data-theme="dark"] .token.selector,
+[data-theme="dark"] .token.attr-name,
+[data-theme="dark"] .token.string,
+[data-theme="dark"] .token.char,
+[data-theme="dark"] .token.builtin,
+[data-theme="dark"] .token.inserted { color: oklch(76% 0.15 148); }
+
+[data-theme="dark"] .token.operator,
+[data-theme="dark"] .token.entity,
+[data-theme="dark"] .token.url { color: oklch(80% 0.10 70); }
+
+[data-theme="dark"] .token.atrule,
+[data-theme="dark"] .token.attr-value,
+[data-theme="dark"] .token.keyword { color: oklch(78% 0.15 275); }
+
+[data-theme="dark"] .token.function,
+[data-theme="dark"] .token.class-name { color: oklch(80% 0.12 205); }
+
+[data-theme="dark"] .token.regex,
+[data-theme="dark"] .token.important,
+[data-theme="dark"] .token.variable { color: oklch(80% 0.12 50); }
+
+/* ─── Line numbers (opt-in via .line-numbers class) ─── */
+pre.line-numbers {
+  padding-left: calc(var(--space-4) + 3em);
+  counter-reset: line;
+}
+pre.line-numbers code .line::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 2.5em;
+  margin-left: -3em;
+  margin-right: .5em;
+  text-align: right;
+  color: oklch(40% 0 0);
+  font-size: .75rem;
+  user-select: none;
+  pointer-events: none;
+}
 
 /* ═══════════════════════════════════════
    PREVIEW BLOCKS
@@ -1973,26 +2128,32 @@ pre[class*="language-"] {
   position: absolute;
   top: var(--space-2);
   right: var(--space-2);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
   padding: var(--space-1) var(--space-2);
-  background: oklch(100% 0 0 / .1);
+  background: transparent;
+  border: 1px solid transparent;
   border-radius: var(--r-s);
   font-family: var(--ff-m);
-  font-size: .5625rem;
+  font-size: .6875rem;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: .04em;
-  color: oklch(100% 0 0 / .6);
+  letter-spacing: .02em;
+  color: var(--g500);
   transition: all var(--dur-f);
+  cursor: pointer;
 }
 
 .Preview-code-copy:hover {
-  background: oklch(100% 0 0 / .15);
-  color: white;
+  background: oklch(100% 0 0 / .08);
+  border-color: oklch(100% 0 0 / .1);
+  color: var(--g300);
 }
 
 .Preview-code-copy.copied {
-  background: var(--ok);
-  color: white;
+  color: var(--ok);
+  background: oklch(75% 0.15 145 / .1);
+  border-color: oklch(75% 0.15 145 / .15);
 }
 
 /* Canvas backgrounds */
