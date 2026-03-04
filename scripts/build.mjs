@@ -87,7 +87,7 @@ const previewPlugin = (md) => {
             <button class="Preview-control${defaultBg === 'checkered' ? ' active' : ''}" data-bg="checkered" title="Checkered">
                 <i class="ph ph-grid-four"></i>
             </button>
-            <div style="width: 1px; height: 16px; background: var(--bd-w); margin: 0 4px;"></div>
+            <div class="Preview-divider"></div>
             <button class="Preview-control active" data-viewport="desktop" title="Desktop">
                 <i class="ph ph-desktop"></i>
             </button>

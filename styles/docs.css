@@ -231,6 +231,30 @@
     --sh-l: 0 12px 40px oklch(0% 0 0/.4);
     --sh-xl: 0 24px 64px oklch(0% 0 0/.5);
   }
+
+  /* Preview overrides for auto dark mode */
+  html:not([data-theme="light"]) .Preview {
+    border-color: oklch(24% 0 0);
+    box-shadow: 0 2px 8px oklch(0% 0 0 / .3), 0 0 0 1px oklch(100% 0 0 / .03);
+  }
+  html:not([data-theme="light"]) .Preview-header {
+    background: oklch(24% 0 0);
+    border-bottom-color: oklch(24% 0 0);
+  }
+  html:not([data-theme="light"]) .Preview-canvas--light {
+    background: oklch(97% 0 0);
+  }
+  html:not([data-theme="light"]) .Preview-canvas--dark {
+    background: oklch(8% 0 0);
+  }
+  html:not([data-theme="light"]) .Preview-code-copy {
+    color: oklch(64% 0 0);
+  }
+  html:not([data-theme="light"]) .Preview-code-copy:hover {
+    background: oklch(100% 0 0 / .06);
+    border-color: oklch(100% 0 0 / .08);
+    color: oklch(76% 0 0);
+  }
 }
 
 /* ─── Dark mode: Badge adjustments ─── */
@@ -345,9 +369,37 @@
   background: var(--accent-s);
 }
 
-/* ─── Dark mode: Preview canvas default ─── */
+/* ─── Dark mode: Preview containers ─── */
+[data-theme="dark"] .Preview {
+  border-color: var(--bd);
+  box-shadow: 0 2px 8px oklch(0% 0 0 / .3), 0 0 0 1px oklch(100% 0 0 / .03);
+}
+
+[data-theme="dark"] .Preview-header {
+  background: var(--bg-m);
+  border-bottom-color: var(--bd);
+}
+
 [data-theme="dark"] .Preview-canvas {
   background: var(--bg-s);
+}
+
+[data-theme="dark"] .Preview-canvas--light {
+  background: oklch(97% 0 0);
+}
+
+[data-theme="dark"] .Preview-canvas--dark {
+  background: oklch(8% 0 0);
+}
+
+[data-theme="dark"] .Preview-code-copy {
+  color: var(--g400);
+}
+
+[data-theme="dark"] .Preview-code-copy:hover {
+  background: oklch(100% 0 0 / .06);
+  border-color: oklch(100% 0 0 / .08);
+  color: var(--g300);
 }
 
 /* ─── Dark mode: Icons grid items ─── */
@@ -2001,56 +2053,64 @@ pre.line-numbers code .line::before {
 }
 
 /* ═══════════════════════════════════════
-   PREVIEW BLOCKS
+   PREVIEW BLOCKS (v0.3 — Production)
+   Consistent padding, borders, backgrounds,
+   elevation, dark mode, responsive controls.
    ═══════════════════════════════════════ */
-.Preview-container {
-  border: 1px solid var(--bd-w);
-  border-radius: var(--r-l) var(--r-l) 0 0;
-  margin: var(--space-4) 0 0;
-  overflow: hidden;
-}
 
-.Preview-container + pre[class*="language-"] {
-  margin-top: 0;
-  border-top: 1px solid var(--bd-w);
-  border-radius: 0 0 var(--r-l) var(--r-l);
-}
-
+/* --- Canvas (shared by all preview modes) --- */
 .Preview-canvas {
-  padding: var(--space-6);
+  padding: var(--space-8);
   background: var(--bg-s);
   display: flex;
   gap: var(--space-4);
-  align-items: center;
+  align-items: flex-start;
   flex-wrap: wrap;
   min-height: 80px;
 }
 
+/* Center single-child previews */
 .Preview-canvas:has(> :only-child) {
   justify-content: center;
+  align-items: center;
 }
 
-/* Enhanced Preview (v0.2) */
+/* Horizontal centering for inline-level components (buttons, badges, chips, etc.) */
+.Preview-canvas:has(> .Button),
+.Preview-canvas:has(> .Badge),
+.Preview-canvas:has(> .Chip),
+.Preview-canvas:has(> .Avatar),
+.Preview-canvas:has(> .Switch),
+.Preview-canvas:has(> .ButtonGroup) {
+  align-items: center;
+}
+
+/* --- Enhanced Preview block --- */
 .Preview {
-  border: 1px solid var(--bd-w);
+  border: 1px solid var(--bd);
   border-radius: var(--r-l);
-  margin: var(--space-4) 0;
+  margin: var(--space-6) 0;
   overflow: hidden;
+  box-shadow: var(--sh-s);
+  transition: box-shadow var(--dur-n) var(--ease);
 }
 
+/* --- Header toolbar --- */
 .Preview-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: var(--space-2) var(--space-3);
-  background: var(--bg-s);
-  border-bottom: 1px solid var(--bd-w);
+  background: var(--bg-m);
+  border-bottom: 1px solid var(--bd);
   gap: var(--space-2);
 }
 
+/* --- Tabs (Preview / HTML) --- */
 .Preview-tabs {
   display: flex;
   gap: 2px;
+  flex-shrink: 0;
 }
 
 .Preview-tab {
@@ -2062,12 +2122,12 @@ pre.line-numbers code .line::before {
   text-transform: uppercase;
   letter-spacing: .04em;
   color: var(--fg-3);
-  transition: all var(--dur-f);
+  transition: color var(--dur-f), background var(--dur-f);
 }
 
 .Preview-tab:hover {
   color: var(--fg);
-  background: var(--bg-m);
+  background: var(--bg-s);
 }
 
 .Preview-tab.active {
@@ -2075,9 +2135,12 @@ pre.line-numbers code .line::before {
   background: var(--accent-s);
 }
 
+/* --- Controls (bg toggle, viewport) --- */
 .Preview-controls {
   display: flex;
   gap: var(--space-1);
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .Preview-control {
@@ -2088,12 +2151,12 @@ pre.line-numbers code .line::before {
   justify-content: center;
   border-radius: var(--r-s);
   color: var(--fg-4);
-  transition: all var(--dur-f);
+  transition: color var(--dur-f), background var(--dur-f);
 }
 
 .Preview-control:hover {
   color: var(--fg-2);
-  background: var(--bg-m);
+  background: var(--bg-s);
 }
 
 .Preview-control.active {
@@ -2101,6 +2164,24 @@ pre.line-numbers code .line::before {
   background: var(--accent-s);
 }
 
+/* Separator between bg and viewport controls */
+.Preview-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--bd);
+  margin: 0 var(--space-1);
+  flex-shrink: 0;
+}
+
+/* Hide viewport controls + divider on small screens */
+@media (max-width: 600px) {
+  .Preview-controls [data-viewport],
+  .Preview-divider {
+    display: none;
+  }
+}
+
+/* --- Panes --- */
 .Preview-pane {
   display: none;
 }
@@ -2124,10 +2205,12 @@ pre.line-numbers code .line::before {
   border: none;
 }
 
+/* --- Code copy button --- */
 .Preview-code-copy {
   position: absolute;
   top: var(--space-2);
   right: var(--space-2);
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
@@ -2139,37 +2222,44 @@ pre.line-numbers code .line::before {
   font-size: .6875rem;
   font-weight: 500;
   letter-spacing: .02em;
-  color: var(--g500);
-  transition: all var(--dur-f);
+  color: var(--fg-3);
+  transition: background var(--dur-f), border-color var(--dur-f), color var(--dur-f);
   cursor: pointer;
 }
 
 .Preview-code-copy:hover {
-  background: oklch(100% 0 0 / .08);
-  border-color: oklch(100% 0 0 / .1);
-  color: var(--g300);
+  background: oklch(0% 0 0 / .06);
+  border-color: var(--bd);
+  color: var(--fg-2);
 }
 
 .Preview-code-copy.copied {
   color: var(--ok);
-  background: oklch(75% 0.15 145 / .1);
-  border-color: oklch(75% 0.15 145 / .15);
+  background: oklch(75% 0.15 145 / .08);
+  border-color: oklch(75% 0.15 145 / .12);
 }
 
-/* Canvas backgrounds */
-.Preview-canvas--light { background: white; }
-.Preview-canvas--dark { background: var(--g900); }
+/* --- Canvas background variants --- */
+.Preview-canvas--light {
+  background: oklch(100% 0 0);
+}
+
+.Preview-canvas--dark {
+  background: var(--g900);
+}
+
 .Preview-canvas--checkered {
+  background-color: var(--bg-s);
   background-image:
-    linear-gradient(45deg, var(--bd-w) 25%, transparent 25%),
-    linear-gradient(-45deg, var(--bd-w) 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, var(--bd-w) 75%),
-    linear-gradient(-45deg, transparent 75%, var(--bd-w) 75%);
+    linear-gradient(45deg, var(--bd) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--bd) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--bd) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--bd) 75%);
   background-size: 16px 16px;
   background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
 }
 
-/* Canvas viewports */
+/* --- Canvas viewport constraints --- */
 .Preview-canvas--mobile {
   max-width: 375px;
   margin: 0 auto;
