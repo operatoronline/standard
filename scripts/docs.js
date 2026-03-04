@@ -108,10 +108,114 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadSearchIndex();
 
-    // Search toggle for mobile
+    // ═══════════════════════════════════════
+    // MOBILE SEARCH OVERLAY
+    // ═══════════════════════════════════════
+    // On mobile (< 768px), the top-bar search is hidden.
+    // Create a full-screen overlay triggered by the fnav search button.
+    const mobileOverlay = document.createElement('div');
+    mobileOverlay.className = 'mobile-search-overlay';
+    mobileOverlay.innerHTML = `
+        <button class="mobile-search-close" aria-label="Close search">
+            <i class="ph ph-x"></i>
+        </button>
+        <div class="mobile-search-bar">
+            <i class="ph ph-magnifying-glass"></i>
+            <input type="text" class="mobile-search-input" placeholder="Search components…" aria-label="Search" autocomplete="off">
+        </div>
+        <div class="mobile-search-results"></div>
+    `;
+    document.body.appendChild(mobileOverlay);
+
+    const mobileSearchInput = mobileOverlay.querySelector('.mobile-search-input');
+    const mobileSearchResults = mobileOverlay.querySelector('.mobile-search-results');
+    const mobileSearchClose = mobileOverlay.querySelector('.mobile-search-close');
+
+    function openMobileSearch() {
+        mobileOverlay.classList.add('active');
+        // Small delay to let transition start, then focus
+        requestAnimationFrame(() => mobileSearchInput.focus());
+    }
+
+    function closeMobileSearch() {
+        mobileOverlay.classList.remove('active');
+        mobileSearchInput.value = '';
+        mobileSearchResults.classList.remove('active');
+        mobileSearchResults.innerHTML = '';
+    }
+
+    mobileSearchClose.addEventListener('click', closeMobileSearch);
+
+    // Close overlay on Escape
+    mobileOverlay.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeMobileSearch();
+    });
+
+    // Close overlay when clicking outside the search bar/results
+    mobileOverlay.addEventListener('click', (e) => {
+        if (e.target === mobileOverlay) closeMobileSearch();
+    });
+
+    // Mobile search input handling
+    mobileSearchInput.addEventListener('input', (e) => {
+        const query = e.target.value.trim();
+
+        if (!fuse || query.length < 2) {
+            mobileSearchResults.classList.remove('active');
+            mobileSearchResults.innerHTML = '';
+            return;
+        }
+
+        const results = fuse.search(query).slice(0, 8);
+
+        if (results.length === 0) {
+            mobileSearchResults.innerHTML = '<div class="search-no-results">No results found</div>';
+            mobileSearchResults.classList.add('active');
+            return;
+        }
+
+        mobileSearchResults.innerHTML = results.map(result => {
+            const item = result.item;
+            return `
+                <a href="${item.url}" class="search-result-item">
+                    <span class="search-result-title">${item.title}</span>
+                    <span class="search-result-section">${item.section}</span>
+                </a>
+            `;
+        }).join('');
+
+        mobileSearchResults.classList.add('active');
+    });
+
+    // Mobile search keyboard navigation
+    mobileSearchInput.addEventListener('keydown', (e) => {
+        const items = mobileSearchResults.querySelectorAll('.search-result-item');
+        const activeItem = mobileSearchResults.querySelector('.search-result-item.active');
+        let index = Array.from(items).indexOf(activeItem);
+
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (activeItem) activeItem.classList.remove('active');
+            index = (index + 1) % items.length;
+            items[index]?.classList.add('active');
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (activeItem) activeItem.classList.remove('active');
+            index = index <= 0 ? items.length - 1 : index - 1;
+            items[index]?.classList.add('active');
+        } else if (e.key === 'Enter' && activeItem) {
+            e.preventDefault();
+            window.location.href = activeItem.getAttribute('href');
+        }
+    });
+
+    // Search toggle: mobile opens overlay, desktop focuses top-bar input
     if (searchToggle) {
         searchToggle.addEventListener('click', () => {
-            if (searchInput) {
+            const isMobile = window.innerWidth < 768;
+            if (isMobile) {
+                openMobileSearch();
+            } else if (searchInput) {
                 searchInput.focus();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
@@ -342,6 +446,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ═══════════════════════════════════════
+    // RESPONSIVE TABLE WRAPPERS
+    // ═══════════════════════════════════════
+    // Wrap tables in scrollable containers on all screens.
+    // This prevents horizontal overflow while preserving
+    // table layout (better than CSS display:block approach).
+    document.querySelectorAll('.prose table, .prose .ApiTable').forEach(table => {
+        // Skip if already inside a scrollable container
+        if (table.parentElement.classList.contains('Table-container') ||
+            table.parentElement.classList.contains('table-scroll-wrapper')) {
+            return;
+        }
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'table-scroll-wrapper';
+        wrapper.style.overflowX = 'auto';
+        wrapper.style.WebkitOverflowScrolling = 'touch';
+        wrapper.style.margin = 'var(--space-4) 0';
+        table.parentNode.insertBefore(wrapper, table);
+        wrapper.appendChild(table);
+
+        // Remove the table's own margin since wrapper provides it
+        table.style.margin = '0';
+    });
+
+    // ═══════════════════════════════════════
     // SMOOTH SCROLL FOR ANCHOR LINKS
     // ═══════════════════════════════════════
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -417,7 +546,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Cmd/Ctrl + K to focus search
         if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
             e.preventDefault();
-            if (searchInput) {
+            const isMobile = window.innerWidth < 768;
+            if (isMobile) {
+                openMobileSearch();
+            } else if (searchInput) {
                 searchInput.focus();
             }
         }

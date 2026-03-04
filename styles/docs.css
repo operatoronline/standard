@@ -4272,5 +4272,578 @@ details[open] .Accordion-icon {
 }
 
 /* ═══════════════════════════════════════
+   MOBILE RESPONSIVE POLISH
+   Comprehensive breakpoint audit for all
+   components, layout, and interactive elements.
+   ═══════════════════════════════════════ */
+
+/* --- Mobile Search Overlay ---
+   Search toggle in fnav opens a full-screen
+   search overlay on mobile (< 768px) since
+   the top-bar search is hidden.
+   ─────────────────────────────────────── */
+.mobile-search-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 600;
+  background: oklch(from var(--bg) l c h / .96);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-12) var(--space-5) var(--space-8);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--dur-n) var(--ease), visibility var(--dur-n);
+}
+
+.mobile-search-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-search-overlay .mobile-search-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: 480px;
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-s);
+  border: 1px solid var(--bd);
+  border-radius: var(--r-f);
+  transition: border-color var(--dur-f), box-shadow var(--dur-f);
+}
+
+.mobile-search-overlay .mobile-search-bar:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-s);
+}
+
+.mobile-search-overlay .mobile-search-bar i {
+  color: var(--fg-4);
+  font-size: 1.125rem;
+  flex-shrink: 0;
+}
+
+.mobile-search-overlay .mobile-search-input {
+  flex: 1;
+  font-size: 1rem;
+  color: var(--fg);
+  background: none;
+  border: none;
+  outline: none;
+  font-family: var(--ff-b);
+}
+
+.mobile-search-overlay .mobile-search-input::placeholder {
+  color: var(--fg-4);
+}
+
+.mobile-search-close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-f);
+  color: var(--fg-3);
+  font-size: 1.25rem;
+  transition: background var(--dur-f), color var(--dur-f);
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.mobile-search-close:hover {
+  background: var(--bg-m);
+  color: var(--fg);
+}
+
+.mobile-search-results {
+  width: 100%;
+  max-width: 480px;
+  margin-top: var(--space-3);
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
+  display: none;
+}
+
+.mobile-search-results.active {
+  display: block;
+}
+
+.mobile-search-results .search-result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--r-m);
+  transition: background var(--dur-f);
+  color: var(--fg);
+}
+
+.mobile-search-results .search-result-item:hover,
+.mobile-search-results .search-result-item.active {
+  background: var(--bg-s);
+}
+
+/* Hide mobile search overlay on desktop */
+@media (min-width: 768px) {
+  .mobile-search-overlay {
+    display: none !important;
+  }
+}
+
+/* --- Tables: Mobile Optimization ---
+   JS wraps tables in .table-scroll-wrapper for
+   horizontal scrolling. CSS handles tighter spacing.
+   ─────────────────────────────────────── */
+.table-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: var(--space-4) 0;
+  border-radius: var(--r-l);
+}
+
+/* Subtle scroll indicator shadow on left/right */
+.table-scroll-wrapper {
+  background:
+    linear-gradient(to right, var(--bg), var(--bg)) local,
+    linear-gradient(to right, var(--bg-m), transparent) scroll,
+    linear-gradient(to left, var(--bg), var(--bg)) local,
+    linear-gradient(to left, var(--bg-m), transparent) scroll;
+  background-size: 20px 100%, 12px 100%, 20px 100%, 12px 100%;
+  background-position: left, left, right, right;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 767px) {
+  .prose table th,
+  .prose table td,
+  .ApiTable th,
+  .ApiTable td {
+    padding: var(--space-2) var(--space-3);
+    font-size: .8125rem;
+  }
+
+  .prose table,
+  .ApiTable {
+    min-width: 480px;
+  }
+}
+
+/* --- FormRow: Stack on Mobile ---
+   2-column form layout stacks to single column.
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  .FormRow {
+    grid-template-columns: 1fr;
+  }
+
+  .FormInline {
+    flex-wrap: wrap;
+  }
+
+  .FormInline > * {
+    flex: 1 1 100%;
+  }
+}
+
+/* --- Stepper: Stack on Mobile ---
+   Horizontal stepper becomes vertical for readability.
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  .Stepper {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .Stepper-step {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .Stepper-connector {
+    width: 2px;
+    height: 24px;
+    min-width: 2px;
+    margin-top: 0;
+    margin-left: 15px; /* center under 32px indicator */
+  }
+
+  .Stepper-title {
+    white-space: normal;
+    padding-top: var(--space-1);
+  }
+}
+
+/* --- Tabs: Horizontal Scroll ---
+   Tabs list scrolls horizontally instead of wrapping.
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  .Tabs-list {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+    flex-wrap: nowrap;
+    gap: 0;
+  }
+
+  .Tabs-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .Tabs-tab {
+    flex-shrink: 0;
+    padding: var(--space-2) var(--space-3);
+    font-size: .875rem;
+  }
+
+  .Tabs--pills .Tabs-list {
+    gap: var(--space-1);
+  }
+}
+
+/* --- Toast: Full Width on Mobile ---
+   Toasts span the full width on narrow screens.
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  .Toast-container {
+    left: var(--space-3);
+    right: var(--space-3);
+  }
+
+  .Toast {
+    min-width: 0;
+    max-width: none;
+    width: 100%;
+  }
+}
+
+/* --- Pagination: Compact on Mobile ---
+   Hide ellipsis, reduce padding, allow wrapping.
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  .Pagination {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-1);
+  }
+
+  .Pagination-item {
+    min-width: 32px;
+    height: 32px;
+    font-size: .875rem;
+  }
+}
+
+/* --- Modal: Tighter Padding on Mobile ---
+   Reduce padding to reclaim space on small screens.
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  .Modal {
+    max-width: calc(100vw - var(--space-6));
+    border-radius: var(--r-l);
+  }
+
+  .Modal-header {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .Modal-body {
+    padding: var(--space-4);
+  }
+
+  .Modal-footer {
+    padding: var(--space-3) var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .Modal-title {
+    font-size: 1.125rem;
+  }
+
+  /* Fullscreen modal on very small screens */
+  .Modal--large {
+    max-width: 100%;
+    max-height: 100%;
+    height: 100%;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  .Modal-overlay {
+    padding: var(--space-2);
+  }
+}
+
+/* --- Drawer: Tighter Padding on Mobile ---
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  .Drawer {
+    max-width: 100%;
+  }
+
+  .Drawer-header {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .Drawer-body {
+    padding: var(--space-4);
+  }
+
+  .Drawer-footer {
+    padding: var(--space-3) var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .Drawer-title {
+    font-size: 1.125rem;
+  }
+}
+
+/* --- Toolbar: Scroll on Mobile ---
+   Toolbar scrolls horizontally when it overflows.
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  .Toolbar {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .Toolbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .Toolbar-group {
+    flex-shrink: 0;
+  }
+}
+
+/* --- Card Grid: Tighter Gap on Mobile ---
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  .CardGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+}
+
+/* --- Code Blocks: Smaller on Mobile ---
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  pre[class*="language-"] {
+    padding: var(--space-3);
+    font-size: .75rem;
+    border-radius: var(--r-m);
+  }
+
+  .code-block-header {
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--r-m) var(--r-m) 0 0;
+  }
+
+  .code-block-wrapper.has-header pre[class*="language-"] {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
+
+/* --- Preview Blocks: Tighter on Mobile ---
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  .Preview-canvas {
+    padding: var(--space-4);
+  }
+
+  .Preview-header {
+    padding: var(--space-1) var(--space-2);
+    flex-wrap: wrap;
+    gap: var(--space-1);
+  }
+
+  .Preview-tabs {
+    order: 1;
+    width: 100%;
+  }
+
+  .Preview-controls {
+    order: 2;
+  }
+
+  .Preview {
+    margin: var(--space-4) 0;
+  }
+}
+
+/* --- Prose: Smaller Bottom Margins ---
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  .prose h2 {
+    font-size: 1.5rem;
+    margin-top: var(--space-8);
+  }
+
+  .prose h3 {
+    font-size: 1rem;
+    margin-top: var(--space-6);
+  }
+
+  .page-header {
+    margin-bottom: var(--space-6);
+  }
+}
+
+/* --- Page Header: Smaller Spacing ---
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  .page-header h1 {
+    margin-bottom: var(--space-3);
+  }
+
+  .breadcrumbs {
+    font-size: .625rem;
+    margin-bottom: var(--space-3);
+  }
+}
+
+/* --- ButtonGroup: Allow Wrapping ---
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  .ButtonGroup {
+    flex-wrap: wrap;
+  }
+
+  .ButtonGroup .Button {
+    border-radius: var(--r-m);
+  }
+
+  .ButtonGroup .Button:first-child {
+    border-radius: var(--r-m);
+  }
+
+  .ButtonGroup .Button:last-child {
+    border-radius: var(--r-m);
+  }
+
+  .ButtonGroup .Button + .Button {
+    margin-left: 0;
+  }
+}
+
+/* --- FileUpload: Less Padding on Mobile ---
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  .FileUpload {
+    padding: var(--space-6);
+  }
+
+  .FileUpload-icon {
+    font-size: 2rem;
+  }
+}
+
+/* --- Icons Grid: Smaller Items on Mobile ---
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  .Icons-grid {
+    grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+    gap: var(--space-1);
+  }
+
+  .Icons-item {
+    padding: var(--space-3);
+  }
+
+  .Icons-item i {
+    font-size: 1.25rem;
+  }
+
+  .Icons-item span {
+    font-size: .5rem;
+  }
+}
+
+/* --- EmptyState: Less Padding on Mobile ---
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  .EmptyState {
+    padding: var(--space-6);
+    min-height: 160px;
+  }
+
+  .EmptyState-icon {
+    width: 52px;
+    height: 52px;
+    font-size: 1.5rem;
+    margin-bottom: var(--space-3);
+  }
+}
+
+/* --- Container: Tighter Padding on Small Mobile ---
+   ─────────────────────────────────────── */
+@media (max-width: 374px) {
+  .container {
+    padding: 0 var(--space-3);
+  }
+}
+
+/* --- Floating Nav: Touch Target Polish ---
+   Ensure nav doesn't overflow on very small screens.
+   ─────────────────────────────────────── */
+@media (max-width: 374px) {
+  .fnav {
+    padding: 4px;
+    gap: 1px;
+  }
+
+  .fnav-btn {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 8px;
+  }
+
+  .fnav-btn i {
+    font-size: 1.125rem;
+  }
+}
+
+/* --- Split Layout: Stack on Mobile ---
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  .Layout-split {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+}
+
+/* --- Switch Label: Better Touch Target ---
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  .Switch-label {
+    padding: var(--space-2) 0;
+  }
+}
+
+/* --- Page Footer: Tighter on Mobile ---
+   ─────────────────────────────────────── */
+@media (max-width: 599px) {
+  .page-footer {
+    margin-top: var(--space-8);
+    padding-top: var(--space-4);
+  }
+}
+
+/* ═══════════════════════════════════════
    END OF STANDARD v0.3 STYLES
    ═══════════════════════════════════════ */
