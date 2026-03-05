@@ -162,6 +162,24 @@
 
     <!-- Full stylesheet (non-blocking — after content, preloaded in head) -->
     <link rel="stylesheet" href="{{REL_ROOT}}styles/{{CSS_FILE}}">
+    <!-- Mobile TOC trigger (visible on <1200px screens, on pages with TOC) -->
+    <button class="mobile-toc-trigger" id="mobile-toc-trigger" type="button" aria-label="Open table of contents" aria-expanded="false" aria-controls="mobile-toc-overlay">
+        <i class="ph-bold ph-list" aria-hidden="true"></i>
+        <span>Contents</span>
+    </button>
+    <!-- Mobile TOC bottom sheet -->
+    <div class="mobile-toc-overlay" id="mobile-toc-overlay" role="dialog" aria-modal="true" aria-label="Table of contents">
+        <div class="mobile-toc-sheet">
+            <div class="mobile-toc-handle"></div>
+            <div class="mobile-toc-header">
+                <span class="mobile-toc-title">On this page</span>
+                <button class="mobile-toc-close" id="mobile-toc-close" type="button" aria-label="Close table of contents">
+                    <i class="ph-bold ph-x" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="mobile-toc-body" id="mobile-toc-body"></div>
+        </div>
+    </div>
     <!-- Back to top button -->
     <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
         <i class="ph-bold ph-arrow-up" aria-hidden="true"></i>

@@ -1336,6 +1336,132 @@ document.addEventListener('DOMContentLoaded', () => {
         updateBackToTop();
     }
 
+    // ═══════════════════════════════════════
+    // MOBILE TOC — Bottom sheet for <1200px screens
+    // ═══════════════════════════════════════
+    const mobileTocTrigger = document.getElementById('mobile-toc-trigger');
+    const mobileTocOverlay = document.getElementById('mobile-toc-overlay');
+    const mobileTocClose = document.getElementById('mobile-toc-close');
+    const mobileTocBody = document.getElementById('mobile-toc-body');
+    const sidebarToc = document.querySelector('.toc-sidebar .toc');
+
+    if (mobileTocTrigger && mobileTocOverlay && mobileTocBody && sidebarToc) {
+        // Clone the sidebar TOC content into the mobile sheet
+        const tocClone = sidebarToc.cloneNode(true);
+        // Update cloned links with mobile-specific data attribute
+        tocClone.querySelectorAll('[data-toc-link]').forEach(link => {
+            link.setAttribute('data-mobile-toc-link', '');
+        });
+        mobileTocBody.appendChild(tocClone);
+
+        // Show/hide trigger based on scroll (same logic as back-to-top)
+        const MTOC_THRESHOLD = 200;
+        let mtocTicking = false;
+        function updateMobileTocTrigger() {
+            const isWide = window.matchMedia('(min-width: 1200px)').matches;
+            if (!isWide && window.scrollY > MTOC_THRESHOLD) {
+                mobileTocTrigger.classList.add('is-visible');
+            } else {
+                mobileTocTrigger.classList.remove('is-visible');
+            }
+            mtocTicking = false;
+        }
+        window.addEventListener('scroll', () => {
+            if (!mtocTicking) {
+                requestAnimationFrame(updateMobileTocTrigger);
+                mtocTicking = true;
+            }
+        }, { passive: true });
+        window.addEventListener('resize', updateMobileTocTrigger, { passive: true });
+        updateMobileTocTrigger();
+
+        // Sync scroll-spy active state to mobile TOC links
+        function syncMobileTocActive() {
+            const desktopLinks = sidebarToc.querySelectorAll('[data-toc-link]');
+            const mobileLinks = mobileTocBody.querySelectorAll('[data-mobile-toc-link]');
+            desktopLinks.forEach((dLink, i) => {
+                if (i < mobileLinks.length) {
+                    mobileLinks[i].classList.toggle('active', dLink.classList.contains('active'));
+                }
+            });
+        }
+        // Observe scroll-spy changes
+        window.addEventListener('scroll', () => {
+            requestAnimationFrame(syncMobileTocActive);
+        }, { passive: true });
+
+        function openMobileToc() {
+            syncMobileTocActive();
+            mobileTocOverlay.classList.add('is-open');
+            mobileTocTrigger.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+            // Focus first link or close button
+            const firstLink = mobileTocBody.querySelector('a');
+            if (firstLink) firstLink.focus({ preventScroll: true });
+            // Scroll active item into view
+            const activeLink = mobileTocBody.querySelector('.toc a.active');
+            if (activeLink) {
+                activeLink.scrollIntoView({ block: 'center', behavior: 'instant' });
+            }
+        }
+
+        function closeMobileToc() {
+            mobileTocOverlay.classList.remove('is-open');
+            mobileTocTrigger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+            mobileTocTrigger.focus({ preventScroll: true });
+        }
+
+        mobileTocTrigger.addEventListener('click', openMobileToc);
+        mobileTocClose.addEventListener('click', closeMobileToc);
+        // Close on overlay click (not sheet itself)
+        mobileTocOverlay.addEventListener('click', (e) => {
+            if (e.target === mobileTocOverlay) closeMobileToc();
+        });
+        // Escape key
+        mobileTocOverlay.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeMobileToc();
+        });
+
+        // Handle link clicks in mobile TOC
+        mobileTocBody.addEventListener('click', (e) => {
+            const link = e.target.closest('a');
+            if (!link) return;
+            e.preventDefault();
+            const id = link.getAttribute('href')?.replace('#', '');
+            const target = id && document.getElementById(id);
+            if (target) {
+                closeMobileToc();
+                // Small delay for sheet to close before scrolling
+                setTimeout(() => {
+                    target.scrollIntoView({
+                        behavior: prefersReducedMotion ? 'instant' : 'smooth',
+                        block: 'start'
+                    });
+                    history.pushState(null, '', `#${id}`);
+                    target.setAttribute('tabindex', '-1');
+                    target.focus({ preventScroll: true });
+                }, 150);
+            }
+        });
+
+        // Focus trap inside mobile TOC sheet
+        mobileTocOverlay.addEventListener('keydown', (e) => {
+            if (e.key !== 'Tab') return;
+            const focusable = mobileTocOverlay.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
+            if (focusable.length === 0) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        });
+    }
+
     // ─── Heading anchor links: click-to-copy deep-link URL ───
     document.addEventListener('click', (e) => {
         const anchor = e.target.closest('.heading-anchor');

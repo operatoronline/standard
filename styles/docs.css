@@ -7066,6 +7066,232 @@ details[open] .Accordion-icon {
 }
 
 /* ═══════════════════════════════════════
+   MOBILE TOC — Floating button + bottom sheet overlay
+   Visible only on screens < 1200px (where sidebar TOC is hidden)
+   Only on pages with .has-toc class
+   ═══════════════════════════════════════ */
+.mobile-toc-trigger {
+  display: none; /* hidden by default, shown via .has-toc + media query */
+}
+
+.has-toc .mobile-toc-trigger {
+  position: fixed;
+  bottom: calc(72px + var(--safe-b));
+  right: calc(var(--space-4) + 48px); /* to the left of back-to-top */
+  z-index: 499;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--bd);
+  border-radius: var(--r-f);
+  background: oklch(from var(--bg) l c h / .85);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  box-shadow: var(--sh-s);
+  color: var(--fg-3);
+  cursor: pointer;
+  font-family: var(--ff-m);
+  font-size: var(--fs-3xs);
+  font-weight: 500;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity var(--dur-n) var(--ease),
+              visibility var(--dur-n) var(--ease),
+              transform var(--dur-n) var(--ease),
+              background var(--dur-n) var(--ease),
+              color var(--dur-n) var(--ease),
+              border-color var(--dur-n) var(--ease),
+              box-shadow var(--dur-n) var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.has-toc .mobile-toc-trigger.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.has-toc .mobile-toc-trigger:hover {
+  background: var(--bg-s);
+  color: var(--accent);
+  border-color: var(--accent-s);
+  box-shadow: var(--sh-m);
+}
+.has-toc .mobile-toc-trigger:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.has-toc .mobile-toc-trigger i {
+  font-size: var(--fs-base);
+  line-height: 1;
+}
+
+/* On desktop (≥768px) where fnav is top, adjust position */
+@media (min-width: 768px) {
+  .has-toc .mobile-toc-trigger {
+    bottom: var(--space-8);
+    right: calc(var(--space-6) + 52px);
+  }
+}
+
+/* Hide on wide screens where sidebar TOC is visible */
+@media (min-width: 1200px) {
+  .has-toc .mobile-toc-trigger {
+    display: none;
+  }
+}
+
+/* ─── Mobile TOC Sheet ─── */
+.mobile-toc-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 600;
+  background: oklch(0% 0 0 / .4);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--dur-n) var(--ease), visibility var(--dur-n) var(--ease);
+}
+.mobile-toc-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-toc-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 601;
+  max-height: 70vh;
+  background: var(--bg);
+  border-top-left-radius: var(--r-l);
+  border-top-right-radius: var(--r-l);
+  box-shadow: 0 -4px 24px oklch(0% 0 0 / .12);
+  transform: translateY(100%);
+  transition: transform var(--dur-s) var(--ease);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.mobile-toc-overlay.is-open .mobile-toc-sheet {
+  transform: translateY(0);
+}
+
+.mobile-toc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--bd-w);
+  flex-shrink: 0;
+}
+.mobile-toc-title {
+  font-family: var(--ff-m);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+.mobile-toc-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-f);
+  color: var(--fg-3);
+  cursor: pointer;
+  transition: background var(--dur-f), color var(--dur-f);
+}
+.mobile-toc-close:hover {
+  background: var(--bg-s);
+  color: var(--fg);
+}
+.mobile-toc-close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.mobile-toc-close i {
+  font-size: var(--fs-xl);
+  line-height: 1;
+}
+
+/* Drag handle / pill indicator */
+.mobile-toc-handle {
+  width: 36px;
+  height: 4px;
+  border-radius: var(--r-f);
+  background: var(--bd);
+  margin: var(--space-2) auto 0;
+  flex-shrink: 0;
+}
+
+.mobile-toc-body {
+  overflow-y: auto;
+  padding: var(--space-3) var(--space-4) calc(var(--space-8) + var(--safe-b));
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--bd-w) transparent;
+}
+.mobile-toc-body::-webkit-scrollbar { width: 4px; }
+.mobile-toc-body::-webkit-scrollbar-track { background: transparent; }
+.mobile-toc-body::-webkit-scrollbar-thumb {
+  background: var(--bd-w);
+  border-radius: 2px;
+}
+
+/* Reuse .toc styles inside the sheet */
+.mobile-toc-body .toc h3 { display: none; } /* header already in sheet header */
+.mobile-toc-body .toc a {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--fs-sm);
+}
+.mobile-toc-body .toc .toc-l3 a {
+  padding-left: var(--space-8);
+  font-size: var(--fs-xs);
+}
+
+/* Dark mode */
+[data-theme="dark"] .mobile-toc-trigger {
+  background: oklch(from var(--bg) l c h / .80);
+  box-shadow: var(--sh-m);
+}
+[data-theme="dark"] .mobile-toc-trigger:hover {
+  background: var(--bg-s);
+}
+[data-theme="dark"] .mobile-toc-overlay {
+  background: oklch(0% 0 0 / .6);
+}
+[data-theme="dark"] .mobile-toc-sheet {
+  box-shadow: 0 -4px 24px oklch(0% 0 0 / .4);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .mobile-toc-trigger {
+    background: oklch(from var(--bg) l c h / .80);
+    box-shadow: var(--sh-m);
+  }
+  html:not([data-theme="light"]) .mobile-toc-trigger:hover {
+    background: var(--bg-s);
+  }
+  html:not([data-theme="light"]) .mobile-toc-overlay {
+    background: oklch(0% 0 0 / .6);
+  }
+  html:not([data-theme="light"]) .mobile-toc-sheet {
+    box-shadow: 0 -4px 24px oklch(0% 0 0 / .4);
+  }
+}
+
+/* Print: hide */
+@media print {
+  .mobile-toc-trigger,
+  .mobile-toc-overlay { display: none !important; }
+}
+
+/* ═══════════════════════════════════════
    Section Index — Card Grid
    ═══════════════════════════════════════ */
 
