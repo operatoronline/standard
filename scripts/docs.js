@@ -1,6 +1,6 @@
-// Standard Design System v0.3 — Shell Logic
+// Standard Design System v1.0 — Shell Logic
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Standard v0.3 initialized');
+    console.log('Standard v1.0 initialized');
 
     // ═══════════════════════════════════════
     // A11Y: LIVE REGION ANNOUNCER
@@ -762,4 +762,63 @@ document.addEventListener('DOMContentLoaded', () => {
             if (searchResults) searchResults.classList.remove('active');
         }
     });
+
+    // ═══════════════════════════════════════
+    // TOC SIDEBAR — SCROLL SPY
+    // ═══════════════════════════════════════
+    const tocLinks = document.querySelectorAll('[data-toc-link]');
+    if (tocLinks.length > 0) {
+        // Collect all heading targets referenced by TOC links
+        const tocTargets = [];
+        tocLinks.forEach(link => {
+            const id = link.getAttribute('href')?.replace('#', '');
+            if (id) {
+                const el = document.getElementById(id);
+                if (el) tocTargets.push({ el, link });
+            }
+        });
+
+        if (tocTargets.length > 0) {
+            let rafId = null;
+            function updateActiveToc() {
+                rafId = null;
+                const scrollTop = window.scrollY;
+                const offset = 100; // activate when heading is 100px from top
+                let activeIdx = -1;
+
+                for (let i = tocTargets.length - 1; i >= 0; i--) {
+                    if (tocTargets[i].el.offsetTop - offset <= scrollTop) {
+                        activeIdx = i;
+                        break;
+                    }
+                }
+
+                tocLinks.forEach(l => l.classList.remove('active'));
+                if (activeIdx >= 0) {
+                    tocTargets[activeIdx].link.classList.add('active');
+                }
+            }
+
+            window.addEventListener('scroll', () => {
+                if (!rafId) rafId = requestAnimationFrame(updateActiveToc);
+            }, { passive: true });
+
+            // Initial highlight
+            updateActiveToc();
+
+            // Smooth scroll for TOC clicks
+            tocLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const id = link.getAttribute('href')?.replace('#', '');
+                    const target = id && document.getElementById(id);
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // Update URL hash without jump
+                        history.pushState(null, '', `#${id}`);
+                    }
+                });
+            });
+        }
+    }
 });

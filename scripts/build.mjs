@@ -445,6 +445,20 @@ async function build() {
         }
         const tocHtml = `<ul>${tocEntries.map(e => `<li class="toc-l${e.level}"><a href="#${e.id}">${e.text}</a></li>`).join('')}</ul>`;
 
+        // Generate TOC sidebar HTML (only for pages with ≥4 h2 headings)
+        const h2Count = tocEntries.filter(e => e.level === 2).length;
+        const hasToc = h2Count >= 4;
+        const tocSidebarHtml = hasToc
+            ? `<aside class="toc-sidebar" aria-label="Table of contents">
+                <nav class="toc">
+                    <h3>On this page</h3>
+                    <ul>
+                        ${tocEntries.map(e => `<li class="toc-l${e.level}"><a href="#${e.id}" data-toc-link>${e.text}</a></li>`).join('\n                        ')}
+                    </ul>
+                </nav>
+            </aside>`
+            : '';
+
         let htmlContent = md.renderer.render(tokens, md.options, {});
         // Wrap markdown-rendered <table> (bare, no class attr) in scrollable container with Table class
         // Use a marker to only close wrappers we opened
@@ -522,7 +536,7 @@ async function build() {
             .replace(/{{SITE_URL}}/g, CONFIG.siteUrl)
             .replace(/{{NAV_HTML}}/g, navHtml)
             .replace(/{{BREADCRUMBS_HTML}}/g, breadcrumbsHtml)
-            .replace(/{{TOC_HTML}}/g, tocHtml)
+            .replace(/{{TOC_HTML}}/g, tocHtml) // kept for backward compat
             .replace(/{{CONTENT_HTML}}/g, htmlContent)
             .replace(/{{REL_ROOT}}/g, relRoot)
             .replace(/{{VERSION}}/g, CONFIG.version)
@@ -532,7 +546,9 @@ async function build() {
             .replace(/{{VENDOR_JS_FILE}}/g, assetMap['vendor.js'] || 'vendor.js')
             .replace(/{{JS_FILE}}/g, assetMap['docs.js'] || 'docs.js')
             .replace(/{{JSON_LD}}/g, () => jsonLd)
-            .replace(/{{ACTIVE_SECTION}}/g, activeSection);
+            .replace(/{{ACTIVE_SECTION}}/g, activeSection)
+            .replace(/{{CONTAINER_CLASS}}/g, hasToc ? 'has-toc' : '')
+            .replace(/{{TOC_SIDEBAR}}/g, () => tocSidebarHtml);
 
         await fs.ensureDir(path.dirname(targetPath));
         await fs.writeFile(targetPath, finalHtml);
