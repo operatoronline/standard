@@ -168,6 +168,25 @@
   /* Focus ring */
   --sh-ring: 0 0 0 3px var(--accent-s);
 
+  /* Type Scale — Major Third (1.25) progression
+     Each step has a clear role in the visual hierarchy */
+  --fs-3xs: .5rem;       /*  8px — micro labels (mobile icon names) */
+  --fs-2xs: .625rem;     /* 10px — tiny labels, counters, step numbers */
+  --fs-nav: .5625rem;    /*  9px — nav pill labels (mono, uppercase) */
+  --fs-xs:  .6875rem;    /* 11px — captions, metadata, breadcrumbs */
+  --fs-sm:  .75rem;      /* 12px — small text, table captions */
+  --fs-md:  .8125rem;    /* 13px — compact body, code blocks */
+  --fs-base: .875rem;    /* 14px — default body, form inputs */
+  --fs-lg:  .9375rem;    /* 15px — emphasized body, component text */
+  --fs-xl:  1rem;        /* 16px — prose body, prominent text */
+  --fs-2xl: 1.125rem;    /* 18px — h3, sub-headings */
+  --fs-3xl: 1.25rem;     /* 20px — section icons, large UI elements */
+  --fs-4xl: 1.5rem;      /* 24px — large headings */
+  --fs-5xl: 1.75rem;     /* 28px — h2 section headers */
+  --fs-6xl: 2rem;        /* 32px — display small */
+  --fs-7xl: 2.5rem;      /* 40px — display */
+  --fs-hero: clamp(2.5rem, 8vw, 4rem); /* hero title */
+
   /* Animation */
   --ease: cubic-bezier(.16,1,.3,1);
   --spring: cubic-bezier(.34,1.56,.64,1);
@@ -772,7 +791,7 @@ a { color: inherit; text-decoration: none; }
   border-radius: var(--r-f);
   color: oklch(from var(--bg) l c h / .55);
   font-family: var(--ff-m);
-  font-size: .5625rem;
+  font-size: var(--fs-nav);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: .06em;
@@ -780,7 +799,7 @@ a { color: inherit; text-decoration: none; }
   white-space: nowrap;
 }
 
-.fnav-btn i { font-size: 1.25rem; flex-shrink: 0; }
+.fnav-btn i { font-size: var(--fs-3xl); flex-shrink: 0; }
 .fnav-btn span { display: none; }
 
 .fnav-btn:hover {
@@ -910,14 +929,14 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   gap: var(--space-2);
   font-family: var(--ff-d);
-  font-size: 1.25rem;
+  font-size: var(--fs-3xl);
   font-weight: 400;
   letter-spacing: -0.02em;
 }
 
 .logo i {
   color: var(--accent);
-  font-size: 1.5rem;
+  font-size: var(--fs-4xl);
 }
 
 .icon-btn {
@@ -957,7 +976,7 @@ a { color: inherit; text-decoration: none; }
 
 .search-container input {
   width: 100%;
-  font-size: .875rem;
+  font-size: var(--fs-base);
   color: var(--fg);
 }
 
@@ -967,7 +986,7 @@ a { color: inherit; text-decoration: none; }
 
 .search-container i {
   color: var(--fg-4);
-  font-size: 1rem;
+  font-size: var(--fs-xl);
 }
 
 .search-results {
@@ -1010,7 +1029,7 @@ a { color: inherit; text-decoration: none; }
 
 .search-result-section {
   font-family: var(--ff-m);
-  font-size: .625rem;
+  font-size: var(--fs-2xs);
   text-transform: uppercase;
   letter-spacing: .05em;
   color: var(--fg-4);
@@ -1020,7 +1039,7 @@ a { color: inherit; text-decoration: none; }
   padding: var(--space-4);
   text-align: center;
   color: var(--fg-3);
-  font-size: .875rem;
+  font-size: var(--fs-base);
 }
 
 /* ═══════════════════════════════════════
@@ -1059,7 +1078,7 @@ a { color: inherit; text-decoration: none; }
 
 .page-header h1 {
   font-family: var(--ff-d);
-  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-size: var(--fs-hero);
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.035em;
@@ -1077,7 +1096,7 @@ a { color: inherit; text-decoration: none; }
   gap: var(--space-2);
   margin-bottom: var(--space-4);
   font-family: var(--ff-m);
-  font-size: .6875rem;
+  font-size: var(--fs-xs);
   text-transform: uppercase;
   letter-spacing: .05em;
   color: var(--fg-4);
@@ -1100,14 +1119,14 @@ a { color: inherit; text-decoration: none; }
    PROSE CONTENT
    ═══════════════════════════════════════ */
 .prose {
-  font-size: 1rem;
+  font-size: var(--fs-xl);
   line-height: 1.7;
   color: var(--fg-2);
 }
 
 .prose h2 {
   font-family: var(--ff-d);
-  font-size: 1.75rem;
+  font-size: var(--fs-5xl);
   font-weight: 400;
   color: var(--fg);
   margin: var(--space-10) 0 var(--space-4);
@@ -1120,7 +1139,7 @@ a { color: inherit; text-decoration: none; }
 
 .prose h3 {
   font-family: var(--ff-b);
-  font-size: 1.125rem;
+  font-size: var(--fs-2xl);
   font-weight: 600;
   color: var(--fg);
   margin: var(--space-8) 0 var(--space-3);
@@ -1149,7 +1168,7 @@ a { color: inherit; text-decoration: none; }
 .ApiTable {
   width: 100%;
   border-collapse: collapse;
-  font-size: .9375rem;
+  font-size: var(--fs-lg);
   margin: var(--space-4) 0;
 }
 
@@ -1167,7 +1186,7 @@ a { color: inherit; text-decoration: none; }
   font-weight: 600;
   color: var(--fg);
   background: var(--bg-s);
-  font-size: .875rem;
+  font-size: var(--fs-base);
 }
 
 .prose table td,
@@ -1233,7 +1252,7 @@ a { color: inherit; text-decoration: none; }
   padding: var(--space-2) var(--space-4);
   border-radius: var(--r-m);
   font-family: var(--ff-b);
-  font-size: .875rem;
+  font-size: var(--fs-base);
   font-weight: 500;
   line-height: 1.4;
   cursor: pointer;
@@ -1310,12 +1329,12 @@ a { color: inherit; text-decoration: none; }
 /* Button Sizes */
 .Button--small {
   padding: var(--space-1) var(--space-3);
-  font-size: .8125rem;
+  font-size: var(--fs-md);
 }
 
 .Button--large {
   padding: var(--space-3) var(--space-6);
-  font-size: 1rem;
+  font-size: var(--fs-xl);
 }
 
 .Button--icon {
@@ -1393,7 +1412,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .FormField-label {
-  font-size: .875rem;
+  font-size: var(--fs-base);
   font-weight: 500;
   color: var(--fg);
 }
@@ -1404,7 +1423,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .FormField-helper {
-  font-size: .8125rem;
+  font-size: var(--fs-md);
   color: var(--fg-3);
 }
 
@@ -1412,7 +1431,7 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   align-items: center;
   gap: var(--space-1);
-  font-size: .8125rem;
+  font-size: var(--fs-md);
 }
 
 .FormField-message--error { color: var(--err-text); }
@@ -1426,7 +1445,7 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid var(--bd);
   background: var(--bg);
   color: var(--fg);
-  font-size: 1rem;
+  font-size: var(--fs-xl);
   transition: border-color var(--dur-f), box-shadow var(--dur-f);
 }
 
@@ -1455,12 +1474,12 @@ a { color: inherit; text-decoration: none; }
 /* Input Sizes */
 .Input--small {
   padding: var(--space-1) var(--space-2);
-  font-size: .875rem;
+  font-size: var(--fs-base);
 }
 
 .Input--large {
   padding: var(--space-3) var(--space-4);
-  font-size: 1.0625rem;
+  font-size: var(--fs-2xl);
 }
 
 /* Input with Icon */
@@ -1538,7 +1557,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .Checkbox-label {
-  font-size: .9375rem;
+  font-size: var(--fs-lg);
   color: var(--fg);
 }
 
@@ -1587,7 +1606,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .Radio-label {
-  font-size: .9375rem;
+  font-size: var(--fs-lg);
   color: var(--fg);
 }
 
@@ -1607,7 +1626,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .FormFieldset-legend {
-  font-size: .875rem;
+  font-size: var(--fs-base);
   font-weight: 600;
   color: var(--fg);
   margin-bottom: var(--space-3);
@@ -1715,7 +1734,7 @@ a { color: inherit; text-decoration: none; }
   padding: 2px var(--space-2);
   border-radius: var(--r-s);
   font-family: var(--ff-m);
-  font-size: .6875rem;
+  font-size: var(--fs-xs);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: .03em;
@@ -1798,14 +1817,14 @@ a { color: inherit; text-decoration: none; }
 }
 
 .Card-title {
-  font-size: 1rem;
+  font-size: var(--fs-xl);
   font-weight: 600;
   color: var(--fg);
   margin: 0;
 }
 
 .Card-text {
-  font-size: .9375rem;
+  font-size: var(--fs-lg);
   color: var(--fg-2);
   margin: var(--space-2) 0 0;
   line-height: 1.6;
@@ -1849,7 +1868,7 @@ a { color: inherit; text-decoration: none; }
 .Table {
   width: 100%;
   border-collapse: collapse;
-  font-size: .9375rem;
+  font-size: var(--fs-lg);
 }
 
 .Table th,
@@ -1863,7 +1882,7 @@ a { color: inherit; text-decoration: none; }
   font-weight: 600;
   color: var(--fg);
   background: var(--bg-s);
-  font-size: .875rem;
+  font-size: var(--fs-base);
 }
 
 .Table td {
@@ -1890,7 +1909,7 @@ a { color: inherit; text-decoration: none; }
 .Table--compact th,
 .Table--compact td {
   padding: var(--space-2) var(--space-3);
-  font-size: .875rem;
+  font-size: var(--fs-base);
 }
 
 .Table-container {
@@ -1909,7 +1928,7 @@ a { color: inherit; text-decoration: none; }
 pre[class*="language-"],
 code[class*="language-"] {
   font-family: var(--ff-m);
-  font-size: .8125rem;
+  font-size: var(--fs-md);
   line-height: 1.75;
   -moz-tab-size: 2;
   tab-size: 2;
@@ -1983,7 +2002,7 @@ pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
 /* Language label */
 .code-lang-label {
   font-family: var(--ff-m);
-  font-size: .6875rem;
+  font-size: var(--fs-xs);
   font-weight: 500;
   letter-spacing: .04em;
   text-transform: uppercase;
@@ -2008,14 +2027,14 @@ pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
   transition: background var(--dur-f) var(--ease), color var(--dur-f) var(--ease), border-color var(--dur-f) var(--ease);
   color: var(--g500);
   font-family: var(--ff-m);
-  font-size: .6875rem;
+  font-size: var(--fs-xs);
   font-weight: 500;
   letter-spacing: .02em;
   line-height: 1;
 }
 
 .code-copy-btn i {
-  font-size: .875rem;
+  font-size: var(--fs-base);
 }
 
 .code-copy-btn:hover {
@@ -2149,7 +2168,7 @@ pre.line-numbers code .line::before {
   margin-right: .5em;
   text-align: right;
   color: oklch(40% 0 0);
-  font-size: .75rem;
+  font-size: var(--fs-sm);
   user-select: none;
   pointer-events: none;
 }
@@ -2219,7 +2238,7 @@ pre.line-numbers code .line::before {
   padding: var(--space-1) var(--space-3);
   border-radius: var(--r-s);
   font-family: var(--ff-m);
-  font-size: .625rem;
+  font-size: var(--fs-2xs);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: .04em;
@@ -2321,7 +2340,7 @@ pre.line-numbers code .line::before {
   border: 1px solid transparent;
   border-radius: var(--r-s);
   font-family: var(--ff-m);
-  font-size: .6875rem;
+  font-size: var(--fs-xs);
   font-weight: 500;
   letter-spacing: .02em;
   color: var(--fg-3);
@@ -2436,7 +2455,7 @@ pre.line-numbers code .line::before {
 
 .Modal-title {
   font-family: var(--ff-d);
-  font-size: 1.25rem;
+  font-size: var(--fs-3xl);
   font-weight: 400;
   margin: 0;
   color: var(--fg);
@@ -2478,11 +2497,11 @@ body:has(.Modal-overlay.active) {
   padding: var(--space-4);
   background: var(--bg-s);
   border-radius: var(--r-l);
-  font-size: .9375rem;
+  font-size: var(--fs-lg);
 }
 
 .Alert-icon {
-  font-size: 1.25rem;
+  font-size: var(--fs-3xl);
   flex-shrink: 0;
   margin-top: 2px;
 }
@@ -2571,7 +2590,7 @@ body:has(.Modal-overlay.active) {
   color: white;
   border-radius: var(--r-l);
   box-shadow: var(--sh-l), 0 0 0 1px oklch(100% 0 0 / .06);
-  font-size: .9375rem;
+  font-size: var(--fs-lg);
   min-width: 280px;
   max-width: 400px;
   transform: translateX(calc(100% + var(--space-6)));
@@ -2585,7 +2604,7 @@ body:has(.Modal-overlay.active) {
 }
 
 .Toast-icon {
-  font-size: 1.25rem;
+  font-size: var(--fs-3xl);
   flex-shrink: 0;
 }
 
@@ -2593,7 +2612,7 @@ body:has(.Modal-overlay.active) {
 
 .Toast-action {
   color: var(--accent);
-  font-size: .875rem;
+  font-size: var(--fs-base);
   font-weight: 600;
   padding: var(--space-1) var(--space-2);
   border-radius: var(--r-s);
@@ -2657,7 +2676,7 @@ body:has(.Modal-overlay.active) {
   background: var(--g950);
   color: white;
   font-family: var(--ff-b);
-  font-size: .8125rem;
+  font-size: var(--fs-md);
   font-weight: 500;
   white-space: nowrap;
   border-radius: var(--r-s);
@@ -2739,7 +2758,7 @@ body:has(.Modal-overlay.active) {
   gap: var(--space-2);
   padding: var(--space-2) var(--space-4);
   color: var(--fg-3);
-  font-size: .9375rem;
+  font-size: var(--fs-lg);
   font-weight: 500;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
@@ -2833,7 +2852,7 @@ body:has(.Modal-overlay.active) {
   gap: var(--space-2);
   padding: var(--space-2) var(--space-3);
   color: var(--fg);
-  font-size: .9375rem;
+  font-size: var(--fs-lg);
   transition: background var(--dur-f);
 }
 
@@ -2843,7 +2862,7 @@ body:has(.Modal-overlay.active) {
 
 .Dropdown-item i {
   color: var(--fg-3);
-  font-size: 1.1rem;
+  font-size: var(--fs-2xl);
 }
 
 .Dropdown-item--danger {
@@ -2867,7 +2886,7 @@ body:has(.Modal-overlay.active) {
 .Dropdown-header {
   padding: var(--space-2) var(--space-3);
   font-family: var(--ff-m);
-  font-size: .625rem;
+  font-size: var(--fs-2xs);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .05em;
@@ -2996,7 +3015,7 @@ body:has(.Modal-overlay.active) {
   height: 36px;
   padding: 0 var(--space-2);
   border-radius: var(--r-m);
-  font-size: .9375rem;
+  font-size: var(--fs-lg);
   font-weight: 500;
   color: var(--fg);
   transition: background var(--dur-f), color var(--dur-f);
@@ -3045,7 +3064,7 @@ body:has(.Modal-overlay.active) {
   width: 100%;
   padding: var(--space-3) var(--space-4);
   background: none;
-  font-size: 1rem;
+  font-size: var(--fs-xl);
   font-weight: 500;
   color: var(--fg);
   cursor: pointer;
@@ -3100,14 +3119,14 @@ details[open] .Accordion-icon {
   background: var(--bg-s);
   border: 1px solid var(--bd-w);
   border-radius: var(--r-f);
-  font-size: .875rem;
+  font-size: var(--fs-base);
   font-weight: 500;
   color: var(--fg);
   white-space: nowrap;
 }
 
 .Chip i {
-  font-size: 1rem;
+  font-size: var(--fs-xl);
   color: var(--fg-3);
 }
 
@@ -3203,7 +3222,7 @@ details[open] .Accordion-icon {
 }
 
 .Divider--label span {
-  font-size: .875rem;
+  font-size: var(--fs-base);
   color: var(--fg-3);
   white-space: nowrap;
 }
@@ -3232,7 +3251,7 @@ details[open] .Accordion-icon {
 }
 
 .List-item i {
-  font-size: 1.25rem;
+  font-size: var(--fs-3xl);
   color: var(--fg-3);
   flex-shrink: 0;
 }
@@ -3283,20 +3302,20 @@ details[open] .Accordion-icon {
   border-radius: 50%;
   background: var(--bg-m);
   color: var(--fg-3);
-  font-size: 2rem;
+  font-size: var(--fs-6xl);
   margin-bottom: var(--space-4);
 }
 
 .EmptyState-title {
   font-family: var(--ff-d);
-  font-size: 1.25rem;
+  font-size: var(--fs-3xl);
   font-weight: 400;
   color: var(--fg);
   margin: 0 0 var(--space-2);
 }
 
 .EmptyState-description {
-  font-size: .9375rem;
+  font-size: var(--fs-lg);
   color: var(--fg-3);
   max-width: 320px;
   margin: 0 0 var(--space-4);
@@ -3374,7 +3393,7 @@ details[open] .Accordion-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: .9375rem;
+  font-size: var(--fs-lg);
   font-weight: 600;
   background: var(--bg-m);
   color: var(--fg-3);
@@ -3383,7 +3402,7 @@ details[open] .Accordion-icon {
 }
 
 .Stepper-title {
-  font-size: .875rem;
+  font-size: var(--fs-base);
   font-weight: 500;
   color: var(--fg-3);
   white-space: nowrap;
@@ -3479,13 +3498,13 @@ details[open] .Accordion-icon {
 }
 
 .Timeline-description {
-  font-size: .9375rem;
+  font-size: var(--fs-lg);
   color: var(--fg-2);
 }
 
 .Timeline-time {
   font-family: var(--ff-m);
-  font-size: .75rem;
+  font-size: var(--fs-sm);
   color: var(--fg-4);
   margin-top: var(--space-2);
 }
@@ -3500,7 +3519,7 @@ details[open] .Accordion-icon {
 
 .Rating-star {
   color: var(--bd);
-  font-size: 1.25rem;
+  font-size: var(--fs-3xl);
   cursor: pointer;
   transition: color var(--dur-f), transform var(--dur-f);
 }
@@ -3574,7 +3593,7 @@ details[open] .Accordion-icon {
 
 .Drawer-title {
   font-family: var(--ff-d);
-  font-size: 1.25rem;
+  font-size: var(--fs-3xl);
   font-weight: 400;
   margin: 0;
 }
@@ -3619,7 +3638,7 @@ details[open] .Accordion-icon {
   padding: var(--space-2) var(--space-3);
   border-radius: var(--r-m);
   color: var(--fg);
-  font-size: .9375rem;
+  font-size: var(--fs-lg);
   text-align: left;
   transition: background var(--dur-f);
 }
@@ -3643,7 +3662,7 @@ details[open] .Accordion-icon {
 }
 
 .Menu-item-icon {
-  font-size: 1.1rem;
+  font-size: var(--fs-2xl);
   color: var(--fg-3);
   flex-shrink: 0;
   width: 20px;
@@ -3663,7 +3682,7 @@ details[open] .Accordion-icon {
 .Menu-header {
   padding: var(--space-2) var(--space-3);
   font-family: var(--ff-m);
-  font-size: .625rem;
+  font-size: var(--fs-2xs);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .05em;
@@ -3678,7 +3697,7 @@ details[open] .Accordion-icon {
   width: 100%;
   padding: var(--space-3);
   font-family: var(--ff-b);
-  font-size: 1rem;
+  font-size: var(--fs-xl);
   line-height: 1.6;
   color: var(--fg);
   background: var(--bg);
@@ -3791,7 +3810,7 @@ details[open] .Accordion-icon {
 }
 
 .FileUpload-icon {
-  font-size: 2.5rem;
+  font-size: var(--fs-7xl);
   color: var(--fg-4);
   margin-bottom: var(--space-3);
 }
@@ -3808,7 +3827,7 @@ details[open] .Accordion-icon {
 }
 
 .FileUpload-description {
-  font-size: .875rem;
+  font-size: var(--fs-base);
   color: var(--fg-3);
 }
 
@@ -3823,7 +3842,7 @@ details[open] .Accordion-icon {
    BREADCRUMB COMPONENT
    ═══════════════════════════════════════ */
 .Breadcrumb {
-  font-size: .875rem;
+  font-size: var(--fs-base);
   color: var(--fg-3);
 }
 
@@ -4016,7 +4035,7 @@ details[open] .Accordion-icon {
 
 .page-footer p {
   font-family: var(--ff-m);
-  font-size: .6875rem;
+  font-size: var(--fs-xs);
   text-transform: uppercase;
   letter-spacing: .05em;
   color: var(--fg-4);
@@ -4041,7 +4060,7 @@ details[open] .Accordion-icon {
 .nav-group {
   display: block;
   font-weight: 600;
-  font-size: .75rem;
+  font-size: var(--fs-sm);
   text-transform: uppercase;
   letter-spacing: .05em;
   color: var(--fg-4);
@@ -4053,7 +4072,7 @@ details[open] .Accordion-icon {
    ═══════════════════════════════════════ */
 .toc h3 {
   font-family: var(--ff-m);
-  font-size: .6875rem;
+  font-size: var(--fs-xs);
   text-transform: uppercase;
   letter-spacing: .05em;
   color: var(--fg-4);
@@ -4069,7 +4088,7 @@ details[open] .Accordion-icon {
 .toc li { margin-bottom: var(--space-2); }
 .toc a {
   color: var(--fg-3);
-  font-size: .875rem;
+  font-size: var(--fs-base);
   transition: color var(--dur-f);
 }
 .toc a:hover { color: var(--accent); }
@@ -4106,13 +4125,13 @@ details[open] .Accordion-icon {
 }
 
 .Icons-item i {
-  font-size: 1.5rem;
+  font-size: var(--fs-4xl);
   color: var(--fg);
 }
 
 .Icons-item span {
   font-family: var(--ff-m);
-  font-size: .5625rem;
+  font-size: var(--fs-nav);
   text-transform: uppercase;
   letter-spacing: .03em;
   color: var(--fg-4);
@@ -4350,13 +4369,13 @@ details[open] .Accordion-icon {
 
 .mobile-search-overlay .mobile-search-bar i {
   color: var(--fg-4);
-  font-size: 1.125rem;
+  font-size: var(--fs-2xl);
   flex-shrink: 0;
 }
 
 .mobile-search-overlay .mobile-search-input {
   flex: 1;
-  font-size: 1rem;
+  font-size: var(--fs-xl);
   color: var(--fg);
   background: none;
   border: none;
@@ -4379,7 +4398,7 @@ details[open] .Accordion-icon {
   height: 40px;
   border-radius: var(--r-f);
   color: var(--fg-3);
-  font-size: 1.25rem;
+  font-size: var(--fs-3xl);
   transition: background var(--dur-f), color var(--dur-f);
   cursor: pointer;
   background: none;
@@ -4455,7 +4474,7 @@ details[open] .Accordion-icon {
   .ApiTable th,
   .ApiTable td {
     padding: var(--space-2) var(--space-3);
-    font-size: .8125rem;
+    font-size: var(--fs-md);
   }
 
   .prose table,
@@ -4530,7 +4549,7 @@ details[open] .Accordion-icon {
   .Tabs-tab {
     flex-shrink: 0;
     padding: var(--space-2) var(--space-3);
-    font-size: .875rem;
+    font-size: var(--fs-base);
   }
 
   .Tabs--pills .Tabs-list {
@@ -4567,7 +4586,7 @@ details[open] .Accordion-icon {
   .Pagination-item {
     min-width: 32px;
     height: 32px;
-    font-size: .875rem;
+    font-size: var(--fs-base);
   }
 }
 
@@ -4594,7 +4613,7 @@ details[open] .Accordion-icon {
   }
 
   .Modal-title {
-    font-size: 1.125rem;
+    font-size: var(--fs-2xl);
   }
 
   /* Fullscreen modal on very small screens */
@@ -4632,7 +4651,7 @@ details[open] .Accordion-icon {
   }
 
   .Drawer-title {
-    font-size: 1.125rem;
+    font-size: var(--fs-2xl);
   }
 }
 
@@ -4670,7 +4689,7 @@ details[open] .Accordion-icon {
 @media (max-width: 599px) {
   pre[class*="language-"] {
     padding: var(--space-3);
-    font-size: .75rem;
+    font-size: var(--fs-sm);
     border-radius: var(--r-m);
   }
 
@@ -4716,12 +4735,12 @@ details[open] .Accordion-icon {
    ─────────────────────────────────────── */
 @media (max-width: 599px) {
   .prose h2 {
-    font-size: 1.5rem;
+    font-size: var(--fs-4xl);
     margin-top: var(--space-8);
   }
 
   .prose h3 {
-    font-size: 1rem;
+    font-size: var(--fs-xl);
     margin-top: var(--space-6);
   }
 
@@ -4738,7 +4757,7 @@ details[open] .Accordion-icon {
   }
 
   .breadcrumbs {
-    font-size: .625rem;
+    font-size: var(--fs-2xs);
     margin-bottom: var(--space-3);
   }
 }
@@ -4775,7 +4794,7 @@ details[open] .Accordion-icon {
   }
 
   .FileUpload-icon {
-    font-size: 2rem;
+    font-size: var(--fs-6xl);
   }
 }
 
@@ -4792,11 +4811,11 @@ details[open] .Accordion-icon {
   }
 
   .Icons-item i {
-    font-size: 1.25rem;
+    font-size: var(--fs-3xl);
   }
 
   .Icons-item span {
-    font-size: .5rem;
+    font-size: var(--fs-3xs);
   }
 }
 
@@ -4811,7 +4830,7 @@ details[open] .Accordion-icon {
   .EmptyState-icon {
     width: 52px;
     height: 52px;
-    font-size: 1.5rem;
+    font-size: var(--fs-4xl);
     margin-bottom: var(--space-3);
   }
 }
@@ -4840,7 +4859,7 @@ details[open] .Accordion-icon {
   }
 
   .fnav-btn i {
-    font-size: 1.125rem;
+    font-size: var(--fs-2xl);
   }
 }
 

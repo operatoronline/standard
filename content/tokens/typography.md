@@ -84,27 +84,36 @@ Notice the layering: **mono** for the category label (small, precise), **serif**
 
 ## Type Scale
 
-Based on a **1.25 ratio** (Major Third), creating harmonious size progression where each step feels like a natural next-louder voice.
+Based on a **Major Third (1.25)** progression, tokenized as CSS custom properties. Every `font-size` in the system uses one of these tokens — no magic numbers.
 
-| Level | Size | Usage | Font |
-|-------|------|-------|------|
-| Display | clamp(2.5rem, 8vw, 4rem) | Hero headlines | Instrument Serif |
-| H1 | 2.5rem | Page titles | Instrument Serif |
-| H2 | 1.75rem | Section headers | Instrument Serif |
-| H3 | 1.125rem | Subsections | Outfit |
-| Body | 1rem | Paragraphs | Outfit |
-| Small | 0.875rem | Captions, labels | Outfit |
-| XSmall | 0.75rem | Fine print | Outfit |
-| Mono | 0.8125rem | Code blocks | JetBrains Mono |
+| Token | Size | px | Usage |
+|-------|------|-----|-------|
+| `--fs-hero` | clamp(2.5rem, 8vw, 4rem) | 40–64 | Hero headlines |
+| `--fs-7xl` | 2.5rem | 40 | Display |
+| `--fs-6xl` | 2rem | 32 | Display small |
+| `--fs-5xl` | 1.75rem | 28 | H2 section headers |
+| `--fs-4xl` | 1.5rem | 24 | Large headings |
+| `--fs-3xl` | 1.25rem | 20 | Section icons, large UI |
+| `--fs-2xl` | 1.125rem | 18 | H3, sub-headings |
+| `--fs-xl` | 1rem | 16 | Prose body, prominent text |
+| `--fs-lg` | 0.9375rem | 15 | Emphasized body, component text |
+| `--fs-base` | 0.875rem | 14 | Default body, form inputs |
+| `--fs-md` | 0.8125rem | 13 | Compact body, code blocks |
+| `--fs-sm` | 0.75rem | 12 | Small text, table captions |
+| `--fs-xs` | 0.6875rem | 11 | Captions, metadata, breadcrumbs |
+| `--fs-2xs` | 0.625rem | 10 | Tiny labels, counters |
+| `--fs-nav` | 0.5625rem | 9 | Nav pill labels (mono, uppercase) |
+| `--fs-3xs` | 0.5rem | 8 | Micro labels |
 
 <Preview title="Type Scale">
     <div style="display: flex; flex-direction: column; gap: var(--space-4);">
-        <div style="font-family: var(--ff-d); font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 400; line-height: 1; letter-spacing: -0.035em;">Display</div>
-        <div style="font-family: var(--ff-d); font-size: 1.75rem; font-weight: 400; line-height: 1.25; letter-spacing: -0.02em;">Heading 2</div>
-        <div style="font-family: var(--ff-b); font-size: 1.125rem; font-weight: 600; line-height: 1.4;">Heading 3</div>
-        <div style="font-family: var(--ff-b); font-size: 1rem; line-height: 1.6; color: var(--fg-2);">Body text — the quick brown fox jumps over the lazy dog. This is readable body copy.</div>
-        <div style="font-family: var(--ff-b); font-size: 0.875rem; color: var(--fg-3); line-height: 1.5;">Small text for captions and supporting content.</div>
-        <div style="font-family: var(--ff-m); font-size: 0.8125rem; color: var(--accent); line-height: 1.7; background: var(--bg-s); padding: var(--space-2) var(--space-3); border-radius: var(--r-s);">const code = "monospace";</div>
+        <div style="font-family: var(--ff-d); font-size: var(--fs-hero); font-weight: 400; line-height: 1; letter-spacing: -0.035em;">Hero</div>
+        <div style="font-family: var(--ff-d); font-size: var(--fs-5xl); font-weight: 400; line-height: 1.25; letter-spacing: -0.02em;">Heading 2 <code style="font-size: 0.75em; color: var(--fg-3);">--fs-5xl</code></div>
+        <div style="font-family: var(--ff-b); font-size: var(--fs-2xl); font-weight: 600; line-height: 1.4;">Heading 3 <code style="font-size: 0.75em; color: var(--fg-3);">--fs-2xl</code></div>
+        <div style="font-family: var(--ff-b); font-size: var(--fs-xl); line-height: 1.6; color: var(--fg-2);">Body text — the quick brown fox jumps over the lazy dog. <code style="font-size: 0.75em; color: var(--fg-3);">--fs-xl</code></div>
+        <div style="font-family: var(--ff-b); font-size: var(--fs-base); color: var(--fg-3); line-height: 1.5;">Default body for captions and labels. <code style="font-size: 0.75em; color: var(--fg-3);">--fs-base</code></div>
+        <div style="font-family: var(--ff-m); font-size: var(--fs-md); color: var(--accent); line-height: 1.7; background: var(--bg-s); padding: var(--space-2) var(--space-3); border-radius: var(--r-s);">const code = "monospace"; <span style="font-size: 0.85em; color: var(--fg-3);">// --fs-md</span></div>
+        <div style="font-family: var(--ff-m); font-size: var(--fs-nav); font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: var(--fg-3);">Nav Label <code style="font-size: 1em; color: var(--fg-4);">--fs-nav</code></div>
     </div>
 </Preview>
 
@@ -228,23 +237,23 @@ The display heading uses `clamp()` for smooth scaling — no breakpoint jumps, j
 
 ```css
 /* Scales from 2.5rem (40px) to 4rem (64px) based on viewport */
-font-size: clamp(2.5rem, 8vw, 4rem);
+font-size: var(--fs-hero); /* clamp(2.5rem, 8vw, 4rem) */
 
 /* Base (Mobile) */
 .page-header h1 { 
-  font-size: clamp(2.5rem, 8vw, 4rem); 
+  font-size: var(--fs-hero); 
 }
 
 /* Prose scales naturally with rem */
-.prose { font-size: 1rem; }
+.prose { font-size: var(--fs-xl); }
 
 /* Breakpoint-specific adjustments */
 @media (min-width: 768px) {
-  .prose h2 { font-size: 1.75rem; }
+  .prose h2 { font-size: var(--fs-5xl); }
 }
 
 @media (min-width: 1024px) {
-  .prose h2 { font-size: 2rem; }
+  .prose h2 { font-size: var(--fs-6xl); }
 }
 ```
 
@@ -399,16 +408,16 @@ Complete heading definitions matching the Library aesthetic.
 <Preview title="Heading Definitions">
     <div style="display: flex; flex-direction: column; gap: var(--space-6);">
         <div>
-            <div style="font-family: var(--ff-d); font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 400; line-height: 1; letter-spacing: -0.035em;">Page Title</div>
-            <code style="font-size: 0.75em; color: var(--fg-3);">Display: ff-d / clamp(2.5rem, 8vw, 4rem) / 400 / 1 / -0.035em</code>
+            <div style="font-family: var(--ff-d); font-size: var(--fs-hero); font-weight: 400; line-height: 1; letter-spacing: -0.035em;">Page Title</div>
+            <code style="font-size: 0.75em; color: var(--fg-3);">Display: --ff-d / --fs-hero / 400 / 1 / -0.035em</code>
         </div>
         <div>
-            <h2 style="font-family: var(--ff-d); font-size: 1.75rem; font-weight: 400; line-height: 1.25; letter-spacing: -0.02em; margin: 0;">Section Header</h2>
-            <code style="font-size: 0.75em; color: var(--fg-3);">H2: ff-d / 1.75rem / 400 / 1.25 / -0.02em</code>
+            <h2 style="font-family: var(--ff-d); font-size: var(--fs-5xl); font-weight: 400; line-height: 1.25; letter-spacing: -0.02em; margin: 0;">Section Header</h2>
+            <code style="font-size: 0.75em; color: var(--fg-3);">H2: --ff-d / --fs-5xl / 400 / 1.25 / -0.02em</code>
         </div>
         <div>
-            <h3 style="font-family: var(--ff-b); font-size: 1.125rem; font-weight: 600; line-height: 1.4; margin: 0;">Subsection</h3>
-            <code style="font-size: 0.75em; color: var(--fg-3);">H3: ff-b / 1.125rem / 600 / 1.4 / 0</code>
+            <h3 style="font-family: var(--ff-b); font-size: var(--fs-2xl); font-weight: 600; line-height: 1.4; margin: 0;">Subsection</h3>
+            <code style="font-size: 0.75em; color: var(--fg-3);">H3: --ff-b / --fs-2xl / 600 / 1.4 / 0</code>
         </div>
     </div>
 </Preview>
@@ -416,7 +425,7 @@ Complete heading definitions matching the Library aesthetic.
 ```css
 .page-header h1 {
   font-family: var(--ff-d);
-  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-size: var(--fs-hero);
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.035em;
@@ -429,7 +438,7 @@ Complete heading definitions matching the Library aesthetic.
 
 .prose h2 {
   font-family: var(--ff-d);
-  font-size: 1.75rem;
+  font-size: var(--fs-5xl);
   font-weight: 400;
   line-height: 1.25;
   letter-spacing: -0.02em;
@@ -438,7 +447,7 @@ Complete heading definitions matching the Library aesthetic.
 
 .prose h3 {
   font-family: var(--ff-b);
-  font-size: 1.125rem;
+  font-size: var(--fs-2xl);
   font-weight: 600;
   line-height: 1.4;
   margin: var(--space-8) 0 var(--space-3);
@@ -461,7 +470,7 @@ Optimized typography for long-form reading.
 
 ```css
 .prose {
-  font-size: 1rem;
+  font-size: var(--fs-xl);
   line-height: 1.7;
   color: var(--fg-2);
   max-width: 65ch; /* Optimal line length */
@@ -478,7 +487,7 @@ Optimized typography for long-form reading.
 
 .prose code:not([class*="language-"]) {
   font-family: var(--ff-m);
-  font-size: 0.875em;
+  font-size: 0.875em;  /* Relative to parent — stays as em */
   padding: 2px 6px;
   background: var(--bg-m);
   border-radius: var(--r-s);
@@ -510,7 +519,7 @@ JetBrains Mono styles for code blocks and inline code.
 ```css
 code:not([class*="language-"]) {
   font-family: var(--ff-m);
-  font-size: 0.875em;
+  font-size: 0.875em;  /* Relative to parent */
   padding: 2px 6px;
   background: var(--bg-m);
   border-radius: var(--r-s);
@@ -519,7 +528,7 @@ code:not([class*="language-"]) {
 
 pre[class*="language-"] {
   font-family: var(--ff-m);
-  font-size: 0.8125rem;
+  font-size: var(--fs-md);
   line-height: 1.7;
   background: var(--g950);
   border: 1px solid var(--g800);
@@ -545,7 +554,7 @@ The floating pill nav uses monospace labels with wide tracking.
 ```css
 .fnav-btn {
   font-family: var(--ff-m);
-  font-size: 0.5625rem;
+  font-size: var(--fs-nav);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -580,18 +589,27 @@ The floating pill nav uses monospace labels with wide tracking.
 
 ```css
 /* Font Families */
-font-family: var(--ff-d);  /* Instrument Serif - Display */
-font-family: var(--ff-b);  /* Outfit - Body & UI */
-font-family: var(--ff-m);  /* JetBrains Mono - Code */
+font-family: var(--ff-d);  /* Instrument Serif — Display */
+font-family: var(--ff-b);  /* Outfit — Body & UI */
+font-family: var(--ff-m);  /* JetBrains Mono — Code */
 
-/* Display Sizes */
-font-size: clamp(2.5rem, 8vw, 4rem);  /* Hero */
-font-size: 1.75rem;                    /* H2 */
-font-size: 1.125rem;                   /* H3 */
-font-size: 1rem;                       /* Body */
-font-size: 0.875rem;                   /* Small */
-font-size: 0.8125rem;                  /* Code */
-font-size: 0.5625rem;                  /* Nav labels */
+/* Type Scale Tokens (use these, not raw values) */
+font-size: var(--fs-hero); /* clamp(2.5rem, 8vw, 4rem) — Hero */
+font-size: var(--fs-7xl);  /* 2.5rem  — Display */
+font-size: var(--fs-6xl);  /* 2rem    — Display small */
+font-size: var(--fs-5xl);  /* 1.75rem — H2 */
+font-size: var(--fs-4xl);  /* 1.5rem  — Large heading */
+font-size: var(--fs-3xl);  /* 1.25rem — Section icons */
+font-size: var(--fs-2xl);  /* 1.125rem — H3 */
+font-size: var(--fs-xl);   /* 1rem    — Prose body */
+font-size: var(--fs-lg);   /* .9375rem — Emphasized body */
+font-size: var(--fs-base); /* .875rem — Default body */
+font-size: var(--fs-md);   /* .8125rem — Code blocks */
+font-size: var(--fs-sm);   /* .75rem  — Small text */
+font-size: var(--fs-xs);   /* .6875rem — Captions */
+font-size: var(--fs-2xs);  /* .625rem — Tiny labels */
+font-size: var(--fs-nav);  /* .5625rem — Nav labels */
+font-size: var(--fs-3xs);  /* .5rem   — Micro */
 
 /* Weights */
 font-weight: 400;  /* Regular (body, serif) */
