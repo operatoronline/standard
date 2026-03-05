@@ -7255,5 +7255,157 @@ details[open] .Accordion-icon {
 }
 
 /* ═══════════════════════════════════════
+   See Also — Related Pages (v1.0)
+   ═══════════════════════════════════════ */
+
+.see-also {
+  margin-top: var(--space-12);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--bd);
+}
+
+.see-also-heading {
+  font-family: var(--ff-d);
+  font-size: var(--fs-2xl);
+  font-weight: 400;
+  color: var(--fg-3);
+  margin-bottom: var(--space-4);
+  letter-spacing: -0.01em;
+}
+
+.see-also-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-3);
+}
+
+.see-also-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--bd);
+  border-radius: var(--r-m);
+  background: var(--bg);
+  color: var(--fg);
+  text-decoration: none;
+  transition: border-color var(--dur-n) var(--ease), box-shadow var(--dur-n) var(--ease), transform var(--dur-n) var(--ease), background var(--dur-n) var(--ease);
+}
+
+.see-also-card:hover {
+  border-color: var(--accent);
+  box-shadow: var(--sh-s);
+  transform: translateY(-1px);
+  background: var(--bg-s);
+}
+
+.see-also-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: var(--r-s);
+  background: oklch(from var(--accent) l c h / .08);
+  color: var(--accent);
+  font-size: var(--fs-lg);
+  transition: background var(--dur-n) var(--ease);
+}
+
+.see-also-card:hover .see-also-card-icon {
+  background: oklch(from var(--accent) l c h / .16);
+}
+
+.see-also-card-body {
+  min-width: 0;
+}
+
+.see-also-card-title {
+  font-size: var(--fs-base);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.see-also-card-section {
+  font-size: var(--fs-xs);
+  color: var(--fg-4);
+  line-height: 1.3;
+}
+
+/* Dark mode */
+[data-theme="dark"] .see-also-card-icon {
+  background: oklch(from var(--accent) l c h / .14);
+}
+[data-theme="dark"] .see-also-card:hover .see-also-card-icon {
+  background: oklch(from var(--accent) l c h / .22);
+}
+[data-theme="dark"] .see-also-card:hover {
+  background: var(--bg-m);
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .see-also-card-icon {
+    background: oklch(from var(--accent) l c h / .14);
+  }
+  html:not([data-theme="light"]) .see-also-card:hover .see-also-card-icon {
+    background: oklch(from var(--accent) l c h / .22);
+  }
+  html:not([data-theme="light"]) .see-also-card:hover {
+    background: var(--bg-m);
+  }
+}
+
+/* Responsive */
+@media (max-width: 599px) {
+  .see-also-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+  }
+  .see-also-card {
+    padding: var(--space-2) var(--space-3);
+  }
+  .see-also-card-icon {
+    width: 28px;
+    height: 28px;
+    font-size: var(--fs-base);
+  }
+  .see-also-card-section {
+    display: none;
+  }
+}
+
+@media (max-width: 374px) {
+  .see-also-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Print */
+@media print {
+  .see-also {
+    border-top: 1px solid #ccc;
+  }
+  .see-also-card {
+    display: inline;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    transform: none;
+  }
+  .see-also-card-icon {
+    display: none;
+  }
+  .see-also-card::after {
+    content: " · ";
+  }
+  .see-also-card:last-child::after {
+    content: "";
+  }
+  .see-also-card-section {
+    display: none;
+  }
+}
+
+/* ═══════════════════════════════════════
    END OF STANDARD v1.0 STYLES
    ═══════════════════════════════════════ */

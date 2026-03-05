@@ -188,17 +188,131 @@ const PAGE_ORDER = [
     'changelog.md',
 ];
 
+// Related pages map — each key maps to an array of related page paths (content-relative, without .md)
+// Used to generate "See Also" section at the bottom of each page
+const RELATED_PAGES = {
+    // Components — Actions
+    'components/buttons':     ['components/links', 'components/dropdowns', 'components/toolbar', 'components/chips'],
+    'components/links':       ['components/buttons', 'components/breadcrumbs', 'components/tabs', 'components/pagination'],
+    'components/dropdowns':   ['components/menus', 'components/buttons', 'components/forms', 'components/tooltips'],
+    'components/menus':       ['components/dropdowns', 'components/drawer', 'components/tooltips', 'components/lists'],
+    // Components — Data Entry
+    'components/forms':       ['components/switches', 'components/textarea', 'components/sliders', 'components/file-upload'],
+    'components/switches':    ['components/forms', 'components/sliders', 'components/chips'],
+    'components/textarea':    ['components/forms', 'components/sliders', 'components/file-upload'],
+    'components/sliders':     ['components/forms', 'components/progress', 'components/switches'],
+    'components/file-upload': ['components/forms', 'components/buttons', 'components/progress'],
+    // Components — Data Display
+    'components/tables':      ['components/lists', 'components/cards', 'components/pagination', 'components/badges'],
+    'components/cards':       ['components/lists', 'components/badges', 'components/modals', 'patterns/layouts'],
+    'components/badges':      ['components/chips', 'components/alerts', 'components/avatars', 'components/icons'],
+    'components/avatars':     ['components/badges', 'components/lists', 'components/cards', 'components/chips'],
+    'components/icons':       ['components/badges', 'components/buttons', 'components/toolbar', 'tokens/colors'],
+    'components/lists':       ['components/tables', 'components/cards', 'components/accordions', 'components/timeline'],
+    'components/timeline':    ['components/steppers', 'components/lists', 'components/badges'],
+    'components/rating':      ['components/forms', 'components/icons', 'components/badges'],
+    // Components — Feedback
+    'components/alerts':      ['components/toasts', 'components/badges', 'components/modals', 'components/icons'],
+    'components/toasts':      ['components/alerts', 'components/modals', 'components/progress'],
+    'components/progress':    ['components/skeletons', 'components/steppers', 'components/sliders'],
+    'components/skeletons':   ['components/progress', 'components/cards', 'components/lists'],
+    'components/tooltips':    ['components/menus', 'components/dropdowns', 'components/badges'],
+    // Components — Navigation
+    'components/tabs':        ['components/breadcrumbs', 'components/steppers', 'components/pagination', 'components/accordions'],
+    'components/breadcrumbs': ['components/tabs', 'components/pagination', 'components/links'],
+    'components/pagination':  ['components/tables', 'components/lists', 'components/breadcrumbs', 'components/tabs'],
+    'components/steppers':    ['components/tabs', 'components/timeline', 'components/progress'],
+    // Components — Layout
+    'components/modals':      ['components/drawer', 'components/alerts', 'components/cards', 'components/forms'],
+    'components/drawer':      ['components/modals', 'components/menus', 'patterns/layouts'],
+    'components/toolbar':     ['components/buttons', 'components/icons', 'components/dividers'],
+    'components/accordions':  ['components/tabs', 'components/lists', 'components/cards'],
+    'components/chips':       ['components/badges', 'components/buttons', 'components/forms'],
+    'components/dividers':    ['components/toolbar', 'components/lists', 'patterns/layouts'],
+    // Tokens
+    'tokens/colors':          ['tokens/typography', 'tokens/spacing', 'tokens/playground', 'tokens/export'],
+    'tokens/typography':      ['tokens/colors', 'tokens/spacing', 'components/buttons'],
+    'tokens/spacing':         ['tokens/typography', 'tokens/colors', 'tokens/elevation', 'patterns/layouts'],
+    'tokens/elevation':       ['tokens/colors', 'tokens/spacing', 'components/cards', 'components/modals'],
+    'tokens/export':          ['tokens/colors', 'tokens/playground', 'getting-started'],
+    'tokens/playground':      ['tokens/colors', 'tokens/export', 'tokens/elevation'],
+    // Patterns
+    'patterns/layouts':       ['components/cards', 'patterns/empty-states', 'tokens/spacing', 'components/dividers'],
+    'patterns/empty-states':  ['components/buttons', 'components/icons', 'patterns/layouts', 'components/cards'],
+    // Resources
+    'getting-started':        ['tokens/colors', 'components/buttons', 'tokens/export', 'contributing'],
+    'contributing':           ['getting-started', 'changelog', 'tokens/export'],
+    'changelog':              ['contributing', 'getting-started'],
+};
+
+// Phosphor icon map for See Also cards (matches section index cards)
+const PAGE_ICONS = {
+    // Components
+    'components/buttons': 'ph-cursor-click', 'components/links': 'ph-link',
+    'components/dropdowns': 'ph-caret-circle-down', 'components/menus': 'ph-list',
+    'components/forms': 'ph-textbox', 'components/switches': 'ph-toggle-left',
+    'components/textarea': 'ph-note', 'components/sliders': 'ph-sliders-horizontal',
+    'components/file-upload': 'ph-upload-simple', 'components/tables': 'ph-table',
+    'components/cards': 'ph-cards-three', 'components/badges': 'ph-seal',
+    'components/avatars': 'ph-user-circle', 'components/icons': 'ph-shapes',
+    'components/lists': 'ph-list-bullets', 'components/timeline': 'ph-clock-countdown',
+    'components/rating': 'ph-star', 'components/alerts': 'ph-warning-circle',
+    'components/toasts': 'ph-bell-ringing', 'components/progress': 'ph-spinner',
+    'components/skeletons': 'ph-ghost', 'components/tooltips': 'ph-chat-circle-text',
+    'components/tabs': 'ph-tabs', 'components/breadcrumbs': 'ph-bread',
+    'components/pagination': 'ph-dots-three', 'components/steppers': 'ph-steps',
+    'components/modals': 'ph-frame-corners', 'components/drawer': 'ph-sidebar',
+    'components/toolbar': 'ph-toolbox', 'components/accordions': 'ph-rows',
+    'components/chips': 'ph-tag', 'components/dividers': 'ph-minus',
+    // Tokens
+    'tokens/colors': 'ph-palette', 'tokens/typography': 'ph-text-aa',
+    'tokens/spacing': 'ph-ruler', 'tokens/elevation': 'ph-stack',
+    'tokens/export': 'ph-download-simple', 'tokens/playground': 'ph-paint-brush',
+    // Patterns
+    'patterns/layouts': 'ph-layout', 'patterns/empty-states': 'ph-folder-open',
+    // Resources
+    'getting-started': 'ph-rocket-launch', 'contributing': 'ph-git-pull-request',
+    'changelog': 'ph-clock-counter-clockwise',
+};
+
+function getPageSection(pagePath) {
+    if (pagePath.startsWith('tokens')) return 'Tokens';
+    if (pagePath.startsWith('components')) return 'Components';
+    if (pagePath.startsWith('patterns')) return 'Patterns';
+    return 'Resources';
+}
+
+function generateSeeAlso(relativePath, relRoot) {
+    const pageKey = relativePath.replace('.md', '');
+    const related = RELATED_PAGES[pageKey];
+    if (!related || related.length === 0) return '';
+
+    const cards = related.map(rp => {
+        const title = rp.split('/').pop().replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+        const icon = PAGE_ICONS[rp] || 'ph-file';
+        const section = getPageSection(rp);
+        const href = relRoot + rp + '.html';
+        return `<a href="${href}" class="see-also-card">
+            <span class="see-also-card-icon"><i class="ph ${icon}" aria-hidden="true"></i></span>
+            <span class="see-also-card-body">
+                <span class="see-also-card-title">${title}</span>
+                <span class="see-also-card-section">${section}</span>
+            </span>
+        </a>`;
+    }).join('\n                ');
+
+    return `<section class="see-also" aria-label="Related pages">
+            <h2 class="see-also-heading">See also</h2>
+            <div class="see-also-grid">
+                ${cards}
+            </div>
+        </section>`;
+}
+
 function getPageTitle(filePath) {
     const baseName = path.basename(filePath, '.md');
     if (baseName === 'index') return 'Home';
     return baseName.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-}
-
-function getPageSection(filePath) {
-    if (filePath.startsWith('tokens')) return 'Tokens';
-    if (filePath.startsWith('components')) return 'Components';
-    if (filePath.startsWith('patterns')) return 'Patterns';
-    return null;
 }
 
 function generatePageNav(relativePath, relRoot) {
@@ -792,6 +906,7 @@ async function build() {
             .replace(/{{TOC_SIDEBAR}}/g, () => tocSidebarHtml)
             .replace(/{{PAGE_SUBTITLE}}/g, () => subtitleHtml)
             .replace(/{{HERO_SHOWCASE}}/g, () => heroHtml)
+            .replace(/{{SEE_ALSO}}/g, () => generateSeeAlso(relativePath, relRoot))
             .replace(/{{PAGE_NAV}}/g, () => generatePageNav(relativePath, relRoot));
 
         // Post-process: add lazy loading to any <img> tags missing it
