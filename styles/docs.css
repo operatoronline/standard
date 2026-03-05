@@ -276,11 +276,18 @@
     background: oklch(24% 0 0);
     border-bottom-color: oklch(24% 0 0);
   }
+  html:not([data-theme="light"]) .Preview-tab.active {
+    background: oklch(30% 0 0);
+    box-shadow: 0 1px 3px oklch(0% 0 0 / .3);
+  }
   html:not([data-theme="light"]) .Preview-canvas--light {
     background: oklch(97% 0 0);
   }
   html:not([data-theme="light"]) .Preview-canvas--dark {
     background: oklch(8% 0 0);
+  }
+  html:not([data-theme="light"]) .Preview-pane--code {
+    background: oklch(10% 0 0);
   }
   html:not([data-theme="light"]) .Preview-code-copy {
     color: oklch(64% 0 0);
@@ -2301,33 +2308,40 @@ pre.line-numbers code .line::before {
   gap: var(--space-2);
 }
 
-/* --- Tabs (Preview / HTML) --- */
+/* --- Segmented Control (Preview / HTML) --- */
 .Preview-tabs {
   display: flex;
-  gap: 2px;
   flex-shrink: 0;
+  background: var(--bg-s);
+  border-radius: var(--r-m);
+  padding: 2px;
 }
 
 .Preview-tab {
   padding: var(--space-1) var(--space-3);
-  border-radius: var(--r-s);
+  border-radius: calc(var(--r-m) - 2px);
   font-family: var(--ff-m);
   font-size: var(--fs-2xs);
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .04em;
-  color: var(--fg-2);
-  transition: color var(--dur-f), background var(--dur-f);
+  color: var(--fg-3);
+  transition: color var(--dur-f), background var(--dur-f), box-shadow var(--dur-f);
 }
 
 .Preview-tab:hover {
-  color: var(--fg);
-  background: var(--bg-s);
+  color: var(--fg-2);
 }
 
 .Preview-tab.active {
-  color: var(--accent-h);
-  background: var(--accent-s);
+  color: var(--fg);
+  background: var(--bg);
+  box-shadow: 0 1px 3px oklch(0% 0 0 / .08), 0 1px 2px oklch(0% 0 0 / .04);
+}
+
+[data-theme="dark"] .Preview-tab.active {
+  background: var(--g800);
+  box-shadow: 0 1px 3px oklch(0% 0 0 / .3);
 }
 
 /* --- Controls (cycle buttons) --- */
@@ -2369,12 +2383,18 @@ pre.line-numbers code .line::before {
 
 .Preview-pane--code {
   position: relative;
+  background: var(--g950);
+}
+
+[data-theme="dark"] .Preview-pane--code {
+  background: oklch(10% 0 0);
 }
 
 .Preview-pane--code pre {
   margin: 0;
   border-radius: 0;
   border: none;
+  background: transparent;
 }
 
 /* --- Code copy button --- */
@@ -2400,9 +2420,9 @@ pre.line-numbers code .line::before {
 }
 
 .Preview-code-copy:hover {
-  background: oklch(0% 0 0 / .06);
-  border-color: var(--bd);
-  color: var(--fg-2);
+  background: oklch(100% 0 0 / .08);
+  border-color: oklch(100% 0 0 / .12);
+  color: var(--g300);
 }
 
 .Preview-code-copy.copied {
