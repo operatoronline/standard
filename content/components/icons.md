@@ -2,6 +2,18 @@
 
 Standard uses **Phosphor Icons** for its visual language. Icons provide visual context, improve scannability, and reinforce meaning throughout the interface.
 
+<Hero>
+<!-- stats: 4 Weights, 300+ Icons, Accessible -->
+<i class="ph-bold ph-house" style="font-size:2rem;color:var(--accent)" aria-hidden="true"></i>
+<i class="ph ph-gear" style="font-size:2rem" aria-hidden="true"></i>
+<i class="ph ph-palette" style="font-size:2rem" aria-hidden="true"></i>
+<i class="ph-fill ph-heart" style="font-size:2rem;color:var(--err)" aria-hidden="true"></i>
+<i class="ph ph-code" style="font-size:2rem" aria-hidden="true"></i>
+<i class="ph-bold ph-lightning" style="font-size:2rem;color:var(--warn)" aria-hidden="true"></i>
+<i class="ph ph-rocket" style="font-size:2rem" aria-hidden="true"></i>
+<i class="ph-fill ph-star" style="font-size:2rem;color:var(--warn)" aria-hidden="true"></i>
+</Hero>
+
 ---
 
 ## Basic Usage

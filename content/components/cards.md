@@ -2,6 +2,22 @@
 
 Cards are flexible containers that group related content and actions. They provide a clean, elevated surface for displaying everything from simple text to complex interactive layouts.
 
+<Hero>
+<!-- stats: 4 Variants, 5 Sections, Interactive -->
+<div class="Card Card--elevated" style="max-width: 220px;">
+    <div class="Card-body">
+        <h3 class="Card-title" style="margin:0 0 4px">Design Tokens</h3>
+        <p class="Card-text" style="margin:0;font-size:.875rem">OKLCH colors, spacing, and type scale.</p>
+    </div>
+</div>
+<div class="Card Card--interactive" style="max-width: 220px;">
+    <div class="Card-body">
+        <h3 class="Card-title" style="margin:0 0 4px">Components</h3>
+        <p class="Card-text" style="margin:0;font-size:.875rem">32 production-ready UI primitives.</p>
+    </div>
+</div>
+</Hero>
+
 ---
 
 ## Installation

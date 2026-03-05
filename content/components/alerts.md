@@ -2,6 +2,15 @@
 
 Alerts display important messages that require user attention.
 
+<Hero>
+<!-- stats: 4 Variants, Dismissible, Accessible -->
+<div style="display:flex;flex-direction:column;gap:12px;width:100%;max-width:400px">
+    <div class="Alert Alert--success"><i class="ph ph-check-circle" aria-hidden="true"></i><p style="margin:0">Changes saved successfully.</p></div>
+    <div class="Alert Alert--warning"><i class="ph ph-warning" aria-hidden="true"></i><p style="margin:0">Your session expires in 5 minutes.</p></div>
+    <div class="Alert Alert--error"><i class="ph ph-x-circle" aria-hidden="true"></i><p style="margin:0">Unable to connect to the server.</p></div>
+</div>
+</Hero>
+
 ## Basic Alert
 
 <Preview title="Basic Alert">

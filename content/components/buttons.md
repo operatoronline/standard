@@ -2,6 +2,16 @@
 
 Buttons allow users to take actions and make choices with a single tap. They communicate actions that users can take and are typically placed throughout your UI.
 
+<Hero>
+<!-- stats: 6 Variants, 3 Sizes, 4 States -->
+<button class="Button Button--primary">Get Started</button>
+<button class="Button Button--secondary">Learn More</button>
+<button class="Button Button--outline">Documentation</button>
+<button class="Button Button--ghost">Cancel</button>
+<button class="Button Button--danger Button--small"><i class="ph ph-trash" aria-hidden="true"></i> Delete</button>
+<button class="Button Button--primary Button--large"><i class="ph ph-arrow-right" aria-hidden="true"></i> Continue</button>
+</Hero>
+
 ---
 
 ## Usage

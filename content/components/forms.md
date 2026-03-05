@@ -2,6 +2,20 @@
 
 Forms allow users to enter data and interact with the system. Standard provides a complete set of form controls including inputs, textareas, selects, checkboxes, radio buttons, switches, and file uploads — all with built-in validation states and accessibility.
 
+<Hero>
+<!-- stats: 7 Controls, 3 Sizes, Validation -->
+<div style="display:flex;flex-direction:column;gap:12px;min-width:240px;max-width:280px">
+    <div class="FormField">
+        <label class="FormField-label">Email</label>
+        <input type="email" class="Input" placeholder="you@example.com" style="pointer-events:none">
+    </div>
+    <div style="display:flex;gap:12px;align-items:center">
+        <label class="Checkbox"><input type="checkbox" checked><span class="Checkbox-box"></span><span>Remember me</span></label>
+        <label class="Switch"><input type="checkbox" checked><span class="Switch-slider"></span></label>
+    </div>
+</div>
+</Hero>
+
 ---
 
 ## Installation

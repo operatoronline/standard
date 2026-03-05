@@ -2,6 +2,22 @@
 
 Modals are overlay dialogs that require user interaction before returning to the main content. They focus attention on critical information, decisions, or forms.
 
+<Hero>
+<!-- stats: 3 Sizes, Focus Trap, Accessible -->
+<div class="Card Card--elevated" style="max-width:320px;text-align:center;padding:0">
+    <div style="padding:16px 20px;border-bottom:1px solid var(--bd)">
+        <strong style="font-size:.9375rem">Confirm Action</strong>
+    </div>
+    <div style="padding:20px">
+        <p style="margin:0 0 16px;font-size:.875rem;color:var(--fg-3)">Are you sure you want to proceed?</p>
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+            <button class="Button Button--ghost Button--small">Cancel</button>
+            <button class="Button Button--primary Button--small">Confirm</button>
+        </div>
+    </div>
+</div>
+</Hero>
+
 ---
 
 ## Installation

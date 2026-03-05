@@ -411,10 +411,70 @@ async function build() {
     };
 
     for (const file of files) {
-        const rawContent = await fs.readFile(file, 'utf-8');
+        let rawContent = await fs.readFile(file, 'utf-8');
         const relativePath = path.relative(CONFIG.contentDir, file);
         const targetPath = path.join(CONFIG.distDir, relativePath.replace('.md', '.html'));
         const relRoot = '../'.repeat(relativePath.split(path.sep).length - 1) || './';
+
+        // Extract <Hero> block if present (rendered in template, not prose)
+        let heroHtml = '';
+        const heroMatch = rawContent.match(/<Hero>([\s\S]*?)<\/Hero>/);
+        if (heroMatch) {
+            const heroInner = heroMatch[1].trim();
+            // Parse stats: <!-- stats: 6 Variants, 3 Sizes, 4 States -->
+            const statsMatch = heroInner.match(/<!--\s*stats:\s*(.*?)\s*-->/);
+            let statsHtml = '';
+            if (statsMatch) {
+                const statItems = statsMatch[1].split(',').map(s => s.trim());
+                statsHtml = statItems.map(item => {
+                    const [num, ...labelParts] = item.split(' ');
+                    const label = labelParts.join(' ');
+                    return `<div class="Hero-stat"><strong>${num}</strong> ${label}</div>`;
+                }).join('\n                    ');
+                statsHtml = `<div class="Hero-meta">\n                    ${statsHtml}\n                </div>`;
+            }
+            // Remove stats comment from showcase content
+            const showcaseContent = heroInner
+                .replace(/<!--\s*stats:.*?-->/g, '')
+                .trim();
+            heroHtml = `<div class="Hero" aria-label="Component showcase">
+                <div class="Hero-content">
+                    <div class="Hero-showcase">
+                        ${showcaseContent}
+                    </div>
+                    ${statsHtml}
+                </div>
+            </div>`;
+            // Remove Hero block from raw content so it doesn't appear in prose
+            rawContent = rawContent.replace(/<Hero>[\s\S]*?<\/Hero>/, '');
+        }
+
+        // Extract first paragraph as subtitle (for page header)
+        // Also capture it for meta description before removing from rawContent
+        let subtitleHtml = '';
+        let subtitlePlainText = '';
+        const contentForSubtitle = rawContent.replace(/^---[\s\S]*?---\n*/, ''); // skip frontmatter
+        const contentAfterTitle = contentForSubtitle.replace(/^#[^\n]+\n+/, ''); // skip h1
+        const firstParaMatch = contentAfterTitle.match(/^([^#<\n-][^\n]+)/m);
+        if (firstParaMatch && firstParaMatch[1].trim().length > 20) {
+            const subtitleText = firstParaMatch[1].trim()
+                .replace(/\*\*([^*]+)\*\*/g, '$1')
+                .replace(/\*([^*]+)\*/g, '$1')
+                .replace(/`([^`]+)`/g, '$1')
+                .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+            subtitleHtml = `<p class="page-subtitle">${subtitleText}</p>`;
+            subtitlePlainText = subtitleText;
+            // Remove the matched paragraph from rawContent to avoid duplication in prose
+            const paraToRemove = firstParaMatch[1];
+            const idx = rawContent.indexOf(paraToRemove);
+            if (idx !== -1) {
+                // Remove the paragraph and any trailing newlines
+                const before = rawContent.slice(0, idx);
+                let after = rawContent.slice(idx + paraToRemove.length);
+                after = after.replace(/^\n{1,2}/, ''); // eat 1-2 trailing newlines
+                rawContent = before + after;
+            }
+        }
 
         const navHtml = generateNavHtml(navTree, relRoot);
 
@@ -491,28 +551,33 @@ async function build() {
         // Create display title with italic accent for hero treatment
         const titleDisplay = createDisplayTitle(title);
 
-        // Generate meta description from first paragraph of content
-        const descriptionMatch = rawContent
-            .replace(/^#[^\n]+\n+/, '') // Remove first heading
-            .replace(/<Preview[\s\S]*?<\/Preview>/g, '') // Remove preview blocks
-            .replace(/```[\s\S]*?```/g, '') // Remove code blocks
-            .replace(/\|[^\n]+\|/g, '') // Remove table rows
-            .replace(/---+/g, '') // Remove horizontal rules
-            .trim()
-            .split(/\n\n/)[0]; // First paragraph
-        const metaDescription = descriptionMatch
-            ? descriptionMatch
-                .replace(/<[^>]+>/g, '') // Strip HTML
-                .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Markdown links → text
-                .replace(/\*\*([^*]+)\*\*/g, '$1') // Bold → text
-                .replace(/\*([^*]+)\*/g, '$1') // Italic → text
-                .replace(/`([^`]+)`/g, '$1') // Inline code → text
-                .replace(/#+\s/g, '') // Remove heading markers
-                .replace(/\s+/g, ' ') // Collapse whitespace
+        // Generate meta description — prefer subtitle (already extracted from first paragraph)
+        let metaDescription;
+        if (subtitlePlainText) {
+            metaDescription = subtitlePlainText.slice(0, 155) + (subtitlePlainText.length > 155 ? '…' : '');
+        } else {
+            const descriptionMatch = rawContent
+                .replace(/^#[^\n]+\n+/, '')
+                .replace(/<Preview[\s\S]*?<\/Preview>/g, '')
+                .replace(/```[\s\S]*?```/g, '')
+                .replace(/\|[^\n]+\|/g, '')
+                .replace(/---+/g, '')
                 .trim()
-                .slice(0, 155) // SEO: ~155 char limit
-                + (descriptionMatch.length > 155 ? '…' : '')
-            : `${title} — Standard Design System documentation.`;
+                .split(/\n\n/)[0];
+            metaDescription = descriptionMatch
+                ? descriptionMatch
+                    .replace(/<[^>]+>/g, '')
+                    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+                    .replace(/\*\*([^*]+)\*\*/g, '$1')
+                    .replace(/\*([^*]+)\*/g, '$1')
+                    .replace(/`([^`]+)`/g, '$1')
+                    .replace(/#+\s/g, '')
+                    .replace(/\s+/g, ' ')
+                    .trim()
+                    .slice(0, 155)
+                    + (descriptionMatch.length > 155 ? '…' : '')
+                : `${title} — Standard Design System documentation.`;
+        }
 
         // Generate canonical URL
         let canonicalPath = relativePath.replace('.md', '');
@@ -565,7 +630,9 @@ async function build() {
             .replace(/{{JSON_LD}}/g, () => jsonLd)
             .replace(/{{ACTIVE_SECTION}}/g, activeSection)
             .replace(/{{CONTAINER_CLASS}}/g, hasToc ? 'has-toc' : '')
-            .replace(/{{TOC_SIDEBAR}}/g, () => tocSidebarHtml);
+            .replace(/{{TOC_SIDEBAR}}/g, () => tocSidebarHtml)
+            .replace(/{{PAGE_SUBTITLE}}/g, () => subtitleHtml)
+            .replace(/{{HERO_SHOWCASE}}/g, () => heroHtml);
 
         // Post-process: add lazy loading to any <img> tags missing it
         const processedHtml = addLazyLoading(finalHtml);
