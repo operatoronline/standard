@@ -111,10 +111,13 @@
   /* Status Colors */
   --ok: oklch(65% 0.18 145);
   --ok-soft: oklch(92% 0.04 145);
+  --ok-text: oklch(48% 0.15 145);     /* WCAG AA text-safe (≥4.5:1 on white & ok-soft) */
   --warn: oklch(75% 0.15 85);
   --warn-soft: oklch(94% 0.04 85);
+  --warn-text: oklch(48% 0.15 85);    /* WCAG AA text-safe (≥4.5:1 on white & warn-soft) */
   --err: oklch(60% 0.20 25);
   --err-soft: oklch(92% 0.04 25);
+  --err-text: oklch(53% 0.20 25);     /* WCAG AA text-safe (≥4.5:1 on white & err-soft) */
 
   /* Semantic — Light Mode */
   --bg: var(--white);
@@ -188,7 +191,7 @@
   --fg: var(--g50);
   --fg-2: var(--g300);
   --fg-3: var(--g400);
-  --fg-4: var(--g600);
+  --fg-4: oklch(55% 0 0);  /* Raised from g600 (44%) for WCAG 1.4.11 UI contrast (≥3:1) */
   --bd: var(--g800);
   --bd-s: var(--g700);
   --bd-w: var(--g900);
@@ -198,8 +201,11 @@
 
   /* Status soft backgrounds — dark-appropriate versions */
   --ok-soft: oklch(22% 0.04 145);
+  --ok-text: oklch(65% 0.18 145);     /* Lighter in dark mode — passes on dark bg */
   --warn-soft: oklch(24% 0.04 85);
+  --warn-text: oklch(65% 0.12 85);    /* Lighter in dark mode */
   --err-soft: oklch(22% 0.04 25);
+  --err-text: oklch(65% 0.18 25);     /* Lighter in dark mode */
 
   /* Shadows — stronger for dark surfaces */
   --sh-s: 0 1px 3px oklch(0% 0 0/.2);
@@ -218,14 +224,17 @@
     --fg: oklch(97% 0 0);
     --fg-2: oklch(76% 0 0);
     --fg-3: oklch(64% 0 0);
-    --fg-4: oklch(44% 0 0);
+    --fg-4: oklch(55% 0 0);
     --bd: oklch(24% 0 0);
     --bd-s: oklch(34% 0 0);
     --bd-w: oklch(17% 0 0);
     --accent-s: oklch(25% 0.08 270);
     --ok-soft: oklch(22% 0.04 145);
+    --ok-text: oklch(65% 0.18 145);
     --warn-soft: oklch(24% 0.04 85);
+    --warn-text: oklch(65% 0.12 85);
     --err-soft: oklch(22% 0.04 25);
+    --err-text: oklch(65% 0.18 25);
     --sh-s: 0 1px 3px oklch(0% 0 0/.2);
     --sh-m: 0 4px 16px oklch(0% 0 0/.3);
     --sh-l: 0 12px 40px oklch(0% 0 0/.4);
@@ -259,18 +268,18 @@
 
 /* ─── Dark mode: Badge adjustments ─── */
 [data-theme="dark"] .Badge--success {
-  color: oklch(75% 0.15 145);
-  border-color: oklch(75% 0.15 145 / .25);
+  color: var(--ok-text);
+  border-color: oklch(from var(--ok-text) l c h / .25);
 }
 
 [data-theme="dark"] .Badge--warning {
-  color: oklch(80% 0.12 85);
-  border-color: oklch(80% 0.12 85 / .25);
+  color: var(--warn-text);
+  border-color: oklch(from var(--warn-text) l c h / .25);
 }
 
 [data-theme="dark"] .Badge--error {
-  color: oklch(72% 0.16 25);
-  border-color: oklch(72% 0.16 25 / .25);
+  color: var(--err-text);
+  border-color: oklch(from var(--err-text) l c h / .25);
 }
 
 /* ─── Dark mode: Alert adjustments ─── */
@@ -290,31 +299,31 @@
 }
 
 [data-theme="dark"] .Chip--success {
-  background: oklch(22% 0.04 145);
-  border-color: oklch(65% 0.18 145 / .3);
-  color: oklch(75% 0.15 145);
+  background: var(--ok-soft);
+  border-color: oklch(from var(--ok-text) l c h / .3);
+  color: var(--ok-text);
 }
 
 [data-theme="dark"] .Chip--warning {
-  background: oklch(24% 0.04 85);
-  border-color: oklch(75% 0.15 85 / .3);
-  color: oklch(80% 0.12 85);
+  background: var(--warn-soft);
+  border-color: oklch(from var(--warn-text) l c h / .3);
+  color: var(--warn-text);
 }
 
 [data-theme="dark"] .Chip--error {
-  background: oklch(22% 0.04 25);
-  border-color: oklch(60% 0.20 25 / .3);
-  color: oklch(72% 0.16 25);
+  background: var(--err-soft);
+  border-color: oklch(from var(--err-text) l c h / .3);
+  color: var(--err-text);
 }
 
 [data-theme="dark"] .Chip-remove:hover {
   background: oklch(100% 0 0 / .12);
 }
 
-/* ─── Dark mode: Toast warning (dark text on light bg needs inversion) ─── */
+/* ─── Dark mode: Toast warning ─── */
 [data-theme="dark"] .Toast--warning {
-  background: oklch(40% 0.12 70);
-  color: oklch(95% 0 0);
+  background: oklch(42% 0.12 70);
+  color: oklch(97% 0 0);
 }
 
 /* ─── Dark mode: Table hover ─── */
@@ -458,7 +467,7 @@
 [data-theme="dark"] .prose code:not([class*="language-"]),
 [data-theme="dark"] .ApiTable-prop {
   background: var(--g800);
-  color: var(--pri-300);
+  color: var(--pri-300);  /* L=75% on g800 (L=24%) = 7.18:1 ✅ */
 }
 
 /* ─── Dark mode: Modal overlay ─── */
@@ -1169,7 +1178,7 @@ a { color: inherit; text-decoration: none; }
   padding: 2px 6px;
   background: var(--bg-m);
   border-radius: var(--r-s);
-  color: var(--accent);
+  color: var(--accent-h);  /* Darker accent for ≥4.5:1 on bg-m */
 }
 
 .ApiTable-desc {
@@ -1182,7 +1191,7 @@ a { color: inherit; text-decoration: none; }
   padding: 2px 6px;
   background: var(--bg-m);
   border-radius: var(--r-s);
-  color: var(--accent);
+  color: var(--accent-h);  /* Use darker accent (pri-600) for ≥4.5:1 contrast on bg-m */
 }
 
 /* ═══════════════════════════════════════
@@ -1392,8 +1401,8 @@ a { color: inherit; text-decoration: none; }
   font-size: .8125rem;
 }
 
-.FormField-message--error { color: var(--err); }
-.FormField-message--success { color: var(--ok); }
+.FormField-message--error { color: var(--err-text); }
+.FormField-message--success { color: var(--ok-text); }
 
 /* Input */
 .Input, .Select, .Textarea {
@@ -1708,19 +1717,19 @@ a { color: inherit; text-decoration: none; }
 }
 
 .Badge--success {
-  color: var(--ok);
+  color: var(--ok-text);
   border-color: oklch(from var(--ok) l c h / .2);
   background: var(--ok-soft);
 }
 
 .Badge--warning {
-  color: oklch(55% 0.15 85);
+  color: var(--warn-text);
   border-color: oklch(from var(--warn) l c h / .2);
   background: var(--warn-soft);
 }
 
 .Badge--error {
-  color: var(--err);
+  color: var(--err-text);
   border-color: oklch(from var(--err) l c h / .2);
   background: var(--err-soft);
 }
@@ -2019,12 +2028,12 @@ pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
 
 /* ─── Prism syntax theme — Light mode (dark background) ─── */
 
-/* Comments: muted, italic */
+/* Comments: muted, italic — L=57% for ≥4.5:1 on code bg (L=12%) */
 .token.comment,
 .token.prolog,
 .token.doctype,
 .token.cdata {
-  color: oklch(50% 0 0);
+  color: oklch(57% 0 0);
   font-style: italic;
 }
 
@@ -2077,7 +2086,7 @@ pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
 [data-theme="dark"] .token.comment,
 [data-theme="dark"] .token.prolog,
 [data-theme="dark"] .token.doctype,
-[data-theme="dark"] .token.cdata { color: oklch(45% 0 0); }
+[data-theme="dark"] .token.cdata { color: oklch(57% 0 0); /* ≥4.5:1 on dark code bg (L=10%) */ }
 
 [data-theme="dark"] .token.punctuation { color: oklch(60% 0 0); }
 
@@ -2502,21 +2511,21 @@ body:has(.Modal-overlay.active) {
   border-left: 3px solid var(--ok);
 }
 
-.Alert--success .Alert-icon { color: var(--ok); }
+.Alert--success .Alert-icon { color: var(--ok-text); }
 
 .Alert--warning {
   background: var(--warn-soft);
   border-left: 3px solid var(--warn);
 }
 
-.Alert--warning .Alert-icon { color: oklch(60% 0.15 85); }
+.Alert--warning .Alert-icon { color: var(--warn-text); }
 
 .Alert--error {
   background: var(--err-soft);
   border-left: 3px solid var(--err);
 }
 
-.Alert--error .Alert-icon { color: var(--err); }
+.Alert--error .Alert-icon { color: var(--err-text); }
 
 /* ═══════════════════════════════════════
    TOASTS
@@ -2595,7 +2604,7 @@ body:has(.Modal-overlay.active) {
 .Toast--success { background: oklch(45% 0.12 145); }
 .Toast--error { background: oklch(50% 0.18 25); }
 .Toast--warning {
-  background: oklch(55% 0.15 70);
+  background: oklch(62% 0.12 70);   /* Lightened from 55% for ≥4.5:1 with dark text */
   color: var(--g950);
 }
 .Toast--info { background: oklch(50% 0.12 270); }
@@ -2822,11 +2831,11 @@ body:has(.Modal-overlay.active) {
 }
 
 .Dropdown-item--danger {
-  color: var(--err);
+  color: var(--err-text);
 }
 
 .Dropdown-item--danger i {
-  color: var(--err);
+  color: var(--err-text);
 }
 
 .Dropdown-item--danger:hover {
@@ -3131,19 +3140,19 @@ details[open] .Accordion-icon {
 .Chip--success {
   background: var(--ok-soft);
   border-color: oklch(from var(--ok) l c h / .3);
-  color: var(--ok);
+  color: var(--ok-text);
 }
 
 .Chip--warning {
   background: var(--warn-soft);
   border-color: oklch(from var(--warn) l c h / .3);
-  color: oklch(55% 0.15 85);
+  color: var(--warn-text);
 }
 
 .Chip--error {
   background: var(--err-soft);
   border-color: oklch(from var(--err) l c h / .3);
-  color: var(--err);
+  color: var(--err-text);
 }
 
 /* ═══════════════════════════════════════
@@ -3610,7 +3619,7 @@ details[open] .Accordion-icon {
 }
 
 .Menu-item--danger {
-  color: var(--err);
+  color: var(--err-text);
 }
 
 .Menu-item--danger:hover:not(:disabled) {
@@ -3626,7 +3635,7 @@ details[open] .Accordion-icon {
 }
 
 .Menu-item--danger .Menu-item-icon {
-  color: var(--err);
+  color: var(--err-text);
 }
 
 .Menu-divider {
