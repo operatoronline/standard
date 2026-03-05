@@ -752,7 +752,7 @@ a { color: inherit; text-decoration: none; }
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   border-radius: var(--r-f);
   box-shadow: var(--sh-xl), 0 0 0 1px oklch(from var(--fg) l c h / .15);
-  transition: all var(--dur-s) var(--ease);
+  transition: background var(--dur-s) var(--ease), box-shadow var(--dur-s) var(--ease);
 }
 
 [data-theme="dark"] .fnav {
@@ -776,7 +776,7 @@ a { color: inherit; text-decoration: none; }
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: .06em;
-  transition: all var(--dur-n) var(--ease);
+  transition: color var(--dur-n) var(--ease), background var(--dur-n) var(--ease), box-shadow var(--dur-n) var(--ease);
   white-space: nowrap;
 }
 
@@ -928,7 +928,7 @@ a { color: inherit; text-decoration: none; }
   height: 36px;
   border-radius: var(--r-m);
   color: var(--fg-3);
-  transition: all var(--dur-f);
+  transition: background var(--dur-f), color var(--dur-f);
 }
 
 .icon-btn:hover {
@@ -947,7 +947,7 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid var(--bd-w);
   border-radius: var(--r-f);
   width: 280px;
-  transition: all var(--dur-n) var(--ease);
+  transition: border-color var(--dur-n) var(--ease), box-shadow var(--dur-n) var(--ease);
 }
 
 .search-container:focus-within {
@@ -1215,7 +1215,7 @@ a { color: inherit; text-decoration: none; }
   color: var(--accent);
   text-decoration: none;
   border-bottom: 1px solid transparent;
-  transition: all var(--dur-f);
+  transition: color var(--dur-f), border-bottom-color var(--dur-f);
 }
 
 .Link:hover {
@@ -1237,7 +1237,7 @@ a { color: inherit; text-decoration: none; }
   font-weight: 500;
   line-height: 1.4;
   cursor: pointer;
-  transition: all var(--dur-f) var(--ease);
+  transition: background var(--dur-f) var(--ease), color var(--dur-f) var(--ease), border-color var(--dur-f) var(--ease), box-shadow var(--dur-f) var(--ease);
   border: 1px solid transparent;
   background: var(--bg-m);
   color: var(--fg);
@@ -1427,7 +1427,7 @@ a { color: inherit; text-decoration: none; }
   background: var(--bg);
   color: var(--fg);
   font-size: 1rem;
-  transition: all var(--dur-f);
+  transition: border-color var(--dur-f), box-shadow var(--dur-f);
 }
 
 .Input:focus, .Select:focus, .Textarea:focus {
@@ -1513,7 +1513,7 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--dur-f);
+  transition: background var(--dur-f), border-color var(--dur-f);
   flex-shrink: 0;
 }
 
@@ -1565,7 +1565,7 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--dur-f);
+  transition: border-color var(--dur-f);
   flex-shrink: 0;
 }
 
@@ -1648,7 +1648,7 @@ a { color: inherit; text-decoration: none; }
   inset: 0;
   background: var(--bd-s);
   border-radius: 24px;
-  transition: all var(--dur-n);
+  transition: background var(--dur-n) var(--ease);
 }
 
 .Switch-slider::before {
@@ -1660,7 +1660,7 @@ a { color: inherit; text-decoration: none; }
   bottom: 3px;
   background: white;
   border-radius: 50%;
-  transition: transform var(--dur-n);
+  transition: transform var(--dur-n) var(--ease);
   box-shadow: var(--sh-s);
 }
 
@@ -1773,7 +1773,7 @@ a { color: inherit; text-decoration: none; }
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: all var(--dur-n) var(--ease);
+  transition: box-shadow var(--dur-n) var(--ease), transform var(--dur-n) var(--ease), border-color var(--dur-n) var(--ease);
 }
 
 .Card-header {
@@ -2005,7 +2005,7 @@ pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
   border-radius: var(--r-s);
   padding: var(--space-1) var(--space-2);
   cursor: pointer;
-  transition: all var(--dur-f) ease;
+  transition: background var(--dur-f) var(--ease), color var(--dur-f) var(--ease), border-color var(--dur-f) var(--ease);
   color: var(--g500);
   font-family: var(--ff-m);
   font-size: .6875rem;
@@ -2388,7 +2388,7 @@ pre.line-numbers code .line::before {
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
-  transition: opacity var(--dur-n), visibility var(--dur-n);
+  transition: opacity var(--dur-n) var(--ease), visibility var(--dur-n);
 }
 
 .Modal-overlay.active,
@@ -2405,7 +2405,7 @@ pre.line-numbers code .line::before {
   max-height: calc(100vh - var(--space-8));
   box-shadow: var(--sh-xl), 0 0 0 1px oklch(0% 0 0 / .06);
   transform: translateY(10px);
-  transition: transform var(--dur-n);
+  transition: transform var(--dur-n) var(--ease);
   display: flex;
   flex-direction: column;
 }
@@ -2506,7 +2506,7 @@ body:has(.Modal-overlay.active) {
   padding: var(--space-1);
   margin: calc(-1 * var(--space-1));
   border-radius: var(--r-s);
-  transition: all var(--dur-f);
+  transition: background var(--dur-f), color var(--dur-f);
 }
 
 .Alert-close:hover {
@@ -2576,7 +2576,7 @@ body:has(.Modal-overlay.active) {
   max-width: 400px;
   transform: translateX(calc(100% + var(--space-6)));
   opacity: 0;
-  transition: all var(--dur-s) var(--ease);
+  transition: transform var(--dur-s) var(--ease), opacity var(--dur-s) var(--ease);
 }
 
 .Toast.active {
@@ -2608,7 +2608,7 @@ body:has(.Modal-overlay.active) {
   color: oklch(70% 0 0);
   padding: var(--space-1);
   border-radius: var(--r-s);
-  transition: all var(--dur-f);
+  transition: background var(--dur-f), color var(--dur-f);
 }
 
 .Toast-close:hover {
@@ -2643,7 +2643,7 @@ body:has(.Modal-overlay.active) {
   position: absolute;
   opacity: 0;
   visibility: hidden;
-  transition: all var(--dur-f) var(--ease);
+  transition: opacity var(--dur-f) var(--ease), visibility var(--dur-f) var(--ease), transform var(--dur-f) var(--ease);
   pointer-events: none;
   z-index: 100;
 }
@@ -2743,7 +2743,7 @@ body:has(.Modal-overlay.active) {
   font-weight: 500;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
-  transition: all var(--dur-f);
+  transition: color var(--dur-f), border-bottom-color var(--dur-f);
 }
 
 .Tabs-tab:hover:not(:disabled) {
@@ -2818,7 +2818,7 @@ body:has(.Modal-overlay.active) {
   opacity: 0;
   visibility: hidden;
   transform: translateY(-4px);
-  transition: all var(--dur-f) var(--ease);
+  transition: opacity var(--dur-f) var(--ease), visibility var(--dur-f) var(--ease), transform var(--dur-f) var(--ease);
 }
 
 .Dropdown-menu.active {
@@ -2973,8 +2973,8 @@ body:has(.Modal-overlay.active) {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* Static fallback background when shimmer animation is disabled */
   .Skeleton {
-    animation: none;
     background: var(--bg-m);
   }
 }
@@ -2999,7 +2999,7 @@ body:has(.Modal-overlay.active) {
   font-size: .9375rem;
   font-weight: 500;
   color: var(--fg);
-  transition: all var(--dur-f);
+  transition: background var(--dur-f), color var(--dur-f);
 }
 
 .Pagination-item:hover:not(.disabled):not(.active) {
@@ -3120,7 +3120,7 @@ details[open] .Accordion-icon {
   margin-left: var(--space-1);
   border-radius: 50%;
   color: var(--fg-3);
-  transition: all var(--dur-f);
+  transition: background var(--dur-f), color var(--dur-f);
 }
 
 .Chip-remove:hover {
@@ -3130,7 +3130,7 @@ details[open] .Accordion-icon {
 
 .Chip--selectable {
   cursor: pointer;
-  transition: all var(--dur-f);
+  transition: background var(--dur-f), border-color var(--dur-f), color var(--dur-f);
 }
 
 .Chip--selectable:hover {
@@ -3379,7 +3379,7 @@ details[open] .Accordion-icon {
   background: var(--bg-m);
   color: var(--fg-3);
   border: 2px solid var(--bd);
-  transition: all var(--dur-n);
+  transition: background var(--dur-n) var(--ease), color var(--dur-n) var(--ease), border-color var(--dur-n) var(--ease);
 }
 
 .Stepper-title {
@@ -3502,7 +3502,7 @@ details[open] .Accordion-icon {
   color: var(--bd);
   font-size: 1.25rem;
   cursor: pointer;
-  transition: all var(--dur-f);
+  transition: color var(--dur-f), transform var(--dur-f);
 }
 
 .Rating-star:hover,
@@ -3526,7 +3526,7 @@ details[open] .Accordion-icon {
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
-  transition: all var(--dur-n);
+  transition: opacity var(--dur-n) var(--ease), visibility var(--dur-n);
 }
 
 .Drawer-overlay.active {
@@ -3759,7 +3759,7 @@ details[open] .Accordion-icon {
   height: 32px;
   border-radius: var(--r-m);
   color: var(--fg-3);
-  transition: all var(--dur-f);
+  transition: background var(--dur-f), color var(--dur-f);
 }
 
 .Toolbar-btn:hover {
@@ -3780,7 +3780,7 @@ details[open] .Accordion-icon {
   border-radius: var(--r-l);
   padding: var(--space-8);
   text-align: center;
-  transition: all var(--dur-f);
+  transition: border-color var(--dur-f), background var(--dur-f);
   cursor: pointer;
 }
 
@@ -4097,7 +4097,7 @@ details[open] .Accordion-icon {
   border: 1px solid var(--bd-w);
   border-radius: var(--r-m);
   cursor: pointer;
-  transition: all var(--dur-f);
+  transition: border-color var(--dur-f), background var(--dur-f);
 }
 
 .Icons-item:hover {
@@ -4280,14 +4280,16 @@ details[open] .Accordion-icon {
 
 /* --- Reduced Motion --- */
 @media (prefers-reduced-motion: reduce) {
-  .main-content,
-  .main-content.page-exit,
-  .page-header .breadcrumbs,
-  .page-header h1,
-  .prose {
-    animation: none !important;
+  /* Kill all animations globally */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 
+  /* View transitions need explicit override */
   ::view-transition-old(root),
   ::view-transition-new(root),
   ::view-transition-old(main-content),
