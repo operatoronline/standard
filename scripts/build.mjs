@@ -501,7 +501,9 @@ async function build() {
                 if (i === pathParts.length - 1) {
                     breadcrumbsHtml += `<span aria-current="page">${capitalizedLabel}</span>`;
                 } else {
-                    breadcrumbsHtml += `<span>${capitalizedLabel}</span>`;
+                    // Link intermediate segments to section index pages
+                    const sectionHref = `${relRoot}${part}.html`;
+                    breadcrumbsHtml += `<a href="${sectionHref}">${capitalizedLabel}</a>`;
                 }
             }
         }
@@ -705,6 +707,9 @@ Disallow: /search-index.json
         if (url === 'getting-started.html') return { priority: '0.9', changefreq: 'monthly' };
         if (url === 'contributing.html') return { priority: '0.7', changefreq: 'monthly' };
         if (url === 'changelog.html') return { priority: '0.6', changefreq: 'weekly' };
+        if (url === 'tokens.html') return { priority: '0.8', changefreq: 'monthly' };
+        if (url === 'components.html') return { priority: '0.9', changefreq: 'monthly' };
+        if (url === 'patterns.html') return { priority: '0.7', changefreq: 'monthly' };
         if (url.startsWith('tokens/')) return { priority: '0.8', changefreq: 'monthly' };
         if (url.startsWith('components/')) return { priority: '0.9', changefreq: 'monthly' };
         if (url.startsWith('patterns/')) return { priority: '0.7', changefreq: 'monthly' };
@@ -821,15 +826,15 @@ ${sitemapEntries.map(e => `  <url>
                         <i class="ph-bold ph-house" aria-hidden="true"></i>
                         Home
                     </a>
-                    <a href="./tokens/colors.html" class="error-link">
+                    <a href="./tokens.html" class="error-link">
                         <i class="ph-bold ph-palette" aria-hidden="true"></i>
                         Tokens
                     </a>
-                    <a href="./components/buttons.html" class="error-link">
+                    <a href="./components.html" class="error-link">
                         <i class="ph-bold ph-stack" aria-hidden="true"></i>
                         Components
                     </a>
-                    <a href="./patterns/layouts.html" class="error-link">
+                    <a href="./patterns.html" class="error-link">
                         <i class="ph-bold ph-grid-four" aria-hidden="true"></i>
                         Patterns
                     </a>
