@@ -306,6 +306,8 @@ async function build() {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8/normalize.css">
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web/src/regular/style.css">
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web/src/bold/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web/src/fill/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web/src/duotone/style.css">
     <link rel="stylesheet" href="./styles/docs.css">
     <style>
         /* 404 Page — Unique Styles */
@@ -582,19 +584,19 @@ async function build() {
 
                 <div class="error-links">
                     <a href="./index.html" class="error-link">
-                        <i class="ph ph-house"></i>
+                        <i class="ph-bold ph-house"></i>
                         Home
                     </a>
                     <a href="./tokens/colors.html" class="error-link">
-                        <i class="ph ph-palette"></i>
+                        <i class="ph-bold ph-palette"></i>
                         Tokens
                     </a>
                     <a href="./components/buttons.html" class="error-link">
-                        <i class="ph ph-stack"></i>
+                        <i class="ph-bold ph-stack"></i>
                         Components
                     </a>
                     <a href="./patterns/layouts.html" class="error-link">
-                        <i class="ph ph-grid-four"></i>
+                        <i class="ph-bold ph-grid-four"></i>
                         Patterns
                     </a>
                 </div>

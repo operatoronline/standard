@@ -871,6 +871,36 @@ Icons require attention to ensure they're accessible:
 
 ---
 
+## Weight Conventions
+
+Standard uses a deliberate weight hierarchy across the interface. Use the right weight for the right context.
+
+| Context | Weight | Rationale |
+|---------|--------|-----------|
+| **Navigation chrome** (pill nav, section links) | `ph-bold` | Heavier weight anchors the nav bar visually |
+| **UI controls** (toolbar buttons, search, copy) | `ph` (regular) | Lighter weight recedes behind content |
+| **Content icons** (alerts, lists, form hints) | `ph` (regular) | Matches body text optical weight |
+| **Filled states** (active stars, favorite hearts) | `ph-fill` | Solid fill communicates "selected" or "active" |
+| **Decorative showcase** (icon grid, style demos) | Any | Documentation context; all weights available |
+
+```html
+<!-- Navigation: bold -->
+<i class="ph-bold ph-house"></i>
+
+<!-- UI control: regular -->
+<i class="ph ph-copy"></i>
+
+<!-- Filled state: fill -->
+<i class="ph-fill ph-star"></i>
+
+<!-- Unfilled state: regular -->
+<i class="ph ph-star"></i>
+```
+
+> **Rule of thumb:** Use `ph-bold` only for persistent navigation. Everything else uses `ph` (regular) or `ph-fill` for active/selected states.
+
+---
+
 ## Best Practices
 
 ### Do
@@ -879,7 +909,7 @@ Icons require attention to ensure they're accessible:
 - ✓ **Pair icons with text** — When possible, provide labels
 - ✓ **Use recognizable icons** — Stick to common conventions
 - ✓ **Provide aria-labels** — Required for icon-only buttons
-- ✓ **Match icon style** — Use the same weight throughout
+- ✓ **Follow weight conventions** — Bold for nav, regular for content, fill for active states
 - ✓ **Use semantic color classes** — `.Icon--success` for positive states
 
 ### Don't
@@ -889,4 +919,5 @@ Icons require attention to ensure they're accessible:
 - ✗ **Use ambiguous icons** — A hamburger menu isn't a hamburger
 - ✗ **Forget color contrast** — Icons need sufficient contrast
 - ✗ **Mix icon libraries** — Stick to Phosphor for consistency
+- ✗ **Mix weights arbitrarily** — Don't use `ph-bold` for content icons or `ph` for nav
 - ✗ **Use icons without accessible names** — Icon-only elements need aria-label

@@ -37,9 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!themeBtn) return;
         const icon = themeBtn.querySelector('i');
         if (theme === 'dark') {
-            icon.className = 'ph ph-sun';
+            icon.className = 'ph-bold ph-sun';
         } else {
-            icon.className = 'ph ph-moon';
+            icon.className = 'ph-bold ph-moon';
         }
     }
 
