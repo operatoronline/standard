@@ -1,6 +1,8 @@
 import fs from 'fs-extra';
 import path from 'path';
 import { glob } from 'glob';
+import { createHash } from 'crypto';
+import { transform } from 'esbuild';
 import MarkdownIt from 'markdown-it';
 
 const md = new MarkdownIt({
@@ -141,6 +143,47 @@ async function build() {
         }
     }
 
+    // 1b. Minify CSS and JS, generate content-hashed filenames
+    const assetMap = {}; // maps original name → hashed name (e.g. 'docs.css' → 'docs.a1b2c3d4.min.css')
+
+    // Minify CSS
+    const cssPath = path.join(CONFIG.distDir, 'styles/docs.css');
+    if (await fs.pathExists(cssPath)) {
+        const cssSource = await fs.readFile(cssPath, 'utf-8');
+        const cssResult = await transform(cssSource, {
+            loader: 'css',
+            minify: true,
+            target: ['chrome111', 'safari17', 'firefox121'],
+        });
+        const cssHash = createHash('md5').update(cssResult.code).digest('hex').slice(0, 8);
+        const cssMinName = `docs.${cssHash}.min.css`;
+        await fs.writeFile(path.join(CONFIG.distDir, `styles/${cssMinName}`), cssResult.code);
+        await fs.remove(cssPath); // remove unminified
+        assetMap['docs.css'] = cssMinName;
+        const cssOrigSize = Buffer.byteLength(cssSource, 'utf-8');
+        const cssMinSize = Buffer.byteLength(cssResult.code, 'utf-8');
+        console.log(`  ✓ Minified docs.css → ${cssMinName} (${(cssOrigSize / 1024).toFixed(1)}KB → ${(cssMinSize / 1024).toFixed(1)}KB, ${Math.round((1 - cssMinSize / cssOrigSize) * 100)}% smaller)`);
+    }
+
+    // Minify JS
+    const jsPath = path.join(CONFIG.distDir, 'scripts/docs.js');
+    if (await fs.pathExists(jsPath)) {
+        const jsSource = await fs.readFile(jsPath, 'utf-8');
+        const jsResult = await transform(jsSource, {
+            loader: 'js',
+            minify: true,
+            target: ['chrome111', 'safari17', 'firefox121'],
+        });
+        const jsHash = createHash('md5').update(jsResult.code).digest('hex').slice(0, 8);
+        const jsMinName = `docs.${jsHash}.min.js`;
+        await fs.writeFile(path.join(CONFIG.distDir, `scripts/${jsMinName}`), jsResult.code);
+        await fs.remove(jsPath); // remove unminified
+        assetMap['docs.js'] = jsMinName;
+        const jsOrigSize = Buffer.byteLength(jsSource, 'utf-8');
+        const jsMinSize = Buffer.byteLength(jsResult.code, 'utf-8');
+        console.log(`  ✓ Minified docs.js → ${jsMinName} (${(jsOrigSize / 1024).toFixed(1)}KB → ${(jsMinSize / 1024).toFixed(1)}KB, ${Math.round((1 - jsMinSize / jsOrigSize) * 100)}% smaller)`);
+    }
+
     // 2. Walk content
     const files = await glob(`${CONFIG.contentDir}/**/*.md`);
     
@@ -249,7 +292,9 @@ async function build() {
             .replace(/{{CONTENT_HTML}}/g, htmlContent)
             .replace(/{{REL_ROOT}}/g, relRoot)
             .replace(/{{VERSION}}/g, CONFIG.version)
-            .replace(/{{LAST_BUILT}}/g, new Date().toLocaleString());
+            .replace(/{{LAST_BUILT}}/g, new Date().toLocaleString())
+            .replace(/{{CSS_FILE}}/g, assetMap['docs.css'] || 'docs.css')
+            .replace(/{{JS_FILE}}/g, assetMap['docs.js'] || 'docs.js');
 
         await fs.ensureDir(path.dirname(targetPath));
         await fs.writeFile(targetPath, finalHtml);
@@ -308,7 +353,7 @@ async function build() {
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web/src/bold/style.css">
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web/src/fill/style.css">
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web/src/duotone/style.css">
-    <link rel="stylesheet" href="./styles/docs.css">
+    <link rel="stylesheet" href="./styles/${assetMap['docs.css'] || 'docs.css'}">
     <style>
         /* 404 Page — Unique Styles */
         .error-page {
