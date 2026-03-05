@@ -126,6 +126,114 @@ const CONFIG = {
     siteUrl: 'https://standard.operator.onl'
 };
 
+// Defined reading order for Previous/Next navigation
+// Follows the information architecture: Home → Getting Started → Tokens → Components → Patterns → Contributing → Changelog
+const PAGE_ORDER = [
+    'index.md',
+    'getting-started.md',
+    // Tokens
+    'tokens.md',
+    'tokens/colors.md',
+    'tokens/typography.md',
+    'tokens/spacing.md',
+    'tokens/elevation.md',
+    'tokens/export.md',
+    'tokens/playground.md',
+    // Components
+    'components.md',
+    // Actions
+    'components/buttons.md',
+    'components/links.md',
+    'components/dropdowns.md',
+    'components/menus.md',
+    // Data Entry
+    'components/forms.md',
+    'components/switches.md',
+    'components/textarea.md',
+    'components/sliders.md',
+    'components/file-upload.md',
+    // Data Display
+    'components/tables.md',
+    'components/cards.md',
+    'components/badges.md',
+    'components/avatars.md',
+    'components/icons.md',
+    'components/lists.md',
+    'components/timeline.md',
+    'components/rating.md',
+    // Feedback
+    'components/alerts.md',
+    'components/toasts.md',
+    'components/progress.md',
+    'components/skeletons.md',
+    'components/tooltips.md',
+    // Navigation
+    'components/tabs.md',
+    'components/breadcrumbs.md',
+    'components/pagination.md',
+    'components/steppers.md',
+    // Layout
+    'components/modals.md',
+    'components/drawer.md',
+    'components/toolbar.md',
+    'components/accordions.md',
+    'components/chips.md',
+    'components/dividers.md',
+    // Patterns
+    'patterns.md',
+    'patterns/layouts.md',
+    'patterns/empty-states.md',
+    // Resources
+    'contributing.md',
+    'changelog.md',
+];
+
+function getPageTitle(filePath) {
+    const baseName = path.basename(filePath, '.md');
+    if (baseName === 'index') return 'Home';
+    return baseName.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function getPageSection(filePath) {
+    if (filePath.startsWith('tokens')) return 'Tokens';
+    if (filePath.startsWith('components')) return 'Components';
+    if (filePath.startsWith('patterns')) return 'Patterns';
+    return null;
+}
+
+function generatePageNav(relativePath, relRoot) {
+    const orderIndex = PAGE_ORDER.indexOf(relativePath);
+    if (orderIndex === -1) return '';
+
+    const prev = orderIndex > 0 ? PAGE_ORDER[orderIndex - 1] : null;
+    const next = orderIndex < PAGE_ORDER.length - 1 ? PAGE_ORDER[orderIndex + 1] : null;
+
+    let html = '<nav class="page-nav" aria-label="Page navigation">';
+
+    if (prev) {
+        const prevUrl = relRoot + prev.replace('.md', '.html');
+        const prevTitle = getPageTitle(prev);
+        const prevSection = getPageSection(prev);
+        html += `<a href="${prevUrl}" class="page-nav-link page-nav-link--prev" rel="prev">
+            <span class="page-nav-label"><i class="ph ph-arrow-left" aria-hidden="true"></i> Previous${prevSection ? ` · ${prevSection}` : ''}</span>
+            <span class="page-nav-title">${prevTitle}</span>
+        </a>`;
+    }
+
+    if (next) {
+        const nextUrl = relRoot + next.replace('.md', '.html');
+        const nextTitle = getPageTitle(next);
+        const nextSection = getPageSection(next);
+        html += `<a href="${nextUrl}" class="page-nav-link page-nav-link--next" rel="next">
+            <span class="page-nav-label">Next${nextSection ? ` · ${nextSection}` : ''} <i class="ph ph-arrow-right" aria-hidden="true"></i></span>
+            <span class="page-nav-title">${nextTitle}</span>
+        </a>`;
+    }
+
+    html += '</nav>';
+    return html;
+}
+
 async function build() {
     const startTime = Date.now();
     console.log('🚀 Starting Standard v1.0 build...');
@@ -638,7 +746,8 @@ async function build() {
             .replace(/{{CONTAINER_CLASS}}/g, hasToc ? 'has-toc' : '')
             .replace(/{{TOC_SIDEBAR}}/g, () => tocSidebarHtml)
             .replace(/{{PAGE_SUBTITLE}}/g, () => subtitleHtml)
-            .replace(/{{HERO_SHOWCASE}}/g, () => heroHtml);
+            .replace(/{{HERO_SHOWCASE}}/g, () => heroHtml)
+            .replace(/{{PAGE_NAV}}/g, () => generatePageNav(relativePath, relRoot));
 
         // Post-process: add lazy loading to any <img> tags missing it
         const processedHtml = addLazyLoading(finalHtml);

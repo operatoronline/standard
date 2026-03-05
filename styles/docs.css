@@ -4537,10 +4537,76 @@ details[open] .Accordion-icon {
 }
 
 /* ═══════════════════════════════════════
+   PAGE NAV (Previous / Next)
+   ═══════════════════════════════════════ */
+.page-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin-top: var(--space-12);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--bd-w);
+}
+
+.page-nav-link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--bd-w);
+  border-radius: var(--r-m);
+  text-decoration: none;
+  color: var(--fg);
+  transition: border-color var(--dur-n) var(--ease), box-shadow var(--dur-n) var(--ease), transform var(--dur-n) var(--ease);
+}
+
+.page-nav-link:hover {
+  border-color: var(--accent);
+  box-shadow: var(--sh-s);
+  transform: translateY(-1px);
+}
+
+.page-nav-link--next {
+  text-align: right;
+  grid-column: 2;
+}
+
+.page-nav-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--fg-3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.page-nav-label i {
+  font-size: var(--fs-sm);
+}
+
+.page-nav-link--next .page-nav-label {
+  justify-content: flex-end;
+}
+
+.page-nav-title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-lg);
+  color: var(--accent);
+  transition: color var(--dur-n) var(--ease);
+}
+
+.page-nav-link:hover .page-nav-title {
+  color: var(--accent-h);
+}
+
+/* ═══════════════════════════════════════
    PAGE FOOTER
    ═══════════════════════════════════════ */
 .page-footer {
-  margin-top: var(--space-12);
+  margin-top: var(--space-8);
   padding-top: var(--space-8);
   border-top: 1px solid var(--bd);
 }
@@ -5753,6 +5819,23 @@ details[open] .Accordion-icon {
   }
 }
 
+/* Page nav responsive */
+@media (max-width: 599px) {
+  .page-nav {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+  .page-nav-link--next {
+    grid-column: 1;
+  }
+  .page-nav-link {
+    padding: var(--space-3) var(--space-4);
+  }
+  .page-nav-title {
+    font-size: var(--fs-base);
+  }
+}
+
 /* ═══════════════════════════════════════
    PRINT STYLESHEET
    ═══════════════════════════════════════
@@ -5816,6 +5899,7 @@ details[open] .Accordion-icon {
   .Modal-overlay,
   .Drawer-overlay,
   .toc-sidebar,
+  .page-nav,
   .page-footer {
     display: none !important;
   }
