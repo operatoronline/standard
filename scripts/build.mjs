@@ -120,7 +120,7 @@ const CONFIG = {
     contentDir: 'content',
     distDir: 'dist',
     templatePath: 'templates/page.html',
-    assets: ['styles', 'scripts', 'assets'],
+    assets: ['styles', 'scripts', 'assets', 'vendor'],
     version: 'v0.3',
     siteUrl: 'https://standard.operator.onl'
 };
@@ -457,11 +457,11 @@ ${sitemapEntries.map(e => `  <url>
     <link rel="preload" href="./assets/fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="./assets/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="./assets/fonts/instrument-serif-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8/normalize.css">
-    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web/src/regular/style.css">
-    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web/src/bold/style.css">
-    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web/src/fill/style.css">
-    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web/src/duotone/style.css">
+    <link rel="stylesheet" href="./vendor/normalize.css">
+    <link rel="stylesheet" href="./vendor/phosphor/regular/style.css">
+    <link rel="stylesheet" href="./vendor/phosphor/bold/style.css">
+    <link rel="stylesheet" href="./vendor/phosphor/fill/style.css">
+    <link rel="stylesheet" href="./vendor/phosphor/duotone/style.css">
     <link rel="stylesheet" href="./styles/${assetMap['docs.css'] || 'docs.css'}">
     <style>
         /* 404 Page — Unique Styles */
@@ -786,7 +786,7 @@ ${sitemapEntries.map(e => `  <url>
 
             // Load Fuse.js
             const fuseScript = document.createElement('script');
-            fuseScript.src = 'https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js';
+            fuseScript.src = './vendor/fuse.min.js';
             document.head.appendChild(fuseScript);
 
             await new Promise(resolve => { fuseScript.onload = resolve; });
