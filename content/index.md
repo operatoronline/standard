@@ -72,3 +72,10 @@ Composable layout primitives and common UI patterns.
 
 - [Layouts](./patterns/layouts.html) — Container, Grid, Stack, Cluster, Split, Sidebar, Center
 - [Empty States](./patterns/empty-states.html) — No-content messaging with icons and CTAs
+
+---
+
+## Resources
+
+- [Getting Started](./getting-started.html) — Installation, quick start, and first components
+- [Changelog](./changelog.html) — Release history and what's new in v1.0

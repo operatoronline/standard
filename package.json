@@ -1,6 +1,6 @@
 {
   "name": "standard-design-system",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "Standard Design System — Framework-agnostic design system.",
   "type": "module",
   "scripts": {

@@ -121,7 +121,7 @@ const CONFIG = {
     distDir: 'dist',
     templatePath: 'templates/page.html',
     assets: ['styles', 'scripts', 'assets', 'vendor'],
-    version: 'v0.3',
+    version: 'v1.0',
     siteUrl: 'https://standard.operator.onl'
 };
 
@@ -398,6 +398,7 @@ Disallow: /search-index.json
     const getSitemapMeta = (url) => {
         if (url === 'index.html') return { priority: '1.0', changefreq: 'weekly' };
         if (url === 'getting-started.html') return { priority: '0.9', changefreq: 'monthly' };
+        if (url === 'changelog.html') return { priority: '0.6', changefreq: 'weekly' };
         if (url.startsWith('tokens/')) return { priority: '0.8', changefreq: 'monthly' };
         if (url.startsWith('components/')) return { priority: '0.9', changefreq: 'monthly' };
         if (url.startsWith('patterns/')) return { priority: '0.7', changefreq: 'monthly' };
