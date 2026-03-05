@@ -4,6 +4,29 @@ Release history for the Standard Design System. Each version documents what chan
 
 ---
 
+## v1.0.1 — Polish & Navigation
+
+**Released:** March 5, 2026
+
+A focused quality pass on navigation, content discovery, and the homepage experience. This release brings the documentation from 43 to **47 pages** and adds the navigation infrastructure that makes the site feel like a real product.
+
+### Added
+- **Homepage redesign** — hero section with live code preview, animated stat counters, categorized section grid with 47 page cards, and a persistent quick-stats bar
+- **Site-wide footer** — 3-column link grid (Documentation, Resources, Community), branding strip, and version tag
+- **Back-to-top button** — glassmorphic floating button, appears on scroll, smooth-scrolls to top, adapts for mobile/desktop breakpoints
+- **Heading anchor links** — `#` permalink buttons on all `h2`/`h3` headings with copy-to-clipboard and toast confirmation
+- **Previous / Next page navigation** — contextual links at the bottom of every doc page, ordered by section hierarchy
+- **"See Also" related pages** — curated link cards at the bottom of every component/token/pattern page, showing related documentation
+- **Section category headers** — icon + label + count headers on the homepage grid for Tokens, Components, and Patterns
+- **Comprehensive search index** — all 47 pages indexed with content snippets for better search result previews
+
+### Changed
+- **Page count badge** updated from 41 → 47 in README
+- **Homepage** completely rebuilt from simple link list to production-quality landing page with visual hierarchy
+- **Navigation flow** improved — users can now traverse the entire site without touching the nav bar (via prev/next + see-also)
+
+---
+
 ## v1.0 — Production Release
 
 **Released:** March 5, 2026
@@ -12,7 +35,7 @@ The first production-grade release of Standard. This version represents a compre
 
 ### Highlights
 
-- **43 pages** of documentation across tokens, components, and patterns
+- **43 pages** of documentation across tokens, components, and patterns (later expanded to 47 in v1.0.1)
 - **WCAG 2.1 AA compliant** — contrast, focus management, reduced motion, screen reader support
 - **Zero external dependencies** — all assets self-hosted and vendored
 - **Dark mode** — complete coverage across all 32 components with system preference auto-detection

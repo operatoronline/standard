@@ -1,10 +1,10 @@
 # Standard Design System
 
-[![Version](https://img.shields.io/badge/version-1.0.0-7B2FBE?style=flat-square)](https://standard.operator.onl/changelog.html)
+[![Version](https://img.shields.io/badge/version-1.0.1-7B2FBE?style=flat-square)](https://standard.operator.onl/changelog.html)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 [![WCAG AA](https://img.shields.io/badge/WCAG-AA%20compliant-4CAF50?style=flat-square)](#accessibility)
 [![Zero Dependencies](https://img.shields.io/badge/runtime%20deps-0-brightgreen?style=flat-square)](#zero-dependencies)
-[![Pages](https://img.shields.io/badge/docs-41%20pages-8B5CF6?style=flat-square)](https://standard.operator.onl)
+[![Pages](https://img.shields.io/badge/docs-47%20pages-8B5CF6?style=flat-square)](https://standard.operator.onl)
 
 A framework-agnostic design system built on **OKLCH colors**, a **24-column fluid grid**, and **4px spacing**. Zero runtime dependencies. Dark mode. Print-ready. Accessible.
 
