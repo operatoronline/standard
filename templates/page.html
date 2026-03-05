@@ -108,7 +108,44 @@
                 </article>
 
                 <footer class="page-footer" role="contentinfo">
-                    <p>Standard {{VERSION}} • Last built: {{LAST_BUILT}}</p>
+                    <div class="footer-grid">
+                        <div class="footer-col">
+                            <h3 class="footer-heading">Resources</h3>
+                            <ul class="footer-links">
+                                <li><a href="{{REL_ROOT}}getting-started.html">Getting Started</a></li>
+                                <li><a href="{{REL_ROOT}}changelog.html">Changelog</a></li>
+                                <li><a href="{{REL_ROOT}}contributing.html">Contributing</a></li>
+                                <li><a href="{{REL_ROOT}}tokens/export.html">Token Export</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-col">
+                            <h3 class="footer-heading">Explore</h3>
+                            <ul class="footer-links">
+                                <li><a href="{{REL_ROOT}}tokens.html">Tokens</a></li>
+                                <li><a href="{{REL_ROOT}}components.html">Components</a></li>
+                                <li><a href="{{REL_ROOT}}patterns.html">Patterns</a></li>
+                                <li><a href="{{REL_ROOT}}tokens/playground.html">Playground</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-col">
+                            <h3 class="footer-heading">Community</h3>
+                            <ul class="footer-links">
+                                <li><a href="https://github.com/operatoronline/standard" rel="noopener noreferrer">GitHub <i class="ph ph-arrow-square-out" aria-hidden="true"></i></a></li>
+                                <li><a href="https://github.com/operatoronline/standard/issues/new" rel="noopener noreferrer">Report Issue <i class="ph ph-arrow-square-out" aria-hidden="true"></i></a></li>
+                                <li><a href="https://github.com/operatoronline/standard/releases" rel="noopener noreferrer">Releases <i class="ph ph-arrow-square-out" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="footer-bottom">
+                        <div class="footer-brand">
+                            <a href="{{REL_ROOT}}index.html" class="footer-logo" aria-label="Standard Design System — Home">
+                                <i class="ph ph-intersect" aria-hidden="true"></i>
+                                <span>Standard</span>
+                            </a>
+                            <p class="footer-tagline">Zero dependencies · OKLCH colors · WCAG AA</p>
+                        </div>
+                        <p class="footer-meta">{{VERSION}} · Built {{LAST_BUILT}}</p>
+                    </div>
                 </footer>
             </main>
             {{TOC_SIDEBAR}}
