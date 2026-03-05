@@ -76,36 +76,36 @@ const previewPlugin = (md) => {
 <div class="Preview" id="${previewId}">
     <div class="Preview-header">
         <div class="Preview-tabs">
-            <button class="Preview-tab active" data-tab="preview">Preview</button>
-            <button class="Preview-tab" data-tab="html">HTML</button>
+            <button class="Preview-tab active" data-tab="preview" type="button">Preview</button>
+            <button class="Preview-tab" data-tab="html" type="button">HTML</button>
         </div>
         <div class="Preview-controls">
-            <button class="Preview-control${defaultBg === 'light' ? ' active' : ''}" data-bg="light" title="Light background">
-                <i class="ph ph-sun"></i>
+            <button class="Preview-control${defaultBg === 'light' ? ' active' : ''}" data-bg="light" title="Light background" type="button" aria-label="Light background">
+                <i class="ph ph-sun" aria-hidden="true"></i>
             </button>
-            <button class="Preview-control${defaultBg === 'dark' ? ' active' : ''}" data-bg="dark" title="Dark background">
-                <i class="ph ph-moon"></i>
+            <button class="Preview-control${defaultBg === 'dark' ? ' active' : ''}" data-bg="dark" title="Dark background" type="button" aria-label="Dark background">
+                <i class="ph ph-moon" aria-hidden="true"></i>
             </button>
-            <button class="Preview-control${defaultBg === 'checkered' ? ' active' : ''}" data-bg="checkered" title="Checkered">
-                <i class="ph ph-grid-four"></i>
+            <button class="Preview-control${defaultBg === 'checkered' ? ' active' : ''}" data-bg="checkered" title="Checkered background" type="button" aria-label="Checkered background">
+                <i class="ph ph-grid-four" aria-hidden="true"></i>
             </button>
-            <div class="Preview-divider"></div>
-            <button class="Preview-control active" data-viewport="desktop" title="Desktop">
-                <i class="ph ph-desktop"></i>
+            <div class="Preview-divider" role="separator" aria-hidden="true"></div>
+            <button class="Preview-control active" data-viewport="desktop" title="Desktop viewport" type="button" aria-label="Desktop viewport">
+                <i class="ph ph-desktop" aria-hidden="true"></i>
             </button>
-            <button class="Preview-control" data-viewport="tablet" title="Tablet">
-                <i class="ph ph-device-tablet"></i>
+            <button class="Preview-control" data-viewport="tablet" title="Tablet viewport" type="button" aria-label="Tablet viewport">
+                <i class="ph ph-device-tablet" aria-hidden="true"></i>
             </button>
-            <button class="Preview-control" data-viewport="mobile" title="Mobile">
-                <i class="ph ph-device-mobile"></i>
+            <button class="Preview-control" data-viewport="mobile" title="Mobile viewport" type="button" aria-label="Mobile viewport">
+                <i class="ph ph-device-mobile" aria-hidden="true"></i>
             </button>
         </div>
     </div>
     <div class="Preview-pane active" data-pane="preview">
         <div class="Preview-canvas${defaultBg !== 'default' ? ` Preview-canvas--${defaultBg}` : ''}">${innerContent}</div>
     </div>
-    <div class="Preview-pane" data-pane="html">
-        <button class="Preview-code-copy"><i class="ph ph-copy"></i> Copy</button>
+    <div class="Preview-pane" data-pane="html" hidden>
+        <button class="Preview-code-copy" type="button"><i class="ph ph-copy" aria-hidden="true"></i> Copy</button>
         <pre class="language-html"><code class="language-html">${escapedCode}</code></pre>
     </div>
 </div>`;
@@ -244,9 +244,9 @@ async function build() {
                 const part = pathParts[i];
                 const label = part.replace(/-/g, ' ');
                 const capitalizedLabel = label.charAt(0).toUpperCase() + label.slice(1);
-                breadcrumbsHtml += ` <span class="sep">/</span> `;
+                breadcrumbsHtml += ` <span class="sep" aria-hidden="true">/</span> `;
                 if (i === pathParts.length - 1) {
-                    breadcrumbsHtml += `<span>${capitalizedLabel}</span>`;
+                    breadcrumbsHtml += `<span aria-current="page">${capitalizedLabel}</span>`;
                 } else {
                     breadcrumbsHtml += `<span>${capitalizedLabel}</span>`;
                 }
@@ -729,27 +729,27 @@ ${sitemapEntries.map(e => `  <url>
                     Try searching or pick a section below.
                 </p>
 
-                <div class="error-search">
-                    <i class="ph ph-magnifying-glass error-search-icon"></i>
-                    <input type="text" id="error-search-input" placeholder="Search the design system..." aria-label="Search" autocomplete="off">
-                    <div class="search-results" id="error-search-results"></div>
+                <div class="error-search" role="search">
+                    <i class="ph ph-magnifying-glass error-search-icon" aria-hidden="true"></i>
+                    <input type="text" id="error-search-input" placeholder="Search the design system..." aria-label="Search the design system" autocomplete="off">
+                    <div class="search-results" id="error-search-results" role="listbox"></div>
                 </div>
 
                 <div class="error-links">
                     <a href="./index.html" class="error-link">
-                        <i class="ph-bold ph-house"></i>
+                        <i class="ph-bold ph-house" aria-hidden="true"></i>
                         Home
                     </a>
                     <a href="./tokens/colors.html" class="error-link">
-                        <i class="ph-bold ph-palette"></i>
+                        <i class="ph-bold ph-palette" aria-hidden="true"></i>
                         Tokens
                     </a>
                     <a href="./components/buttons.html" class="error-link">
-                        <i class="ph-bold ph-stack"></i>
+                        <i class="ph-bold ph-stack" aria-hidden="true"></i>
                         Components
                     </a>
                     <a href="./patterns/layouts.html" class="error-link">
-                        <i class="ph-bold ph-grid-four"></i>
+                        <i class="ph-bold ph-grid-four" aria-hidden="true"></i>
                         Patterns
                     </a>
                 </div>

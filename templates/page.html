@@ -36,54 +36,55 @@
     <link rel="stylesheet" href="{{REL_ROOT}}styles/{{CSS_FILE}}">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <div class="app">
         <!-- Floating Pill Nav (Mobile: bottom, Desktop: top) -->
         <nav class="fnav" id="fnav" role="navigation" aria-label="Main navigation">
             <a href="{{REL_ROOT}}index.html" class="fnav-btn" data-section="home" aria-label="Home">
-                <i class="ph-bold ph-house"></i>
+                <i class="ph-bold ph-house" aria-hidden="true"></i>
                 <span>Home</span>
             </a>
             <a href="{{REL_ROOT}}tokens/colors.html" class="fnav-btn" data-section="tokens" aria-label="Tokens">
-                <i class="ph-bold ph-palette"></i>
+                <i class="ph-bold ph-palette" aria-hidden="true"></i>
                 <span>Tokens</span>
             </a>
             <a href="{{REL_ROOT}}components/buttons.html" class="fnav-btn" data-section="components" aria-label="Components">
-                <i class="ph-bold ph-stack"></i>
+                <i class="ph-bold ph-stack" aria-hidden="true"></i>
                 <span>Components</span>
             </a>
             <a href="{{REL_ROOT}}patterns/layouts.html" class="fnav-btn" data-section="patterns" aria-label="Patterns">
-                <i class="ph-bold ph-grid-four"></i>
+                <i class="ph-bold ph-grid-four" aria-hidden="true"></i>
                 <span>Patterns</span>
             </a>
-            <div class="fnav-sep"></div>
-            <button class="fnav-btn" id="search-toggle" aria-label="Search">
-                <i class="ph-bold ph-magnifying-glass"></i>
+            <div class="fnav-sep" role="separator" aria-hidden="true"></div>
+            <button class="fnav-btn" id="search-toggle" aria-label="Search" type="button">
+                <i class="ph-bold ph-magnifying-glass" aria-hidden="true"></i>
             </button>
-            <button class="fnav-btn" id="theme-btn" aria-label="Toggle theme">
-                <i class="ph-bold ph-moon"></i>
+            <button class="fnav-btn" id="theme-btn" aria-label="Toggle theme" type="button">
+                <i class="ph-bold ph-moon" aria-hidden="true"></i>
             </button>
         </nav>
 
         <!-- Glassmorphism Top Bar (Desktop only) -->
-        <header class="top-bar">
+        <header class="top-bar" role="banner">
             <div class="top-bar-left">
-                <a href="{{REL_ROOT}}index.html" class="logo">
-                    <i class="ph ph-intersect"></i>
+                <a href="{{REL_ROOT}}index.html" class="logo" aria-label="Standard Design System — Home">
+                    <i class="ph ph-intersect" aria-hidden="true"></i>
                     <span>Standard</span>
                 </a>
             </div>
             <div class="top-bar-right">
-                <div class="search-container" id="search-container">
-                    <i class="ph ph-magnifying-glass"></i>
-                    <input type="text" id="search-input" placeholder="Search components..." aria-label="Search" autocomplete="off">
-                    <div class="search-results" id="search-results"></div>
+                <div class="search-container" id="search-container" role="search">
+                    <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+                    <input type="text" id="search-input" placeholder="Search components..." aria-label="Search components" autocomplete="off" aria-controls="search-results" aria-expanded="false" aria-autocomplete="list" role="combobox">
+                    <div class="search-results" id="search-results" role="listbox"></div>
                 </div>
             </div>
         </header>
 
         <!-- Main Content -->
         <div class="container">
-            <main class="main-content">
+            <main class="main-content" id="main-content" tabindex="-1">
                 <header class="page-header">
                     <nav class="breadcrumbs" aria-label="Breadcrumb">
                         {{BREADCRUMBS_HTML}}
@@ -95,7 +96,7 @@
                     {{CONTENT_HTML}}
                 </article>
 
-                <footer class="page-footer">
+                <footer class="page-footer" role="contentinfo">
                     <p>Standard {{VERSION}} • Last built: {{LAST_BUILT}}</p>
                 </footer>
             </main>
@@ -107,6 +108,8 @@
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+    <!-- Screen reader live region for dynamic announcements -->
+    <div id="a11y-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
     <script src="{{REL_ROOT}}scripts/{{JS_FILE}}"></script>
 </body>
 </html>

@@ -4153,6 +4153,126 @@ details[open] .Accordion-icon {
   border: 0;
 }
 
+/* ═══════════════════════════════════════
+   SKIP-TO-CONTENT LINK (WCAG 2.4.1)
+   ═══════════════════════════════════════ */
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: var(--space-4);
+  z-index: 10000;
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--ff-b);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--accent-fg);
+  background: var(--accent);
+  border-radius: 0 0 var(--r-m) var(--r-m);
+  text-decoration: none;
+  box-shadow: var(--sh-m);
+  transition: top var(--dur-n) var(--ease);
+  outline: none;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Remove focus outline from main when targeted via skip-link */
+#main-content:focus {
+  outline: none;
+}
+
+/* ═══════════════════════════════════════
+   GLOBAL FOCUS-VISIBLE FALLBACK
+   Ensures every interactive element has a visible focus indicator.
+   Component-specific :focus-visible rules override this.
+   ═══════════════════════════════════════ */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Links within prose get a tighter offset */
+.prose a:focus-visible {
+  outline-offset: 1px;
+  border-radius: 2px;
+}
+
+/* Tab items / search results in listbox */
+.search-result-item:focus-visible,
+.search-result-item:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  background: var(--bg-s);
+}
+
+/* Tooltip host: don't show outline on focus (tooltip itself is the feedback) */
+.Tooltip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-s);
+}
+
+/* Preview tab buttons */
+.Preview-tab:focus-visible,
+.Preview-control:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  border-radius: var(--r-s);
+}
+
+/* Accordion headers */
+.Accordion-header:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* Tabs-tab */
+.Tabs-tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  border-radius: var(--r-s);
+}
+
+/* Pagination items */
+.Pagination-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+  border-radius: var(--r-s);
+}
+
+/* Rating stars */
+.Rating-star:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-radius: 2px;
+}
+
+/* Code copy and close buttons */
+.code-copy-btn:focus-visible,
+.Alert-close:focus-visible,
+.Toast-close:focus-visible,
+.Toolbar-btn:focus-visible,
+.icon-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+  border-radius: var(--r-s);
+}
+
+/* Mobile search overlay */
+.mobile-search-close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-s);
+}
+
+/* FileUpload */
+.FileUpload:focus-within {
+  border-color: var(--accent);
+  box-shadow: var(--sh-ring);
+}
+
 .text-center { text-align: center; }
 .text-right { text-align: right; }
 

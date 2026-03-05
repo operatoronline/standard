@@ -1,6 +1,48 @@
-// Carbon Design System v0.3 — Shell Logic
+// Standard Design System v0.3 — Shell Logic
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Carbon v0.3 initialized');
+    console.log('Standard v0.3 initialized');
+
+    // ═══════════════════════════════════════
+    // A11Y: LIVE REGION ANNOUNCER
+    // ═══════════════════════════════════════
+    const announcer = document.getElementById('a11y-announcer');
+    function announce(message, priority) {
+        if (!announcer) return;
+        // Briefly clear to ensure re-announcement of same text
+        announcer.textContent = '';
+        announcer.setAttribute('aria-live', priority === 'assertive' ? 'assertive' : 'polite');
+        requestAnimationFrame(() => {
+            announcer.textContent = message;
+        });
+    }
+
+    // ═══════════════════════════════════════
+    // A11Y: FOCUS TRAP UTILITY
+    // ═══════════════════════════════════════
+    function trapFocus(container) {
+        const focusableSelectors = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+        
+        function handler(e) {
+            if (e.key !== 'Tab') return;
+            const focusable = Array.from(container.querySelectorAll(focusableSelectors)).filter(el => el.offsetParent !== null);
+            if (focusable.length === 0) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (e.shiftKey) {
+                if (document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                }
+            } else {
+                if (document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
+        }
+        container.addEventListener('keydown', handler);
+        return () => container.removeEventListener('keydown', handler);
+    }
 
     // ═══════════════════════════════════════
     // THEME TOGGLE
@@ -30,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
             html.setAttribute('data-theme', newTheme);
             localStorage.setItem('standard-theme', newTheme);
             updateThemeIcon(newTheme);
+            announce(`Switched to ${newTheme} mode`);
         });
     }
 
@@ -38,8 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const icon = themeBtn.querySelector('i');
         if (theme === 'dark') {
             icon.className = 'ph-bold ph-sun';
+            themeBtn.setAttribute('aria-label', 'Switch to light mode');
         } else {
             icon.className = 'ph-bold ph-moon';
+            themeBtn.setAttribute('aria-label', 'Switch to dark mode');
         }
     }
 
@@ -115,15 +160,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create a full-screen overlay triggered by the fnav search button.
     const mobileOverlay = document.createElement('div');
     mobileOverlay.className = 'mobile-search-overlay';
+    mobileOverlay.setAttribute('role', 'dialog');
+    mobileOverlay.setAttribute('aria-label', 'Search');
+    mobileOverlay.setAttribute('aria-modal', 'true');
     mobileOverlay.innerHTML = `
-        <button class="mobile-search-close" aria-label="Close search">
-            <i class="ph ph-x"></i>
+        <button class="mobile-search-close" aria-label="Close search" type="button">
+            <i class="ph ph-x" aria-hidden="true"></i>
         </button>
-        <div class="mobile-search-bar">
-            <i class="ph ph-magnifying-glass"></i>
-            <input type="text" class="mobile-search-input" placeholder="Search components…" aria-label="Search" autocomplete="off">
+        <div class="mobile-search-bar" role="search">
+            <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+            <input type="text" class="mobile-search-input" placeholder="Search components…" aria-label="Search components" autocomplete="off" aria-controls="mobile-search-results" aria-expanded="false" aria-autocomplete="list" role="combobox">
         </div>
-        <div class="mobile-search-results"></div>
+        <div class="mobile-search-results" id="mobile-search-results" role="listbox"></div>
     `;
     document.body.appendChild(mobileOverlay);
 
@@ -131,8 +179,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileSearchResults = mobileOverlay.querySelector('.mobile-search-results');
     const mobileSearchClose = mobileOverlay.querySelector('.mobile-search-close');
 
+    let releaseMobileTrap = null;
+    let mobileSearchTrigger = null;
+
     function openMobileSearch() {
+        mobileSearchTrigger = document.activeElement;
         mobileOverlay.classList.add('active');
+        releaseMobileTrap = trapFocus(mobileOverlay);
         // Small delay to let transition start, then focus
         requestAnimationFrame(() => mobileSearchInput.focus());
     }
@@ -140,8 +193,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function closeMobileSearch() {
         mobileOverlay.classList.remove('active');
         mobileSearchInput.value = '';
+        mobileSearchInput.setAttribute('aria-expanded', 'false');
         mobileSearchResults.classList.remove('active');
         mobileSearchResults.innerHTML = '';
+        if (releaseMobileTrap) { releaseMobileTrap(); releaseMobileTrap = null; }
+        // Return focus to trigger element
+        if (mobileSearchTrigger) { mobileSearchTrigger.focus(); mobileSearchTrigger = null; }
     }
 
     mobileSearchClose.addEventListener('click', closeMobileSearch);
@@ -163,6 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!fuse || query.length < 2) {
             mobileSearchResults.classList.remove('active');
             mobileSearchResults.innerHTML = '';
+            mobileSearchInput.setAttribute('aria-expanded', 'false');
             return;
         }
 
@@ -171,13 +229,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (results.length === 0) {
             mobileSearchResults.innerHTML = '<div class="search-no-results">No results found</div>';
             mobileSearchResults.classList.add('active');
+            mobileSearchInput.setAttribute('aria-expanded', 'true');
+            announce('No results found');
             return;
         }
 
-        mobileSearchResults.innerHTML = results.map(result => {
+        mobileSearchResults.innerHTML = results.map((result, i) => {
             const item = result.item;
             return `
-                <a href="${item.url}" class="search-result-item">
+                <a href="${item.url}" class="search-result-item" role="option" id="mobile-search-opt-${i}">
                     <span class="search-result-title">${item.title}</span>
                     <span class="search-result-section">${item.section}</span>
                 </a>
@@ -185,6 +245,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }).join('');
 
         mobileSearchResults.classList.add('active');
+        mobileSearchInput.setAttribute('aria-expanded', 'true');
+        announce(`${results.length} result${results.length === 1 ? '' : 's'} found`);
     });
 
     // Mobile search keyboard navigation
@@ -229,6 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!fuse || query.length < 2) {
                 searchResults.classList.remove('active');
                 searchResults.innerHTML = '';
+                searchInput.setAttribute('aria-expanded', 'false');
                 return;
             }
 
@@ -237,13 +300,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (results.length === 0) {
                 searchResults.innerHTML = '<div class="search-no-results">No results found</div>';
                 searchResults.classList.add('active');
+                searchInput.setAttribute('aria-expanded', 'true');
+                announce('No results found');
                 return;
             }
 
-            searchResults.innerHTML = results.map(result => {
+            searchResults.innerHTML = results.map((result, i) => {
                 const item = result.item;
                 return `
-                    <a href="${item.url}" class="search-result-item">
+                    <a href="${item.url}" class="search-result-item" role="option" id="search-opt-${i}">
                         <span class="search-result-title">${item.title}</span>
                         <span class="search-result-section">${item.section}</span>
                     </a>
@@ -251,12 +316,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }).join('');
             
             searchResults.classList.add('active');
+            searchInput.setAttribute('aria-expanded', 'true');
+            announce(`${results.length} result${results.length === 1 ? '' : 's'} found`);
         });
 
         // Close search results when clicking outside
         document.addEventListener('click', (e) => {
             if (searchContainer && !searchContainer.contains(e.target)) {
                 searchResults.classList.remove('active');
+                searchInput.setAttribute('aria-expanded', 'false');
+                searchInput.removeAttribute('aria-activedescendant');
             }
         });
 
@@ -271,28 +340,80 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (activeItem) activeItem.classList.remove('active');
                 index = (index + 1) % items.length;
                 items[index]?.classList.add('active');
+                searchInput.setAttribute('aria-activedescendant', items[index]?.id || '');
             } else if (e.key === 'ArrowUp') {
                 e.preventDefault();
                 if (activeItem) activeItem.classList.remove('active');
                 index = index <= 0 ? items.length - 1 : index - 1;
                 items[index]?.classList.add('active');
+                searchInput.setAttribute('aria-activedescendant', items[index]?.id || '');
             } else if (e.key === 'Enter' && activeItem) {
                 e.preventDefault();
                 window.location.href = activeItem.getAttribute('href');
             } else if (e.key === 'Escape') {
                 searchResults.classList.remove('active');
+                searchInput.setAttribute('aria-expanded', 'false');
+                searchInput.removeAttribute('aria-activedescendant');
                 searchInput.blur();
             }
         });
     }
 
     // ═══════════════════════════════════════
-    // MODAL HANDLING
+    // MODAL & DRAWER HANDLING (A11Y)
     // ═══════════════════════════════════════
+    let releaseModalTrap = null;
+    let modalTrigger = null;
+
+    function closeActiveModal() {
+        const activeOverlay = document.querySelector('.Modal-overlay.active, .Modal-overlay--active');
+        if (!activeOverlay) return;
+        activeOverlay.classList.remove('active', 'Modal-overlay--active');
+        if (releaseModalTrap) { releaseModalTrap(); releaseModalTrap = null; }
+        if (modalTrigger) { modalTrigger.focus(); modalTrigger = null; }
+    }
+
+    // Close modals on overlay click
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('Modal-overlay')) {
-            e.target.classList.remove('active');
+            closeActiveModal();
         }
+    });
+
+    // Close modals on Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const activeOverlay = document.querySelector('.Modal-overlay.active, .Modal-overlay--active');
+            if (activeOverlay) {
+                e.preventDefault();
+                closeActiveModal();
+            }
+        }
+    });
+
+    // Auto-setup focus trap when modal becomes active (via MutationObserver)
+    const modalObserver = new MutationObserver((mutations) => {
+        for (const m of mutations) {
+            if (m.type === 'attributes' && m.attributeName === 'class') {
+                const el = m.target;
+                if (el.classList.contains('Modal-overlay') || el.classList.contains('Drawer-overlay')) {
+                    const isActive = el.classList.contains('active') || el.classList.contains('Modal-overlay--active');
+                    if (isActive) {
+                        modalTrigger = document.activeElement;
+                        el.setAttribute('role', 'dialog');
+                        el.setAttribute('aria-modal', 'true');
+                        releaseModalTrap = trapFocus(el);
+                        // Focus first focusable element inside
+                        const firstFocusable = el.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                        if (firstFocusable) requestAnimationFrame(() => firstFocusable.focus());
+                    }
+                }
+            }
+        }
+    });
+    // Observe all modal/drawer overlays that exist in the page content (from Preview demos)
+    document.querySelectorAll('.Modal-overlay, .Drawer-overlay').forEach(overlay => {
+        modalObserver.observe(overlay, { attributes: true, attributeFilter: ['class'] });
     });
 
     // ═══════════════════════════════════════
@@ -347,17 +468,18 @@ document.addEventListener('DOMContentLoaded', () => {
     function createCopyBtn(pre) {
         const copyBtn = document.createElement('button');
         copyBtn.className = 'code-copy-btn';
-        copyBtn.innerHTML = '<i class="ph ph-copy"></i><span>Copy</span>';
+        copyBtn.innerHTML = '<i class="ph ph-copy" aria-hidden="true"></i><span>Copy</span>';
         copyBtn.setAttribute('aria-label', 'Copy code');
 
         copyBtn.addEventListener('click', async () => {
             const code = pre.querySelector('code')?.textContent || pre.textContent;
             try {
                 await navigator.clipboard.writeText(code);
-                copyBtn.innerHTML = '<i class="ph ph-check"></i><span>Copied!</span>';
+                copyBtn.innerHTML = '<i class="ph ph-check" aria-hidden="true"></i><span>Copied!</span>';
                 copyBtn.classList.add('copied');
+                announce('Code copied to clipboard');
                 setTimeout(() => {
-                    copyBtn.innerHTML = '<i class="ph ph-copy"></i><span>Copy</span>';
+                    copyBtn.innerHTML = '<i class="ph ph-copy" aria-hidden="true"></i><span>Copy</span>';
                     copyBtn.classList.remove('copied');
                 }, 2000);
             } catch (err) {
@@ -370,20 +492,69 @@ document.addEventListener('DOMContentLoaded', () => {
     // ═══════════════════════════════════════
     // ENHANCED PREVIEW COMPONENT (v0.2+)
     // ═══════════════════════════════════════
-    document.querySelectorAll('.Preview').forEach(preview => {
-        // Tab switching
+    document.querySelectorAll('.Preview').forEach((preview, previewIdx) => {
+        // A11Y: Set up tab ARIA roles
+        const tabsContainer = preview.querySelector('.Preview-tabs');
         const tabs = preview.querySelectorAll('.Preview-tab');
         const panes = preview.querySelectorAll('.Preview-pane');
         
+        if (tabsContainer) tabsContainer.setAttribute('role', 'tablist');
+        
+        tabs.forEach((tab, i) => {
+            const target = tab.dataset.tab;
+            const paneId = `preview-${previewIdx}-pane-${target}`;
+            const tabId = `preview-${previewIdx}-tab-${target}`;
+            tab.setAttribute('role', 'tab');
+            tab.setAttribute('id', tabId);
+            tab.setAttribute('aria-controls', paneId);
+            tab.setAttribute('aria-selected', tab.classList.contains('active') ? 'true' : 'false');
+            tab.setAttribute('tabindex', tab.classList.contains('active') ? '0' : '-1');
+            
+            // Find matching pane
+            const matchingPane = Array.from(panes).find(p => p.dataset.pane === target);
+            if (matchingPane) {
+                matchingPane.setAttribute('role', 'tabpanel');
+                matchingPane.setAttribute('id', paneId);
+                matchingPane.setAttribute('aria-labelledby', tabId);
+                if (!matchingPane.classList.contains('active')) matchingPane.setAttribute('hidden', '');
+            }
+        });
+
+        // Arrow key navigation for tabs
+        if (tabsContainer) {
+            tabsContainer.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                    const currentTab = tabsContainer.querySelector('.Preview-tab[aria-selected="true"]');
+                    const tabArr = Array.from(tabs);
+                    let idx = tabArr.indexOf(currentTab);
+                    if (e.key === 'ArrowRight') idx = (idx + 1) % tabArr.length;
+                    else idx = (idx - 1 + tabArr.length) % tabArr.length;
+                    tabArr[idx].click();
+                    tabArr[idx].focus();
+                    e.preventDefault();
+                }
+            });
+        }
+
+        // Tab switching
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const target = tab.dataset.tab;
                 
-                tabs.forEach(t => t.classList.remove('active'));
+                tabs.forEach(t => {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                    t.setAttribute('tabindex', '-1');
+                });
                 tab.classList.add('active');
+                tab.setAttribute('aria-selected', 'true');
+                tab.setAttribute('tabindex', '0');
                 
                 panes.forEach(pane => {
-                    pane.classList.toggle('active', pane.dataset.pane === target);
+                    const isActive = pane.dataset.pane === target;
+                    pane.classList.toggle('active', isActive);
+                    if (isActive) pane.removeAttribute('hidden');
+                    else pane.setAttribute('hidden', '');
                 });
             });
         });
@@ -425,6 +596,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Copy buttons
         preview.querySelectorAll('.Preview-code-copy').forEach(copyBtn => {
+            copyBtn.setAttribute('aria-label', 'Copy code');
             copyBtn.addEventListener('click', async () => {
                 const codePane = copyBtn.closest('.Preview-pane');
                 const code = codePane.querySelector('code')?.textContent || codePane.querySelector('pre')?.textContent || '';
@@ -432,8 +604,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 try {
                     await navigator.clipboard.writeText(code);
                     const originalText = copyBtn.innerHTML;
-                    copyBtn.innerHTML = '<i class="ph ph-check"></i> Copied';
+                    copyBtn.innerHTML = '<i class="ph ph-check" aria-hidden="true"></i> Copied';
                     copyBtn.classList.add('copied');
+                    announce('Code copied to clipboard');
                     setTimeout(() => {
                         copyBtn.innerHTML = originalText;
                         copyBtn.classList.remove('copied');
