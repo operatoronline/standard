@@ -647,6 +647,13 @@ async function build() {
             : '';
 
         let htmlContent = md.renderer.render(tokens, md.options, {});
+
+        // Add anchor links to headings with ids (h2, h3) for deep-linking
+        htmlContent = htmlContent.replace(
+            /<(h[23]) id="([^"]+)">([^<]*)<\/(h[23])>/g,
+            '<$1 id="$2"><a href="#$2" class="heading-anchor" aria-label="Link to $3"><i class="ph-bold ph-link" aria-hidden="true"></i></a>$3</$4>'
+        );
+
         // Wrap markdown-rendered <table> (bare, no class attr) in scrollable container with Table class
         // Use a marker to only close wrappers we opened
         htmlContent = htmlContent.replace(/<table>\n/g, '<div class="Table-container"><table class="Table">\n');

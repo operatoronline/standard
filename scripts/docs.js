@@ -1273,4 +1273,28 @@ document.addEventListener('DOMContentLoaded', () => {
         // Initial check (e.g., if page loaded scrolled down)
         updateBackToTop();
     }
+
+    // ─── Heading anchor links: click-to-copy deep-link URL ───
+    document.addEventListener('click', (e) => {
+        const anchor = e.target.closest('.heading-anchor');
+        if (!anchor) return;
+        e.preventDefault();
+        const url = new URL(anchor.getAttribute('href'), window.location.href).href;
+        navigator.clipboard.writeText(url).then(() => {
+            // Visual feedback
+            anchor.classList.add('copied');
+            // Update URL hash without scroll
+            history.replaceState(null, '', anchor.getAttribute('href'));
+            // Announce to screen reader
+            const announcer = document.getElementById('a11y-announcer');
+            if (announcer) announcer.textContent = 'Link copied to clipboard';
+            // Reset after 2s
+            setTimeout(() => {
+                anchor.classList.remove('copied');
+            }, 2000);
+        }).catch(() => {
+            // Fallback: just navigate to the anchor
+            window.location.hash = anchor.getAttribute('href');
+        });
+    });
 })();
