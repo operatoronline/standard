@@ -160,11 +160,13 @@
   --r-xl: 24px;
   --r-f: 9999px;
 
-  /* Shadows */
-  --sh-s: 0 1px 3px oklch(0% 0 0/.04);
-  --sh-m: 0 4px 16px oklch(0% 0 0/.06);
-  --sh-l: 0 12px 40px oklch(0% 0 0/.10);
-  --sh-xl: 0 24px 64px oklch(0% 0 0/.14);
+  /* Shadows — multi-layer composites for natural depth (key light + ambient) */
+  --sh-s: 0 1px 2px oklch(0% 0 0/.06), 0 1px 3px oklch(0% 0 0/.04);
+  --sh-m: 0 2px 4px oklch(0% 0 0/.04), 0 4px 16px oklch(0% 0 0/.06);
+  --sh-l: 0 4px 8px oklch(0% 0 0/.04), 0 12px 40px oklch(0% 0 0/.08);
+  --sh-xl: 0 8px 16px oklch(0% 0 0/.06), 0 24px 64px oklch(0% 0 0/.12);
+  /* Focus ring */
+  --sh-ring: 0 0 0 3px var(--accent-s);
 
   /* Animation */
   --ease: cubic-bezier(.16,1,.3,1);
@@ -207,11 +209,11 @@
   --err-soft: oklch(22% 0.04 25);
   --err-text: oklch(65% 0.18 25);     /* Lighter in dark mode */
 
-  /* Shadows — stronger for dark surfaces */
-  --sh-s: 0 1px 3px oklch(0% 0 0/.2);
-  --sh-m: 0 4px 16px oklch(0% 0 0/.3);
-  --sh-l: 0 12px 40px oklch(0% 0 0/.4);
-  --sh-xl: 0 24px 64px oklch(0% 0 0/.5);
+  /* Shadows — stronger for dark surfaces, multi-layer */
+  --sh-s: 0 1px 2px oklch(0% 0 0/.24), 0 2px 6px oklch(0% 0 0/.16);
+  --sh-m: 0 2px 4px oklch(0% 0 0/.20), 0 4px 16px oklch(0% 0 0/.24);
+  --sh-l: 0 4px 8px oklch(0% 0 0/.24), 0 12px 40px oklch(0% 0 0/.32);
+  --sh-xl: 0 8px 16px oklch(0% 0 0/.28), 0 24px 64px oklch(0% 0 0/.40);
 }
 
 /* Auto-detect system preference (when no explicit theme set) */
@@ -235,16 +237,16 @@
     --warn-text: oklch(65% 0.12 85);
     --err-soft: oklch(22% 0.04 25);
     --err-text: oklch(65% 0.18 25);
-    --sh-s: 0 1px 3px oklch(0% 0 0/.2);
-    --sh-m: 0 4px 16px oklch(0% 0 0/.3);
-    --sh-l: 0 12px 40px oklch(0% 0 0/.4);
-    --sh-xl: 0 24px 64px oklch(0% 0 0/.5);
+    --sh-s: 0 1px 2px oklch(0% 0 0/.24), 0 2px 6px oklch(0% 0 0/.16);
+    --sh-m: 0 2px 4px oklch(0% 0 0/.20), 0 4px 16px oklch(0% 0 0/.24);
+    --sh-l: 0 4px 8px oklch(0% 0 0/.24), 0 12px 40px oklch(0% 0 0/.32);
+    --sh-xl: 0 8px 16px oklch(0% 0 0/.28), 0 24px 64px oklch(0% 0 0/.40);
   }
 
   /* Preview overrides for auto dark mode */
   html:not([data-theme="light"]) .Preview {
     border-color: oklch(24% 0 0);
-    box-shadow: 0 2px 8px oklch(0% 0 0 / .3), 0 0 0 1px oklch(100% 0 0 / .03);
+    box-shadow: var(--sh-s), 0 0 0 1px oklch(100% 0 0 / .03);
   }
   html:not([data-theme="light"]) .Preview-header {
     background: oklch(24% 0 0);
@@ -263,6 +265,17 @@
     background: oklch(100% 0 0 / .06);
     border-color: oklch(100% 0 0 / .08);
     color: oklch(76% 0 0);
+  }
+
+  /* Overlay shadow overrides for auto dark mode */
+  html:not([data-theme="light"]) .Modal {
+    box-shadow: var(--sh-xl), 0 0 0 1px oklch(100% 0 0 / .04);
+  }
+  html:not([data-theme="light"]) .Drawer {
+    box-shadow: var(--sh-xl), 0 0 0 1px oklch(100% 0 0 / .04);
+  }
+  html:not([data-theme="light"]) .fnav {
+    box-shadow: var(--sh-xl), 0 0 0 1px oklch(100% 0 0 / .06);
   }
 }
 
@@ -381,7 +394,7 @@
 /* ─── Dark mode: Preview containers ─── */
 [data-theme="dark"] .Preview {
   border-color: var(--bd);
-  box-shadow: 0 2px 8px oklch(0% 0 0 / .3), 0 0 0 1px oklch(100% 0 0 / .03);
+  box-shadow: var(--sh-s), 0 0 0 1px oklch(100% 0 0 / .03);
 }
 
 [data-theme="dark"] .Preview-header {
@@ -477,6 +490,7 @@
 
 [data-theme="dark"] .Modal {
   border: 1px solid var(--g800);
+  box-shadow: var(--sh-xl), 0 0 0 1px oklch(100% 0 0 / .04);
 }
 
 /* ─── Dark mode: Drawer overlay ─── */
@@ -601,12 +615,12 @@
 /* ─── Dark mode: Card elevated ─── */
 [data-theme="dark"] .Card--elevated {
   border-color: var(--g800);
-  box-shadow: 0 4px 16px oklch(0% 0 0/.4);
+  box-shadow: var(--sh-m);
 }
 
 [data-theme="dark"] .Card--interactive:hover {
   border-color: var(--g600);
-  box-shadow: 0 4px 16px oklch(0% 0 0/.4);
+  box-shadow: var(--sh-m);
 }
 
 /* ─── Dark mode: List ─── */
@@ -938,7 +952,7 @@ a { color: inherit; text-decoration: none; }
 
 .search-container:focus-within {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-s);
+  box-shadow: var(--sh-ring);
 }
 
 .search-container input {
@@ -1418,7 +1432,7 @@ a { color: inherit; text-decoration: none; }
 
 .Input:focus, .Select:focus, .Textarea:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-s);
+  box-shadow: var(--sh-ring);
   outline: none;
 }
 
@@ -1807,6 +1821,7 @@ a { color: inherit; text-decoration: none; }
 /* Interactive Card */
 .Card--interactive {
   cursor: pointer;
+  transition: box-shadow var(--dur-n) var(--ease), transform var(--dur-n) var(--ease), border-color var(--dur-n) var(--ease);
 }
 
 .Card--interactive:hover {
@@ -2388,7 +2403,7 @@ pre.line-numbers code .line::before {
   width: 100%;
   max-width: 480px;
   max-height: calc(100vh - var(--space-8));
-  box-shadow: var(--sh-xl);
+  box-shadow: var(--sh-xl), 0 0 0 1px oklch(0% 0 0 / .06);
   transform: translateY(10px);
   transition: transform var(--dur-n);
   display: flex;
@@ -2555,7 +2570,7 @@ body:has(.Modal-overlay.active) {
   background: var(--g950);
   color: white;
   border-radius: var(--r-l);
-  box-shadow: var(--sh-l);
+  box-shadow: var(--sh-l), 0 0 0 1px oklch(100% 0 0 / .06);
   font-size: .9375rem;
   min-width: 280px;
   max-width: 400px;
@@ -2647,6 +2662,7 @@ body:has(.Modal-overlay.active) {
   white-space: nowrap;
   border-radius: var(--r-s);
   max-width: 200px;
+  box-shadow: var(--sh-m);
 }
 
 .Tooltip::after {
@@ -3526,7 +3542,7 @@ details[open] .Accordion-icon {
   width: 100%;
   max-width: 400px;
   background: var(--bg);
-  box-shadow: var(--sh-xl);
+  box-shadow: var(--sh-xl), 0 0 0 1px oklch(0% 0 0 / .06);
   z-index: 1001;
   transform: translateX(100%);
   transition: transform var(--dur-s) var(--ease);
@@ -3679,7 +3695,7 @@ details[open] .Accordion-icon {
 .Textarea:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-s);
+  box-shadow: var(--sh-ring);
 }
 
 .Textarea:hover:not(:focus):not(:disabled) {
@@ -4327,7 +4343,7 @@ details[open] .Accordion-icon {
 
 .mobile-search-overlay .mobile-search-bar:focus-within {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-s);
+  box-shadow: var(--sh-ring);
 }
 
 .mobile-search-overlay .mobile-search-bar i {
