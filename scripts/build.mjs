@@ -121,7 +121,8 @@ const CONFIG = {
     distDir: 'dist',
     templatePath: 'templates/page.html',
     assets: ['styles', 'scripts', 'assets'],
-    version: 'v0.3'
+    version: 'v0.3',
+    siteUrl: 'https://standard.operator.onl'
 };
 
 async function build() {
@@ -283,9 +284,44 @@ async function build() {
         // Create display title with italic accent for hero treatment
         const titleDisplay = createDisplayTitle(title);
 
+        // Generate meta description from first paragraph of content
+        const descriptionMatch = rawContent
+            .replace(/^#[^\n]+\n+/, '') // Remove first heading
+            .replace(/<Preview[\s\S]*?<\/Preview>/g, '') // Remove preview blocks
+            .replace(/```[\s\S]*?```/g, '') // Remove code blocks
+            .replace(/\|[^\n]+\|/g, '') // Remove table rows
+            .replace(/---+/g, '') // Remove horizontal rules
+            .trim()
+            .split(/\n\n/)[0]; // First paragraph
+        const metaDescription = descriptionMatch
+            ? descriptionMatch
+                .replace(/<[^>]+>/g, '') // Strip HTML
+                .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Markdown links → text
+                .replace(/\*\*([^*]+)\*\*/g, '$1') // Bold → text
+                .replace(/\*([^*]+)\*/g, '$1') // Italic → text
+                .replace(/`([^`]+)`/g, '$1') // Inline code → text
+                .replace(/#+\s/g, '') // Remove heading markers
+                .replace(/\s+/g, ' ') // Collapse whitespace
+                .trim()
+                .slice(0, 155) // SEO: ~155 char limit
+                + (descriptionMatch.length > 155 ? '…' : '')
+            : `${title} — Standard Design System documentation.`;
+
+        // Generate canonical URL
+        let canonicalPath = relativePath.replace('.md', '');
+        if (canonicalPath === 'index') {
+            canonicalPath = '';
+        }
+        const canonicalUrl = `${CONFIG.siteUrl}/${canonicalPath}`;
+        const ogUrl = canonicalUrl;
+
         const finalHtml = template
             .replace(/{{TITLE}}/g, title)
             .replace(/{{TITLE_DISPLAY}}/g, titleDisplay)
+            .replace(/{{META_DESCRIPTION}}/g, metaDescription.replace(/"/g, '&quot;'))
+            .replace(/{{CANONICAL_URL}}/g, canonicalUrl)
+            .replace(/{{OG_URL}}/g, ogUrl)
+            .replace(/{{SITE_URL}}/g, CONFIG.siteUrl)
             .replace(/{{NAV_HTML}}/g, navHtml)
             .replace(/{{BREADCRUMBS_HTML}}/g, breadcrumbsHtml)
             .replace(/{{TOC_HTML}}/g, tocHtml)
@@ -338,13 +374,85 @@ async function build() {
     );
     console.log(`  ✓ Generated search-index.json (${searchIndex.length} pages)`);
 
-    // 4. Generate 404 page
+    // 4. Generate robots.txt
+    const robotsTxt = `# Standard Design System
+# ${CONFIG.siteUrl}
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: ${CONFIG.siteUrl}/sitemap.xml
+
+# Disallow non-content resources
+Disallow: /search-index.json
+`;
+    await fs.writeFile(path.join(CONFIG.distDir, 'robots.txt'), robotsTxt);
+    console.log('  ✓ Generated robots.txt');
+
+    // 5. Generate sitemap.xml
+    const now = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+    const sitemapEntries = [];
+
+    // Define priority and changefreq by section
+    const getSitemapMeta = (url) => {
+        if (url === 'index.html') return { priority: '1.0', changefreq: 'weekly' };
+        if (url.startsWith('tokens/')) return { priority: '0.8', changefreq: 'monthly' };
+        if (url.startsWith('components/')) return { priority: '0.9', changefreq: 'monthly' };
+        if (url.startsWith('patterns/')) return { priority: '0.7', changefreq: 'monthly' };
+        return { priority: '0.5', changefreq: 'monthly' };
+    };
+
+    for (const file of files) {
+        const relativePath = path.relative(CONFIG.contentDir, file);
+        const url = relativePath.replace('.md', '.html');
+        // Use clean URL (strip .html, strip index.html for root)
+        let cleanUrl = url;
+        if (cleanUrl === 'index.html') {
+            cleanUrl = '';
+        } else {
+            cleanUrl = cleanUrl.replace(/\.html$/, '');
+        }
+        const fullUrl = `${CONFIG.siteUrl}/${cleanUrl}`;
+        const meta = getSitemapMeta(url);
+        sitemapEntries.push({ url: fullUrl, lastmod: now, ...meta });
+    }
+
+    // Sort: homepage first, then alphabetically
+    sitemapEntries.sort((a, b) => {
+        if (a.url === CONFIG.siteUrl + '/') return -1;
+        if (b.url === CONFIG.siteUrl + '/') return 1;
+        return a.url.localeCompare(b.url);
+    });
+
+    const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapEntries.map(e => `  <url>
+    <loc>${e.url}</loc>
+    <lastmod>${e.lastmod}</lastmod>
+    <changefreq>${e.changefreq}</changefreq>
+    <priority>${e.priority}</priority>
+  </url>`).join('\n')}
+</urlset>
+`;
+    await fs.writeFile(path.join(CONFIG.distDir, 'sitemap.xml'), sitemapXml);
+    console.log(`  ✓ Generated sitemap.xml (${sitemapEntries.length} URLs)`);
+
+    // 6. Generate 404 page
     const notFoundHtml = `<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>404 — Page Not Found | Standard</title>
+    <meta name="description" content="The page you're looking for doesn't exist. Search the Standard Design System or navigate to a section.">
+    <link rel="canonical" href="${CONFIG.siteUrl}/404">
+    <meta property="og:title" content="404 — Page Not Found | Standard">
+    <meta property="og:description" content="The page you're looking for doesn't exist. Search the Standard Design System or navigate to a section.">
+    <meta property="og:url" content="${CONFIG.siteUrl}/404">
+    <meta property="og:image" content="${CONFIG.siteUrl}/assets/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="robots" content="noindex">
     <link rel="preload" href="./assets/fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="./assets/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="./assets/fonts/instrument-serif-italic-latin.woff2" as="font" type="font/woff2" crossorigin>

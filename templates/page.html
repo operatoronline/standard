@@ -4,6 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>{{TITLE}} | Standard</title>
+    <meta name="description" content="{{META_DESCRIPTION}}">
+    <link rel="canonical" href="{{CANONICAL_URL}}">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{TITLE}} | Standard">
+    <meta property="og:description" content="{{META_DESCRIPTION}}">
+    <meta property="og:url" content="{{OG_URL}}">
+    <meta property="og:site_name" content="Standard Design System">
+    <meta property="og:image" content="{{SITE_URL}}/assets/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Standard Design System">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{TITLE}} | Standard">
+    <meta name="twitter:description" content="{{META_DESCRIPTION}}">
+    <meta name="twitter:image" content="{{SITE_URL}}/assets/og-image.png">
+
     <!-- Preload critical fonts (latin subsets) to eliminate FOIT/FOUT -->
     <link rel="preload" href="{{REL_ROOT}}assets/fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="{{REL_ROOT}}assets/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
