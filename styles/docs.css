@@ -1358,6 +1358,212 @@ html:not([data-theme="light"]) {
 }
 
 /* ═══════════════════════════════════════
+   HOMEPAGE HERO
+   ═══════════════════════════════════════ */
+
+/* Override Hero layout for homepage — two-column with code preview */
+.Hero-showcase:has(.home-hero-left) {
+  align-items: stretch;
+  gap: var(--space-8);
+}
+
+.home-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  flex: 1;
+  min-width: 0;
+}
+
+.home-hero-tagline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--ff-m);
+  font-size: var(--fs-xs);
+  color: var(--fg-3);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  flex-wrap: wrap;
+}
+
+.home-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-2);
+  background: var(--accent);
+  color: var(--white);
+  font-size: var(--fs-3xs);
+  font-weight: 600;
+  border-radius: var(--r-f);
+  letter-spacing: .06em;
+}
+
+.home-hero-cta {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.home-hero-right {
+  flex: 0 0 380px;
+  min-width: 0;
+}
+
+/* Code preview block */
+.home-hero-code {
+  border-radius: var(--r-m);
+  overflow: hidden;
+  background: var(--g950);
+  box-shadow: var(--sh-l);
+  border: 1px solid oklch(100% 0 0 / .06);
+}
+
+.home-hero-code-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: oklch(100% 0 0 / .04);
+  border-bottom: 1px solid oklch(100% 0 0 / .06);
+}
+
+.home-hero-code-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--r-f);
+  background: oklch(100% 0 0 / .12);
+}
+
+.home-hero-code-dot:nth-child(1) { background: oklch(65% 0.2 25); }
+.home-hero-code-dot:nth-child(2) { background: oklch(75% 0.15 85); }
+.home-hero-code-dot:nth-child(3) { background: oklch(70% 0.17 145); }
+
+.home-hero-code-file {
+  margin-left: var(--space-2);
+  font-family: var(--ff-m);
+  font-size: var(--fs-3xs);
+  color: oklch(100% 0 0 / .5);
+  letter-spacing: .02em;
+}
+
+.home-hero-code-body {
+  padding: var(--space-4);
+  margin: 0;
+  overflow-x: auto;
+  font-family: var(--ff-c);
+  font-size: var(--fs-xs);
+  line-height: 1.65;
+  color: oklch(85% 0 0);
+  tab-size: 2;
+}
+
+.home-hero-code-body code {
+  font-family: inherit;
+  font-size: inherit;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+}
+
+/* Syntax tokens for hero code */
+.t-tag { color: oklch(72% 0.14 25); }
+.t-attr { color: oklch(75% 0.12 250); }
+.t-str { color: oklch(73% 0.16 145); }
+.t-comment { color: oklch(55% 0 0); font-style: italic; }
+
+/* Homepage stats bar */
+.home-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-6) 0;
+  margin-bottom: var(--space-4);
+}
+
+.home-stat {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--ff-m);
+  font-size: var(--fs-xs);
+  color: var(--fg-3);
+}
+
+.home-stat i {
+  font-size: var(--fs-base);
+  color: var(--accent);
+}
+
+.home-stat strong {
+  color: var(--fg);
+  font-weight: 600;
+  font-size: var(--fs-base);
+}
+
+/* Dark mode hero code adjustments */
+[data-theme="dark"] .home-hero-code {
+  background: oklch(8% 0 0);
+  border-color: oklch(100% 0 0 / .08);
+}
+
+[data-theme="dark"] .home-hero-code-header {
+  background: oklch(100% 0 0 / .03);
+  border-bottom-color: oklch(100% 0 0 / .08);
+}
+
+html:not([data-theme="light"]) {
+  @media (prefers-color-scheme: dark) {
+    .home-hero-code {
+      background: oklch(8% 0 0);
+      border-color: oklch(100% 0 0 / .08);
+    }
+    .home-hero-code-header {
+      background: oklch(100% 0 0 / .03);
+      border-bottom-color: oklch(100% 0 0 / .08);
+    }
+  }
+}
+
+/* Homepage hero responsive */
+@media (max-width: 899px) {
+  .home-hero-right {
+    flex: none;
+    width: 100%;
+  }
+}
+
+@media (max-width: 599px) {
+  .home-hero-code-body {
+    font-size: var(--fs-3xs);
+    padding: var(--space-3);
+  }
+  .home-hero-cta .Button--large {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--fs-xs);
+  }
+  .home-stats {
+    gap: var(--space-3);
+    padding: var(--space-4) 0;
+  }
+}
+
+/* Homepage print */
+@media print {
+  .home-hero-code {
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+  }
+  .home-hero-code-header {
+    background: #eee;
+  }
+  .home-hero-code-dot { display: none; }
+  .home-stats { page-break-inside: avoid; }
+}
+
+/* ═══════════════════════════════════════
    PROSE CONTENT
    ═══════════════════════════════════════ */
 .prose {

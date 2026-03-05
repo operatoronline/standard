@@ -400,7 +400,7 @@ async function build() {
             const label = key.replace('.md', '').replace(/-/g, ' ');
             const capitalizedLabel = label.charAt(0).toUpperCase() + label.slice(1);
             if (typeof value === 'string') {
-                const displayLabel = key === 'index.md' ? 'Introduction' : capitalizedLabel;
+                const displayLabel = key === 'index.md' ? 'Home' : capitalizedLabel;
                 html += `<li><a href="${relRoot}${value}">${displayLabel}</a></li>`;
             } else {
                 html += `<li><span class="nav-group">${capitalizedLabel}</span>${generateNavHtml(value, relRoot, depth + 1)}</li>`;
@@ -547,7 +547,7 @@ async function build() {
             '<div class="Table-container"><table class="Table">$1</table></div>');
         const baseName = path.basename(file, '.md');
         const title = baseName === 'index' 
-            ? 'Introduction' 
+            ? 'Standard Design System' 
             : baseName.replace(/-/g, ' ').charAt(0).toUpperCase() + baseName.replace(/-/g, ' ').slice(1);
         
         // Create display title with italic accent for hero treatment
@@ -611,8 +611,12 @@ async function build() {
             } : {})
         });
 
+        // For homepage, use just "Standard Design System" as the page title (no " | Standard" suffix)
+        const isHomePage = relativePath === 'index.md';
+        const pageTitle = isHomePage ? title : `${title} | Standard`;
         const finalHtml = template
             .replace(/{{TITLE}}/g, title)
+            .replace(/{{PAGE_TITLE}}/g, pageTitle)
             .replace(/{{TITLE_DISPLAY}}/g, titleDisplay)
             .replace(/{{META_DESCRIPTION}}/g, metaDescription.replace(/"/g, '&quot;'))
             .replace(/{{CANONICAL_URL}}/g, canonicalUrl)

@@ -1,8 +1,75 @@
 # Standard Design System
 
-A framework-agnostic design system built on OKLCH colors, a 4px spacing scale, and zero dependencies. Static HTML — host anywhere.
+A framework-agnostic design system built on OKLCH colors, a 4px spacing scale, and zero dependencies. Ship anywhere — no build tools required.
 
-**New here?** Start with the [Getting Started](./getting-started.html) guide — you'll be building in two minutes.
+<Hero>
+<div class="home-hero-left">
+    <div class="home-hero-tagline">
+        <span class="home-hero-badge">v1.0</span>
+        Zero dependencies · OKLCH colors · WCAG AA
+    </div>
+    <div class="home-hero-cta">
+        <a href="./getting-started.html" class="Button Button--primary Button--large"><i class="ph ph-rocket-launch" aria-hidden="true"></i> Get Started</a>
+        <a href="./components.html" class="Button Button--outline Button--large"><i class="ph ph-stack" aria-hidden="true"></i> Components</a>
+    </div>
+</div>
+<div class="home-hero-right">
+    <div class="home-hero-code">
+        <div class="home-hero-code-header">
+            <span class="home-hero-code-dot"></span>
+            <span class="home-hero-code-dot"></span>
+            <span class="home-hero-code-dot"></span>
+            <span class="home-hero-code-file">index.html</span>
+        </div>
+        <pre class="home-hero-code-body"><code><span class="t-comment">&lt;!-- One file. That's it. --&gt;</span>
+<span class="t-tag">&lt;link</span> <span class="t-attr">rel</span>=<span class="t-str">"stylesheet"</span>
+      <span class="t-attr">href</span>=<span class="t-str">"standard.css"</span><span class="t-tag">&gt;</span>
+
+<span class="t-tag">&lt;button</span> <span class="t-attr">class</span>=<span class="t-str">"Button Button--primary"</span><span class="t-tag">&gt;</span>
+  Ship it
+<span class="t-tag">&lt;/button&gt;</span>
+
+<span class="t-tag">&lt;div</span> <span class="t-attr">class</span>=<span class="t-str">"Card Card--elevated"</span><span class="t-tag">&gt;</span>
+  <span class="t-tag">&lt;h3</span> <span class="t-attr">class</span>=<span class="t-str">"Card-title"</span><span class="t-tag">&gt;</span>Ready<span class="t-tag">&lt;/h3&gt;</span>
+  <span class="t-tag">&lt;p&gt;</span>No build step needed.<span class="t-tag">&lt;/p&gt;</span>
+<span class="t-tag">&lt;/div&gt;</span></code></pre>
+    </div>
+</div>
+
+</Hero>
+
+<div class="home-stats">
+    <div class="home-stat">
+        <i class="ph ph-file-text" aria-hidden="true"></i>
+        <strong>47</strong>
+        <span>Pages</span>
+    </div>
+    <div class="home-stat">
+        <i class="ph ph-stack" aria-hidden="true"></i>
+        <strong>32</strong>
+        <span>Components</span>
+    </div>
+    <div class="home-stat">
+        <i class="ph ph-package" aria-hidden="true"></i>
+        <strong>0</strong>
+        <span>Dependencies</span>
+    </div>
+    <div class="home-stat">
+        <i class="ph ph-eye" aria-hidden="true"></i>
+        <strong>AA</strong>
+        <span>WCAG</span>
+    </div>
+    <div class="home-stat">
+        <i class="ph ph-moon" aria-hidden="true"></i>
+        <strong>Dark</strong>
+        <span>Mode</span>
+    </div>
+    <div class="home-stat">
+        <i class="ph ph-printer" aria-hidden="true"></i>
+        <strong>Print</strong>
+        <span>Ready</span>
+    </div>
+</div>
 
 ---
 
