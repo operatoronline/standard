@@ -3,6 +3,17 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Standard v1.0 initialized');
 
     // ═══════════════════════════════════════
+    // SEARCH SHORTCUT HINT (⌘K / Ctrl+K)
+    // ═══════════════════════════════════════
+    const shortcutMods = document.querySelectorAll('.search-shortcut-mod');
+    if (shortcutMods.length) {
+        const isMac = /Mac|iPhone|iPad|iPod/.test(navigator.platform) || 
+                      (navigator.userAgentData && navigator.userAgentData.platform === 'macOS');
+        const modSymbol = isMac ? '⌘' : 'Ctrl+';
+        shortcutMods.forEach(el => { el.textContent = modSymbol; });
+    }
+
+    // ═══════════════════════════════════════
     // A11Y: LIVE REGION ANNOUNCER
     // ═══════════════════════════════════════
     const announcer = document.getElementById('a11y-announcer');

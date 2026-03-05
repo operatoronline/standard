@@ -1036,6 +1036,46 @@ a { color: inherit; text-decoration: none; }
   font-size: var(--fs-xl);
 }
 
+/* Keyboard shortcut hint (⌘K / Ctrl+K) */
+.search-shortcut {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+  padding: 2px var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--fg-4);
+  background: var(--bg);
+  border: 1px solid var(--bd);
+  border-radius: var(--r-s);
+  pointer-events: none;
+  transition: opacity var(--dur-n) var(--ease);
+  white-space: nowrap;
+}
+.search-shortcut-mod {
+  font-size: var(--fs-sm);
+}
+.search-container:focus-within .search-shortcut {
+  opacity: 0;
+  visibility: hidden;
+}
+@media (max-width: 767px) {
+  .search-shortcut { display: none; }
+}
+[data-theme="dark"] .search-shortcut {
+  background: oklch(100% 0 0 / .06);
+  border-color: oklch(100% 0 0 / .12);
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .search-shortcut {
+    background: oklch(100% 0 0 / .06);
+    border-color: oklch(100% 0 0 / .12);
+  }
+}
+
 .search-results {
   position: absolute;
   top: 100%;
