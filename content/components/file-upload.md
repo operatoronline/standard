@@ -479,7 +479,7 @@ Active state when files are dragged over the drop zone.
   border-radius: var(--r-m);
   background: var(--bg);
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
+  transition: border-color var(--dur-f), background var(--dur-f);
   position: relative;
   text-align: center;
 }
@@ -600,7 +600,7 @@ Active state when files are dragged over the drop zone.
   height: 100%;
   background: var(--accent);
   border-radius: 2px;
-  transition: width 0.3s;
+  transition: width var(--dur-s);
 }
 
 /* Remove / Retry buttons */
@@ -615,7 +615,7 @@ Active state when files are dragged over the drop zone.
   cursor: pointer;
   color: var(--fg-3);
   border-radius: var(--r-s);
-  transition: background 0.15s;
+  transition: background var(--dur-f);
 }
 
 .FileUpload-itemRemove:hover,

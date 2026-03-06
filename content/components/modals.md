@@ -558,7 +558,7 @@ Override modal styles using CSS custom properties:
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s, visibility 0.2s;
+  transition: opacity var(--dur-n), visibility var(--dur-n);
 }
 
 .Modal-overlay.active,
@@ -583,7 +583,7 @@ Override modal styles using CSS custom properties:
   display: flex;
   flex-direction: column;
   transform: translateY(-8px);
-  transition: transform 0.2s;
+  transition: transform var(--dur-n);
 }
 
 .Modal-overlay.active .Modal {

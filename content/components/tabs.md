@@ -662,7 +662,7 @@ Override tab styles using CSS custom properties:
   font-size: var(--text-sm);
   font-weight: 500;
   cursor: pointer;
-  transition: color 0.15s, border-color 0.15s;
+  transition: color var(--dur-f), border-color var(--dur-f);
   white-space: nowrap;
 }
 

@@ -1055,7 +1055,7 @@ Override card styles using CSS custom properties:
 
 .Card--interactive {
   cursor: pointer;
-  transition: box-shadow 0.15s, transform 0.15s;
+  transition: box-shadow var(--dur-f), transform var(--dur-f);
 }
 
 .Card--interactive:hover {

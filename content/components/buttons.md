@@ -480,7 +480,7 @@ Override button styles using CSS custom properties:
   font-weight: 500;
   line-height: 1.2;
   cursor: pointer;
-  transition: background-color 0.15s, color 0.15s, border-color 0.15s, box-shadow 0.15s;
+  transition: background-color var(--dur-f), color var(--dur-f), border-color var(--dur-f), box-shadow var(--dur-f);
   white-space: nowrap;
   text-decoration: none;
   background-color: var(--bg-s);

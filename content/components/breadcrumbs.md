@@ -413,7 +413,7 @@ Override breadcrumb styles using CSS custom properties:
 .Breadcrumb-item a {
   color: var(--fg-3);
   text-decoration: none;
-  transition: color 0.15s;
+  transition: color var(--dur-f);
 }
 
 .Breadcrumb-item a:hover {
@@ -461,7 +461,7 @@ Override breadcrumb styles using CSS custom properties:
   color: var(--fg-3);
   cursor: pointer;
   border-radius: var(--r-s);
-  transition: background-color 0.15s, color 0.15s;
+  transition: background-color var(--dur-f), color var(--dur-f);
 }
 
 .Breadcrumb-ellipsis:hover {

@@ -359,7 +359,7 @@ Override switch styles using CSS custom properties:
   background: var(--bg-s);
   border: 1px solid var(--bd-s);
   border-radius: 999px;
-  transition: background 0.2s, border-color 0.2s;
+  transition: background var(--dur-n), border-color var(--dur-n);
 }
 
 /* Thumb */
@@ -372,7 +372,7 @@ Override switch styles using CSS custom properties:
   height: 18px;
   background: white;
   border-radius: 50%;
-  transition: transform 0.2s;
+  transition: transform var(--dur-n);
   box-shadow: var(--shadow-sm);
 }
 

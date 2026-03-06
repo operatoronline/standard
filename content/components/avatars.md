@@ -687,7 +687,7 @@ Override avatar styles using CSS custom properties:
 .AvatarGroup .Avatar {
   margin-left: -12px;
   border: 2px solid var(--bg);
-  transition: transform 0.15s;
+  transition: transform var(--dur-f);
 }
 
 .AvatarGroup .Avatar:last-child {
@@ -738,7 +738,7 @@ Override avatar styles using CSS custom properties:
   background: none;
   cursor: pointer;
   border-radius: 50%;
-  transition: transform 0.15s;
+  transition: transform var(--dur-f);
 }
 
 .Avatar-button:hover {
@@ -780,7 +780,7 @@ Override avatar styles using CSS custom properties:
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background-color 0.15s;
+  transition: background-color var(--dur-f);
 }
 
 .Avatar-edit:hover {

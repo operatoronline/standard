@@ -420,7 +420,7 @@ Override alert styles using CSS custom properties:
   color: var(--fg-3);
   cursor: pointer;
   flex-shrink: 0;
-  transition: color 0.15s;
+  transition: color var(--dur-f);
 }
 
 .Alert-close:hover {

@@ -375,7 +375,7 @@ Override progress styling with CSS custom properties:
   height: 100%;
   background: var(--accent);
   border-radius: var(--r-full);
-  transition: width 0.3s ease;
+  transition: width var(--dur-s) var(--ease);
 }
 
 /* Sizes */

@@ -618,7 +618,7 @@ Override rating styling with CSS custom properties:
 .Rating-star {
   color: var(--bd-s);
   font-size: var(--fs-3xl);
-  transition: color 0.15s, transform 0.15s;
+  transition: color var(--dur-f), transform var(--dur-f);
 }
 
 .Rating-star--filled,
@@ -679,7 +679,7 @@ Override rating styling with CSS custom properties:
   border-radius: var(--radius-sm);
   background: transparent;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: color var(--dur-f), transform var(--dur-f);
 }
 .Rating-thumb:hover {
   background: var(--bg-s);
@@ -697,7 +697,7 @@ Override rating styling with CSS custom properties:
   border: none;
   cursor: pointer;
   opacity: 0.5;
-  transition: all 0.15s;
+  transition: color var(--dur-f), transform var(--dur-f);
   padding: var(--space-1);
 }
 .Rating-emoji:hover,

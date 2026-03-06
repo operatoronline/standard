@@ -527,7 +527,7 @@ Override chip styles using CSS custom properties:
   border-radius: 50%;
   cursor: pointer;
   color: var(--fg-3);
-  transition: all 0.15s;
+  transition: background var(--dur-f), color var(--dur-f);
 }
 
 .Chip-remove:hover {
@@ -538,7 +538,7 @@ Override chip styles using CSS custom properties:
 /* Selectable */
 .Chip--selectable {
   cursor: pointer;
-  transition: all 0.15s;
+  transition: background var(--dur-f), border-color var(--dur-f), color var(--dur-f);
 }
 
 .Chip--selectable:hover {

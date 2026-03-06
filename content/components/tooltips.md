@@ -264,7 +264,7 @@ Override tooltip styles using CSS custom properties:
   border-radius: var(--radius-sm);
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.15s;
+  transition: opacity var(--dur-f);
   z-index: 1000;
 }
 

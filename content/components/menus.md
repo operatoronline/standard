@@ -666,7 +666,7 @@ Override menu styles using CSS custom properties:
   border-radius: var(--r-s);
   width: 100%;
   text-align: left;
-  transition: background-color 0.1s;
+  transition: background-color var(--dur-f);
 }
 
 .Menu-item:hover {

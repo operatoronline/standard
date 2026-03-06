@@ -444,7 +444,7 @@ Override slider styling with CSS custom properties:
   cursor: pointer;
   margin-top: -6px;
   box-shadow: 0 2px 4px oklch(0% 0 0 / 0.2);
-  transition: transform 0.15s, box-shadow 0.15s;
+  transition: transform var(--dur-f), box-shadow var(--dur-f);
 }
 
 .Slider::-webkit-slider-thumb:hover {

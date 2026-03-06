@@ -692,7 +692,7 @@ Override list styles using CSS custom properties:
   gap: var(--space-3);
   padding: var(--space-3);
   cursor: pointer;
-  transition: background-color 0.15s;
+  transition: background-color var(--dur-f);
 }
 
 .List-item:hover {

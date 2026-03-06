@@ -670,7 +670,7 @@ Override badge styles using CSS custom properties:
   cursor: pointer;
   color: inherit;
   opacity: 0.7;
-  transition: opacity 0.15s;
+  transition: opacity var(--dur-f);
 }
 
 .Badge-dismiss:hover {
@@ -682,7 +682,7 @@ Override badge styles using CSS custom properties:
 .Badge--clickable {
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.15s;
+  transition: background var(--dur-f), color var(--dur-f);
 }
 
 .Badge--clickable:hover {

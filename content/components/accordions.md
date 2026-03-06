@@ -431,7 +431,7 @@ Override accordion styles using CSS custom properties:
 /* Custom icon animation */
 .Accordion-icon {
   --accordion-icon-rotation: 180deg;
-  transition: transform 0.3s ease;
+  transition: transform var(--dur-s) var(--ease);
 }
 
 details[open] .Accordion-icon {
@@ -567,7 +567,7 @@ details[open] .Accordion-icon {
   font-size: var(--fs-lg);
   color: var(--fg);
   list-style: none;
-  transition: background-color 0.15s;
+  transition: background-color var(--dur-f);
 }
 
 .Accordion-header::-webkit-details-marker {
@@ -599,7 +599,7 @@ details[open] .Accordion-icon {
 .Accordion-icon {
   font-size: var(--fs-xl);
   color: var(--fg-3);
-  transition: transform 0.2s ease;
+  transition: transform var(--dur-n) var(--ease);
   flex-shrink: 0;
 }
 

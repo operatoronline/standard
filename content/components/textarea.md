@@ -569,7 +569,7 @@ Override textarea styles using CSS custom properties:
   border: 1px solid var(--bd);
   border-radius: var(--radius-md);
   resize: vertical;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color var(--dur-f), box-shadow var(--dur-f);
 }
 
 .Textarea::placeholder {

@@ -340,7 +340,7 @@ Override pagination styling with CSS custom properties:
   border-radius: var(--r-s);
   cursor: pointer;
   text-decoration: none;
-  transition: background 0.15s, color 0.15s;
+  transition: background var(--dur-f), color var(--dur-f);
 }
 
 .Pagination-item:hover:not(.active):not(.disabled) {

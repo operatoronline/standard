@@ -505,7 +505,7 @@ Override drawer styles using CSS custom properties:
 
 /* Custom transition speed */
 .Drawer--slow {
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform var(--dur-s) var(--ease);
 }
 
 /* Drawer with border instead of shadow */
@@ -588,7 +588,7 @@ Override drawer styles using CSS custom properties:
   background: oklch(0% 0 0 / 0.5);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s, visibility 0.2s;
+  transition: opacity var(--dur-n), visibility var(--dur-n);
   z-index: 998;
 }
 .Drawer-backdrop--visible {
@@ -604,7 +604,7 @@ Override drawer styles using CSS custom properties:
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-xl);
-  transition: transform 0.3s ease;
+  transition: transform var(--dur-s) var(--ease);
 }
 
 /* Position variants */
@@ -660,7 +660,7 @@ Override drawer styles using CSS custom properties:
 /* Mini variant */
 .Drawer--mini {
   width: 64px;
-  transition: width 0.2s;
+  transition: width var(--dur-n);
 }
 .Drawer--mini:hover {
   width: 240px;
@@ -718,7 +718,7 @@ Override drawer styles using CSS custom properties:
   border-radius: var(--radius-sm);
   color: var(--fg-3);
   text-decoration: none;
-  transition: background 0.15s, color 0.15s;
+  transition: background var(--dur-f), color var(--dur-f);
 }
 .Drawer-navItem:hover {
   background: var(--bg-s);

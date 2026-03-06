@@ -479,7 +479,7 @@ Override dropdown styles using CSS custom properties:
   text-decoration: none;
   font-size: var(--fs-lg);
   cursor: pointer;
-  transition: background 0.1s;
+  transition: background var(--dur-f);
 }
 
 .Dropdown-item:hover {
@@ -550,7 +550,7 @@ Override dropdown styles using CSS custom properties:
 /* Trigger caret */
 .Dropdown-trigger i.ph-caret-down {
   font-size: var(--fs-md);
-  transition: transform 0.15s;
+  transition: transform var(--dur-f);
 }
 
 .Dropdown-trigger[aria-expanded="true"] i.ph-caret-down {

@@ -1288,7 +1288,7 @@ Override form styles using CSS custom properties:
   border-radius: var(--r-s);
   background: var(--bg);
   color: var(--fg);
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color var(--dur-f), box-shadow var(--dur-f);
 }
 
 .Input:focus {
@@ -1400,7 +1400,7 @@ Override form styles using CSS custom properties:
   resize: vertical;
   min-height: 80px;
   font-family: inherit;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color var(--dur-f), box-shadow var(--dur-f);
 }
 
 .Textarea:focus {
@@ -1448,7 +1448,7 @@ Override form styles using CSS custom properties:
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.15s, border-color 0.15s;
+  transition: background-color var(--dur-f), border-color var(--dur-f);
   flex-shrink: 0;
 }
 
@@ -1494,7 +1494,7 @@ Override form styles using CSS custom properties:
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: border-color 0.15s;
+  transition: border-color var(--dur-f);
   flex-shrink: 0;
 }
 
@@ -1529,7 +1529,7 @@ Override form styles using CSS custom properties:
   border: 1px solid var(--bd);
   border-radius: var(--r-m);
   cursor: pointer;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color var(--dur-f), box-shadow var(--dur-f);
 }
 
 .RadioCard--selected {
@@ -1559,7 +1559,7 @@ Override form styles using CSS custom properties:
   border: 1px solid var(--bd-s);
   border-radius: 11px;
   position: relative;
-  transition: background-color 0.2s, border-color 0.2s;
+  transition: background-color var(--dur-n), border-color var(--dur-n);
   flex-shrink: 0;
 }
 
@@ -1572,7 +1572,7 @@ Override form styles using CSS custom properties:
   background: white;
   top: 2px;
   left: 2px;
-  transition: transform 0.2s;
+  transition: transform var(--dur-n);
 }
 
 .Switch-input:checked + .Switch-track {
@@ -1622,7 +1622,7 @@ Override form styles using CSS custom properties:
   border-radius: var(--r-m);
   cursor: pointer;
   text-align: center;
-  transition: border-color 0.15s, background 0.15s;
+  transition: border-color var(--dur-f), background var(--dur-f);
 }
 
 .FileInput-label:hover {

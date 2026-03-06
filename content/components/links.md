@@ -554,7 +554,7 @@ Override link styles using CSS custom properties:
   color: var(--accent);
   text-decoration: none;
   cursor: pointer;
-  transition: color 0.15s, text-decoration 0.15s;
+  transition: color var(--dur-f), text-decoration var(--dur-f);
 }
 
 .Link:hover {
