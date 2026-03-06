@@ -378,6 +378,17 @@ async function build() {
         }
     }
 
+    // Remove build-time scripts from dist (only runtime JS should be deployed)
+    const buildOnlyScripts = ['build.mjs', 'generate-favicons.mjs'];
+    for (const script of buildOnlyScripts) {
+        const scriptPath = path.join(CONFIG.distDir, 'scripts', script);
+        if (await fs.pathExists(scriptPath)) {
+            await fs.remove(scriptPath);
+        }
+    }
+    console.log(`  ✓ Removed build-only scripts from dist (${buildOnlyScripts.join(', ')})`);
+    
+
     const assetMap = {}; // maps original name → hashed name (e.g. 'docs.css' → 'docs.a1b2c3d4.min.css')
 
     // 1b. Combine + subset + minify all vendor CSS into single file
@@ -715,6 +726,54 @@ async function build() {
         assetMap['404.js'] = js404MinName;
         console.log(`  ✓ Minified 404.js → ${js404MinName}`);
     }
+
+    // Clean up redundant files from dist
+    // After bundling, the original vendor source files are no longer needed —
+    // CSS is combined into standard.*.min.css, JS into vendor.*.min.js
+    const redundantFiles = [
+        // Original vendor JS (now bundled into scripts/vendor.*.min.js)
+        'vendor/fuse.min.js',
+        'vendor/prism/prism.min.js',
+        'vendor/prism/prism-markup.min.js',
+        'vendor/prism/prism-css.min.js',
+        'vendor/prism/prism-javascript.min.js',
+        // Original vendor CSS (now combined into standard.*.min.css)
+        'vendor/normalize.css',
+        'vendor/phosphor/regular/style.css',
+        'vendor/phosphor/bold/style.css',
+        'vendor/phosphor/fill/style.css',
+        'vendor/phosphor/duotone/style.css',
+        // Full (unsubsetted) font backups — source copies live in source tree
+        'vendor/phosphor/bold/Phosphor-Bold-full.woff2',
+        'vendor/phosphor/regular/Phosphor-full.woff2',
+        'vendor/phosphor/fill/Phosphor-Fill-full.woff2',
+        'vendor/phosphor/duotone/Phosphor-Duotone-full.woff2',
+        // Source CSS files (critical.css is inlined in <head>, docs.css is compiled into standard.css)
+        'styles/critical.css',
+        'styles/docs.css',
+    ];
+    let cleanedCount = 0;
+    let cleanedBytes = 0;
+    for (const rf of redundantFiles) {
+        const rfPath = path.join(CONFIG.distDir, rf);
+        if (await fs.pathExists(rfPath)) {
+            const stat = await fs.stat(rfPath);
+            cleanedBytes += stat.size;
+            await fs.remove(rfPath);
+            cleanedCount++;
+        }
+    }
+    // Remove empty vendor directories after cleanup
+    for (const dir of ['vendor/prism', 'vendor/phosphor/regular', 'vendor/phosphor/bold', 'vendor/phosphor/fill', 'vendor/phosphor/duotone']) {
+        const dirPath = path.join(CONFIG.distDir, dir);
+        if (await fs.pathExists(dirPath)) {
+            const contents = await fs.readdir(dirPath);
+            if (contents.length === 0) {
+                await fs.remove(dirPath);
+            }
+        }
+    }
+    console.log(`  ✓ Cleaned ${cleanedCount} redundant files from dist (${(cleanedBytes / 1024).toFixed(1)}KB freed)`);
 
     // 2. Walk content
     const files = await glob(`${CONFIG.contentDir}/**/*.md`);
