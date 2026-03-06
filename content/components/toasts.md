@@ -334,9 +334,9 @@ Override toast styles using CSS custom properties:
   padding: var(--space-3) var(--space-4);
   background: var(--bg);
   border: 1px solid var(--bd);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-lg);
-  font-size: var(--text-sm);
+  border-radius: var(--r-m);
+  box-shadow: var(--sh-l);
+  font-size: var(--fs-sm);
   min-width: 280px;
   max-width: 420px;
 }
@@ -360,7 +360,7 @@ Override toast styles using CSS custom properties:
   border: none;
   color: var(--accent);
   font-weight: 600;
-  font-size: var(--text-sm);
+  font-size: var(--fs-sm);
   cursor: pointer;
   padding: var(--space-1) var(--space-2);
 }

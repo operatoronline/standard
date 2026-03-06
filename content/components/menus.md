@@ -453,9 +453,9 @@ Override menu styles using CSS custom properties:
 /* Custom menu appearance */
 .Menu {
   --menu-bg: var(--bg);
-  --menu-border: var(--border-primary);
-  --menu-shadow: var(--shadow-lg);
-  --menu-radius: var(--radius-lg);
+  --menu-border: var(--bd-s);
+  --menu-shadow: var(--sh-l);
+  --menu-radius: var(--r-l);
 }
 
 /* Custom item styling */
@@ -466,13 +466,13 @@ Override menu styles using CSS custom properties:
 
 /* Danger variant color */
 .Menu-item--danger {
-  --menu-item-color: var(--color-danger);
+  --menu-item-color: var(--err);
 }
 
 /* Custom compact variant */
 .Menu--compact .Menu-item {
   --menu-item-padding: var(--space-1) var(--space-2);
-  font-size: var(--text-sm);
+  font-size: var(--fs-sm);
 }
 
 /* Wider menu */

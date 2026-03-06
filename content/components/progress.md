@@ -367,14 +367,14 @@ Override progress styling with CSS custom properties:
   width: 100%;
   height: 8px;
   background: var(--bd);
-  border-radius: var(--r-full);
+  border-radius: var(--r-f);
   overflow: hidden;
 }
 
 .Progress-bar {
   height: 100%;
   background: var(--accent);
-  border-radius: var(--r-full);
+  border-radius: var(--r-f);
   transition: width var(--dur-s) var(--ease);
 }
 

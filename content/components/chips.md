@@ -268,7 +268,7 @@ Common pattern for tag inputs in forms.
                 <i class="ph ph-x"></i>
             </button>
         </span>
-        <input type="text" placeholder="Add tag..." style="border: none; outline: none; flex: 1; min-width: 100px; font-family: var(--font-sans); font-size: 0.9rem; background: transparent;">
+        <input type="text" placeholder="Add tag..." style="border: none; outline: none; flex: 1; min-width: 100px; font-family: var(--ff-b); font-size: 0.9rem; background: transparent;">
     </div>
 </Preview>
 
@@ -408,7 +408,7 @@ Override chip styles using CSS custom properties:
 
 /* Pill shape (more rounded) */
 .Chip--pill {
-  border-radius: 999px;
+  border-radius: var(--r-f);
   padding: var(--space-1) var(--space-3);
 }
 
@@ -501,8 +501,8 @@ Override chip styles using CSS custom properties:
   padding: var(--space-1) var(--space-2);
   background-color: var(--bg-s);
   border: 1px solid var(--bd);
-  border-radius: var(--space-4);
-  font-family: var(--font-sans);
+  border-radius: var(--r-l);
+  font-family: var(--ff-b);
   font-size: var(--fs-base);
   font-weight: 500;
   color: var(--fg);

@@ -575,7 +575,7 @@ Override card styles using CSS custom properties:
 
 /* Custom border radius */
 .Card--rounded {
-  border-radius: var(--space-6);
+  border-radius: var(--r-xl);
 }
 
 /* Custom padding */

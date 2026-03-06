@@ -518,7 +518,7 @@ Override timeline styles using CSS custom properties:
 .Timeline--cards .Timeline-content {
   background: var(--bg-s);
   padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
+  border-radius: var(--r-m);
   border: 1px solid var(--bd);
 }
 ```
@@ -744,12 +744,12 @@ Override timeline styles using CSS custom properties:
 .Timeline-description {
   margin-top: var(--space-1);
   color: var(--fg-3);
-  font-size: var(--text-sm);
+  font-size: var(--fs-sm);
 }
 
 .Timeline-time {
   margin-top: var(--space-1);
-  font-size: var(--text-xs);
+  font-size: var(--fs-xs);
   color: var(--fg-3);
 }
 
@@ -758,7 +758,7 @@ Override timeline styles using CSS custom properties:
   padding-bottom: var(--space-3);
 }
 .Timeline--compact .Timeline-content {
-  font-size: var(--text-sm);
+  font-size: var(--fs-sm);
 }
 .Timeline--compact .Timeline-time {
   display: inline;

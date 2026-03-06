@@ -238,7 +238,7 @@ Stack actions vertically for sidebars or narrow spaces.
 A floating toolbar for contextual actions (like text editors).
 
 <Preview>
-  <div style="padding: var(--space-8); background: var(--bg-s); border-radius: var(--radius-md);">
+  <div style="padding: var(--space-8); background: var(--bg-s); border-radius: var(--r-m);">
     <div class="Toolbar Toolbar--floating">
       <button class="Button Button--ghost Button--icon Button--sm"><i class="ph ph-text-b"></i></button>
       <button class="Button Button--ghost Button--icon Button--sm"><i class="ph ph-text-italic"></i></button>
@@ -507,13 +507,13 @@ Override toolbar styles using CSS custom properties:
 
 /* Text content */
 .Toolbar-text {
-  font-size: var(--text-sm);
+  font-size: var(--fs-sm);
   color: var(--fg-3);
   padding: 0 var(--space-2);
 }
 
 .Toolbar-label {
-  font-size: var(--text-sm);
+  font-size: var(--fs-sm);
   font-weight: 500;
   color: var(--fg);
   padding: 0 var(--space-2);
@@ -522,7 +522,7 @@ Override toolbar styles using CSS custom properties:
 /* Bordered variant */
 .Toolbar--bordered {
   border: 1px solid var(--bd);
-  border-radius: var(--radius-md);
+  border-radius: var(--r-m);
   background: var(--bg);
 }
 
@@ -544,8 +544,8 @@ Override toolbar styles using CSS custom properties:
 /* Floating (elevated) */
 .Toolbar--floating {
   background: var(--bg);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-lg);
+  border-radius: var(--r-m);
+  box-shadow: var(--sh-l);
   padding: var(--space-1);
 }
 
@@ -553,7 +553,7 @@ Override toolbar styles using CSS custom properties:
 .Toolbar--contextual {
   background: var(--accent);
   color: white;
-  border-radius: var(--radius-md);
+  border-radius: var(--r-m);
   padding: var(--space-2) var(--space-3);
 }
 .Toolbar--contextual .Toolbar-text { color: white; }
@@ -567,14 +567,14 @@ Override toolbar styles using CSS custom properties:
   gap: var(--space-2);
   padding: var(--space-1) var(--space-2);
   background: var(--bg-s);
-  border-radius: var(--radius-sm);
+  border-radius: var(--r-s);
   color: var(--fg-3);
 }
 .Toolbar-searchInput {
   border: none;
   background: transparent;
   outline: none;
-  font-size: var(--text-sm);
+  font-size: var(--fs-sm);
   color: var(--fg);
   min-width: 150px;
 }
@@ -588,10 +588,10 @@ Override toolbar styles using CSS custom properties:
   border-radius: 0;
 }
 .ButtonGroup .Button:first-child {
-  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  border-radius: var(--r-s) 0 0 var(--r-s);
 }
 .ButtonGroup .Button:last-child {
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  border-radius: 0 var(--r-s) var(--r-s) 0;
 }
 .ButtonGroup .Button.active {
   background: var(--bg-s);

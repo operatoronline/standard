@@ -148,7 +148,7 @@ Switches toggle a single option on or off.
 ### Settings Panel
 
 <Preview title="Settings Panel with Switches">
-    <div style="width: 360px; border: 1px solid var(--bd); border-radius: var(--radius-md); overflow: hidden;">
+    <div style="width: 360px; border: 1px solid var(--bd); border-radius: var(--r-m); overflow: hidden;">
         <div style="padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--bd); font-weight: 600;">Preferences</div>
         <div style="display: flex; flex-direction: column;">
             <label class="Switch-label" style="padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--bd);">
@@ -171,21 +171,21 @@ Switches toggle a single option on or off.
 
 <Preview title="Feature Flags">
     <div style="width: 400px; display: flex; flex-direction: column; gap: var(--space-2);">
-        <div style="display: flex; align-items: center; justify-content: space-between; padding: var(--space-2) var(--space-3); background: var(--bg-s); border-radius: var(--radius-sm);">
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: var(--space-2) var(--space-3); background: var(--bg-s); border-radius: var(--r-s);">
             <div style="display: flex; align-items: center; gap: var(--space-2);">
                 <code style="font-size: 0.8rem;">BETA_EDITOR</code>
                 <span class="Badge Badge--warning" style="font-size: 0.65rem;">Beta</span>
             </div>
             <label class="Switch Switch--small"><input type="checkbox" checked><span class="Switch-slider"></span></label>
         </div>
-        <div style="display: flex; align-items: center; justify-content: space-between; padding: var(--space-2) var(--space-3); background: var(--bg-s); border-radius: var(--radius-sm);">
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: var(--space-2) var(--space-3); background: var(--bg-s); border-radius: var(--r-s);">
             <div style="display: flex; align-items: center; gap: var(--space-2);">
                 <code style="font-size: 0.8rem;">AI_ASSIST</code>
                 <span class="Badge Badge--info" style="font-size: 0.65rem;">New</span>
             </div>
             <label class="Switch Switch--small"><input type="checkbox"><span class="Switch-slider"></span></label>
         </div>
-        <div style="display: flex; align-items: center; justify-content: space-between; padding: var(--space-2) var(--space-3); background: var(--bg-s); border-radius: var(--radius-sm);">
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: var(--space-2) var(--space-3); background: var(--bg-s); border-radius: var(--r-s);">
             <div style="display: flex; align-items: center; gap: var(--space-2);">
                 <code style="font-size: 0.8rem;">DARK_MODE</code>
             </div>
@@ -252,10 +252,10 @@ Override switch styles using CSS custom properties:
 
 /* Square switch (no rounded corners) */
 .Switch--square .Switch-slider {
-  border-radius: var(--radius-sm);
+  border-radius: var(--r-s);
 }
 .Switch--square .Switch-slider::before {
-  border-radius: var(--radius-xs);
+  border-radius: var(--r-s);
 }
 
 /* Custom track colors */
@@ -358,7 +358,7 @@ Override switch styles using CSS custom properties:
   height: 24px;
   background: var(--bg-s);
   border: 1px solid var(--bd-s);
-  border-radius: 999px;
+  border-radius: var(--r-f);
   transition: background var(--dur-n), border-color var(--dur-n);
 }
 
@@ -373,7 +373,7 @@ Override switch styles using CSS custom properties:
   background: white;
   border-radius: 50%;
   transition: transform var(--dur-n);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--sh-s);
 }
 
 /* Checked state */

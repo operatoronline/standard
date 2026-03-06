@@ -248,11 +248,11 @@ Override breadcrumb styles using CSS custom properties:
 .Breadcrumb--pills .Breadcrumb-item a {
     background: var(--bg-s);
     padding: var(--space-1) var(--space-2);
-    border-radius: var(--space-4);
+    border-radius: var(--r-l);
 }
 
 .Breadcrumb--pills .Breadcrumb-item a:hover {
-    background: var(--bg-tertiary);
+    background: var(--bg-m);
 }
 
 /* Custom separator icon */

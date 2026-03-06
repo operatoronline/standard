@@ -307,7 +307,7 @@ Override button styles using CSS custom properties:
 
 /* Custom border radius */
 .Button--rounded {
-  border-radius: var(--space-6);
+  border-radius: var(--r-xl);
 }
 ```
 
@@ -475,7 +475,7 @@ Override button styles using CSS custom properties:
   padding: var(--space-2) var(--space-4);
   border: 1px solid transparent;
   border-radius: var(--r-s);
-  font-family: var(--font-sans);
+  font-family: var(--ff-b);
   font-size: var(--fs-base);
   font-weight: 500;
   line-height: 1.2;
@@ -495,7 +495,7 @@ Override button styles using CSS custom properties:
 /* Variants */
 .Button--primary {
   background-color: var(--accent);
-  color: var(--fg-on-accent);
+  color: var(--accent-fg);
   border-color: transparent;
 }
 
@@ -652,7 +652,7 @@ Override button styles using CSS custom properties:
 
 .ButtonGroup-item--active {
   background-color: var(--accent);
-  color: var(--fg-on-accent);
+  color: var(--accent-fg);
   border-color: var(--accent);
   z-index: 1;
 }

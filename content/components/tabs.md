@@ -467,16 +467,16 @@ Override tab styles using CSS custom properties:
 ```css
 /* Bordered variant */
 .Tabs--bordered .Tabs-list {
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--bd);
+  border-radius: var(--r-m);
   padding: var(--space-1);
   background: var(--bg-s);
 }
 
 .Tabs--bordered .Tabs-tab.active {
   background: var(--bg);
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-sm);
+  border-radius: var(--r-s);
+  box-shadow: var(--sh-s);
 }
 
 /* Minimal variant */
@@ -659,7 +659,7 @@ Override tab styles using CSS custom properties:
   border: none;
   border-bottom: 2px solid transparent;
   color: var(--fg-3);
-  font-size: var(--text-sm);
+  font-size: var(--fs-sm);
   font-weight: 500;
   cursor: pointer;
   transition: color var(--dur-f), border-color var(--dur-f);
@@ -693,7 +693,7 @@ Override tab styles using CSS custom properties:
 /* Contained variant */
 .Tabs--contained {
   border: 1px solid var(--bd);
-  border-radius: var(--radius-md);
+  border-radius: var(--r-m);
   overflow: hidden;
 }
 .Tabs--contained .Tabs-list {
@@ -714,7 +714,7 @@ Override tab styles using CSS custom properties:
 }
 .Tabs--pills .Tabs-tab {
   border-bottom: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--r-m);
   padding: var(--space-1) var(--space-3);
 }
 .Tabs--pills .Tabs-tab.active {
@@ -725,11 +725,11 @@ Override tab styles using CSS custom properties:
 /* Size variants */
 .Tabs--small .Tabs-tab {
   padding: var(--space-1) var(--space-3);
-  font-size: var(--text-xs);
+  font-size: var(--fs-xs);
 }
 .Tabs--large .Tabs-tab {
   padding: var(--space-3) var(--space-5);
-  font-size: var(--text-base);
+  font-size: var(--fs-base);
 }
 
 /* Full width */

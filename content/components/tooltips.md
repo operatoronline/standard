@@ -258,10 +258,10 @@ Override tooltip styles using CSS custom properties:
   padding: var(--space-1) var(--space-2);
   background: var(--fg);
   color: var(--bg);
-  font-size: var(--text-xs);
+  font-size: var(--fs-xs);
   line-height: 1.4;
   white-space: nowrap;
-  border-radius: var(--radius-sm);
+  border-radius: var(--r-s);
   pointer-events: none;
   opacity: 0;
   transition: opacity var(--dur-f);

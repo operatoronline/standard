@@ -11,7 +11,7 @@ Drawers are panels that slide in from the edge of the screen, commonly used for 
 A simple slide-out panel from the right.
 
 <Preview>
-  <div style="position: relative; height: 300px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--radius-md);">
+  <div style="position: relative; height: 300px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--r-m);">
     <div class="Drawer-backdrop Drawer-backdrop--visible"></div>
     <div class="Drawer Drawer--right Drawer--open" style="position: absolute;">
       <div class="Drawer-header">
@@ -44,28 +44,28 @@ Drawers can slide in from any edge.
 
 <Preview>
   <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4);">
-    <div style="position: relative; height: 200px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--radius-md);">
+    <div style="position: relative; height: 200px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--r-m);">
       <div class="Drawer Drawer--left Drawer--open Drawer--sm" style="position: absolute;">
         <div class="Drawer-header">
           <h4 class="Drawer-title">Left</h4>
         </div>
       </div>
     </div>
-    <div style="position: relative; height: 200px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--radius-md);">
+    <div style="position: relative; height: 200px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--r-m);">
       <div class="Drawer Drawer--right Drawer--open Drawer--sm" style="position: absolute;">
         <div class="Drawer-header">
           <h4 class="Drawer-title">Right</h4>
         </div>
       </div>
     </div>
-    <div style="position: relative; height: 200px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--radius-md);">
+    <div style="position: relative; height: 200px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--r-m);">
       <div class="Drawer Drawer--top Drawer--open Drawer--sm" style="position: absolute;">
         <div class="Drawer-header">
           <h4 class="Drawer-title">Top</h4>
         </div>
       </div>
     </div>
-    <div style="position: relative; height: 200px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--radius-md);">
+    <div style="position: relative; height: 200px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--r-m);">
       <div class="Drawer Drawer--bottom Drawer--open Drawer--sm" style="position: absolute;">
         <div class="Drawer-header">
           <h4 class="Drawer-title">Bottom</h4>
@@ -88,17 +88,17 @@ Drawers come in different widths.
 
 <Preview>
   <div style="display: flex; flex-direction: column; gap: var(--space-4);">
-    <div style="position: relative; height: 150px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--radius-md);">
+    <div style="position: relative; height: 150px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--r-m);">
       <div class="Drawer Drawer--right Drawer--open Drawer--xs" style="position: absolute;">
         <div class="Drawer-header"><h4 class="Drawer-title">XS (240px)</h4></div>
       </div>
     </div>
-    <div style="position: relative; height: 150px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--radius-md);">
+    <div style="position: relative; height: 150px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--r-m);">
       <div class="Drawer Drawer--right Drawer--open Drawer--sm" style="position: absolute;">
         <div class="Drawer-header"><h4 class="Drawer-title">SM (320px)</h4></div>
       </div>
     </div>
-    <div style="position: relative; height: 150px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--radius-md);">
+    <div style="position: relative; height: 150px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--r-m);">
       <div class="Drawer Drawer--right Drawer--open" style="position: absolute;">
         <div class="Drawer-header"><h4 class="Drawer-title">Default (400px)</h4></div>
       </div>
@@ -120,11 +120,11 @@ Drawers come in different widths.
 A sidebar navigation pattern.
 
 <Preview>
-  <div style="position: relative; height: 400px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--radius-md);">
+  <div style="position: relative; height: 400px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--r-m);">
     <div class="Drawer Drawer--left Drawer--open Drawer--sm" style="position: absolute;">
       <div class="Drawer-header">
         <div style="display: flex; align-items: center; gap: var(--space-2);">
-          <div style="width: 32px; height: 32px; background: var(--accent); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">C</div>
+          <div style="width: 32px; height: 32px; background: var(--accent); border-radius: var(--r-s); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">C</div>
           <span style="font-weight: 600;">Standard</span>
         </div>
       </div>
@@ -187,7 +187,7 @@ A sidebar navigation pattern.
 A drawer for filter controls.
 
 <Preview>
-  <div style="position: relative; height: 400px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--radius-md);">
+  <div style="position: relative; height: 400px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--r-m);">
     <div class="Drawer-backdrop Drawer-backdrop--visible"></div>
     <div class="Drawer Drawer--right Drawer--open Drawer--sm" style="position: absolute;">
       <div class="Drawer-header">
@@ -249,7 +249,7 @@ A drawer for filter controls.
 Organize drawer content with tabs.
 
 <Preview>
-  <div style="position: relative; height: 350px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--radius-md);">
+  <div style="position: relative; height: 350px; overflow: hidden; border: 1px solid var(--bd); border-radius: var(--r-m);">
     <div class="Drawer Drawer--right Drawer--open" style="position: absolute;">
       <div class="Drawer-header">
         <h3 class="Drawer-title">Details</h3>
@@ -292,7 +292,7 @@ Organize drawer content with tabs.
 A drawer that stays open alongside main content.
 
 <Preview>
-  <div style="display: flex; height: 300px; border: 1px solid var(--bd); border-radius: var(--radius-md); overflow: hidden;">
+  <div style="display: flex; height: 300px; border: 1px solid var(--bd); border-radius: var(--r-m); overflow: hidden;">
     <div class="Drawer Drawer--persistent Drawer--open Drawer--sm" style="position: relative;">
       <nav class="Drawer-nav">
         <a href="#" class="Drawer-navItem Drawer-navItem--active">
@@ -331,7 +331,7 @@ A drawer that stays open alongside main content.
 Collapsed sidebar showing only icons, expands on hover.
 
 <Preview>
-  <div style="display: flex; height: 300px; border: 1px solid var(--bd); border-radius: var(--radius-md); overflow: hidden;">
+  <div style="display: flex; height: 300px; border: 1px solid var(--bd); border-radius: var(--r-m); overflow: hidden;">
     <div class="Drawer Drawer--persistent Drawer--mini Drawer--open" style="position: relative;">
       <nav class="Drawer-nav">
         <a href="#" class="Drawer-navItem Drawer-navItem--active" title="Home">
@@ -603,7 +603,7 @@ Override drawer styles using CSS custom properties:
   z-index: 999;
   display: flex;
   flex-direction: column;
-  box-shadow: var(--shadow-xl);
+  box-shadow: var(--sh-xl);
   transition: transform var(--dur-s) var(--ease);
 }
 
@@ -685,7 +685,7 @@ Override drawer styles using CSS custom properties:
 }
 .Drawer-title {
   margin: 0;
-  font-size: var(--text-lg);
+  font-size: var(--fs-lg);
   font-weight: 600;
 }
 
@@ -715,7 +715,7 @@ Override drawer styles using CSS custom properties:
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-sm);
+  border-radius: var(--r-s);
   color: var(--fg-3);
   text-decoration: none;
   transition: background var(--dur-f), color var(--dur-f);
@@ -739,7 +739,7 @@ Override drawer styles using CSS custom properties:
   margin-bottom: var(--space-4);
 }
 .Drawer-sectionTitle {
-  font-size: var(--text-sm);
+  font-size: var(--fs-sm);
   font-weight: 600;
   margin-bottom: var(--space-2);
   color: var(--fg);

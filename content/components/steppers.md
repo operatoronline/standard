@@ -760,7 +760,7 @@ Override stepper styling with CSS custom properties:
 .Stepper-dot--active {
   background: var(--accent);
   width: 24px;
-  border-radius: var(--r-full);
+  border-radius: var(--r-f);
 }
 
 .Stepper-dot--completed {

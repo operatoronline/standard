@@ -242,7 +242,7 @@ Override pagination styling with CSS custom properties:
 
 ```css
 .Pagination--rounded .Pagination-item {
-  border-radius: var(--r-full);
+  border-radius: var(--r-f);
 }
 ```
 

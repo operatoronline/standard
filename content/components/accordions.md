@@ -414,7 +414,7 @@ Override accordion styles using CSS custom properties:
 /* Custom header styling */
 .Accordion-header {
   --accordion-padding: var(--space-4);
-  --accordion-bg-hover: var(--bg-tertiary);
+  --accordion-bg-hover: var(--bg-m);
   padding: var(--accordion-padding);
 }
 
@@ -424,7 +424,7 @@ Override accordion styles using CSS custom properties:
 
 /* Custom border color */
 .Accordion--bordered {
-  --accordion-border: var(--border-default);
+  --accordion-border: var(--bd);
   border-color: var(--accordion-border);
 }
 

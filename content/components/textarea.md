@@ -562,12 +562,12 @@ Override textarea styles using CSS custom properties:
   width: 100%;
   padding: var(--space-2) var(--space-3);
   font-family: var(--ff-b);
-  font-size: var(--text-sm);
+  font-size: var(--fs-sm);
   line-height: 1.5;
   color: var(--fg);
   background: var(--bg);
   border: 1px solid var(--bd);
-  border-radius: var(--radius-md);
+  border-radius: var(--r-m);
   resize: vertical;
   transition: border-color var(--dur-f), box-shadow var(--dur-f);
 }
@@ -585,12 +585,12 @@ Override textarea styles using CSS custom properties:
 /* Sizes */
 .Textarea--sm {
   padding: var(--space-1) var(--space-2);
-  font-size: var(--text-xs);
+  font-size: var(--fs-xs);
 }
 
 .Textarea--lg {
   padding: var(--space-3) var(--space-4);
-  font-size: var(--text-base);
+  font-size: var(--fs-base);
 }
 
 /* States */
@@ -642,7 +642,7 @@ Override textarea styles using CSS custom properties:
   background: var(--bg-s);
   border: 1px solid var(--bd);
   border-bottom: none;
-  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  border-radius: var(--r-m) var(--r-m) 0 0;
 }
 
 .Textarea-toolbar-btn {
@@ -655,7 +655,7 @@ Override textarea styles using CSS custom properties:
   border: none;
   color: var(--fg-3);
   cursor: pointer;
-  border-radius: var(--radius-sm);
+  border-radius: var(--r-s);
 }
 .Textarea-toolbar-btn:hover {
   background: var(--bg);
@@ -678,7 +678,7 @@ Override textarea styles using CSS custom properties:
   background: var(--bg-s);
   border: 1px solid var(--bd);
   border-top: none;
-  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  border-radius: 0 0 var(--r-m) var(--r-m);
 }
 
 .Textarea-actions-left {
@@ -710,7 +710,7 @@ Override textarea styles using CSS custom properties:
 }
 
 .Textarea-counter {
-  font-size: var(--text-xs);
+  font-size: var(--fs-xs);
   color: var(--fg-3);
 }
 ```

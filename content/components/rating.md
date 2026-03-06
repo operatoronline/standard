@@ -653,12 +653,12 @@ Override rating styling with CSS custom properties:
 }
 .Rating-value {
   font-weight: 600;
-  font-size: var(--text-lg);
+  font-size: var(--fs-lg);
 }
-.Rating-value--sm { font-size: var(--text-sm); }
+.Rating-value--sm { font-size: var(--fs-sm); }
 .Rating-count {
   color: var(--fg-3);
-  font-size: var(--text-sm);
+  font-size: var(--fs-sm);
 }
 
 /* Hearts variant */
@@ -676,7 +676,7 @@ Override rating styling with CSS custom properties:
   gap: var(--space-1);
   padding: var(--space-1) var(--space-2);
   border: 1px solid var(--bd);
-  border-radius: var(--radius-sm);
+  border-radius: var(--r-s);
   background: transparent;
   cursor: pointer;
   transition: color var(--dur-f), transform var(--dur-f);
@@ -719,7 +719,7 @@ Override rating styling with CSS custom properties:
   gap: var(--space-2);
 }
 .Rating-breakdownLabel {
-  font-size: var(--text-sm);
+  font-size: var(--fs-sm);
   color: var(--fg-3);
   min-width: 60px;
 }
@@ -727,16 +727,16 @@ Override rating styling with CSS custom properties:
   flex: 1;
   height: 8px;
   background: var(--bg-s);
-  border-radius: var(--radius-full);
+  border-radius: var(--r-f);
   overflow: hidden;
 }
 .Rating-breakdownFill {
   height: 100%;
   background: oklch(75% 0.15 80);
-  border-radius: var(--radius-full);
+  border-radius: var(--r-f);
 }
 .Rating-breakdownCount {
-  font-size: var(--text-sm);
+  font-size: var(--fs-sm);
   color: var(--fg-3);
   min-width: 40px;
   text-align: right;
@@ -752,14 +752,14 @@ Override rating styling with CSS custom properties:
 /* Labels */
 .Rating-label {
   display: block;
-  font-size: var(--text-sm);
+  font-size: var(--fs-sm);
   font-weight: 500;
   margin-bottom: var(--space-1);
 }
 .Rating-required { color: oklch(55% 0.2 25); }
 .Rating-helper {
   display: block;
-  font-size: var(--text-xs);
+  font-size: var(--fs-xs);
   color: var(--fg-3);
   margin-top: var(--space-1);
 }

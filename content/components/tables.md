@@ -735,7 +735,7 @@ Combine tables with pagination controls for large datasets.
 
 <Preview title="Dashboard Table">
 <div class="Table-container">
-  <div class="Toolbar Toolbar--bordered" style="border-bottom: none; border-radius: var(--radius-md) var(--radius-md) 0 0;">
+  <div class="Toolbar Toolbar--bordered" style="border-bottom: none; border-radius: var(--r-m) var(--r-m) 0 0;">
     <span class="Toolbar-label">Recent Orders</span>
     <div class="Toolbar-spacer"></div>
     <button class="Button Button--ghost Button--sm"><i class="ph ph-funnel"></i> Filter</button>
@@ -1114,7 +1114,7 @@ Override table styles using CSS custom properties:
 .Table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--text-sm);
+  font-size: var(--fs-sm);
   color: var(--fg);
 }
 
@@ -1129,7 +1129,7 @@ Override table styles using CSS custom properties:
   font-weight: 600;
   color: var(--fg);
   background: var(--bg-s);
-  font-size: var(--text-xs);
+  font-size: var(--fs-xs);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -1154,7 +1154,7 @@ Override table styles using CSS custom properties:
 .Table--compact th,
 .Table--compact td {
   padding: var(--space-1) var(--space-2);
-  font-size: var(--text-xs);
+  font-size: var(--fs-xs);
 }
 
 /* Sticky header */
@@ -1200,7 +1200,7 @@ Override table styles using CSS custom properties:
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-size: var(--text-xs);
+  font-size: var(--fs-xs);
 }
 
 .Table-sort:hover {
@@ -1249,7 +1249,7 @@ Override table styles using CSS custom properties:
 
 .Table-expandDetail {
   padding: var(--space-1) 0;
-  font-size: var(--text-sm);
+  font-size: var(--fs-sm);
 }
 
 /* Actions column */
@@ -1275,7 +1275,7 @@ Override table styles using CSS custom properties:
 }
 
 .Table-pageInfo {
-  font-size: var(--text-sm);
+  font-size: var(--fs-sm);
   color: var(--fg-3);
 }
 

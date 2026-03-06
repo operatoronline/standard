@@ -507,7 +507,7 @@ Override badge styles using CSS custom properties:
   gap: var(--space-1);
   padding: var(--space-1) var(--space-2);
   border-radius: var(--r-s);
-  font-family: var(--font-sans);
+  font-family: var(--ff-b);
   font-size: var(--fs-sm);
   font-weight: 500;
   line-height: 1.2;
@@ -562,7 +562,7 @@ Override badge styles using CSS custom properties:
 
 /* Pill */
 .Badge--pill {
-  border-radius: 9999px;
+  border-radius: var(--r-f);
 }
 
 /* Outline */
@@ -620,7 +620,7 @@ Override badge styles using CSS custom properties:
   min-width: 20px;
   height: 20px;
   padding: 0 var(--space-1);
-  border-radius: 10px;
+  border-radius: var(--r-m);
   text-align: center;
   justify-content: center;
 }

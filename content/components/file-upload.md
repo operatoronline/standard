@@ -378,25 +378,25 @@ Active state when files are dragged over the drop zone.
 .FileUpload {
   /* Dropzone */
   --file-upload-bg: var(--surface-1);
-  --file-upload-border: var(--border-default);
+  --file-upload-border: var(--bd);
   --file-upload-border-hover: var(--bd-s);
-  --file-upload-border-active: var(--color-primary);
-  --file-upload-radius: var(--radius-lg);
+  --file-upload-border-active: var(--accent);
+  --file-upload-radius: var(--r-l);
   --file-upload-padding: var(--space-8);
 
   /* Colors */
-  --file-upload-icon-color: var(--text-muted);
-  --file-upload-text-color: var(--text-default);
-  --file-upload-hint-color: var(--text-muted);
-  --file-upload-link-color: var(--color-primary);
+  --file-upload-icon-color: var(--fg-3);
+  --file-upload-text-color: var(--fg);
+  --file-upload-hint-color: var(--fg-3);
+  --file-upload-link-color: var(--accent);
 
   /* Progress */
   --file-upload-progress-bg: var(--surface-2);
-  --file-upload-progress-fill: var(--color-primary);
+  --file-upload-progress-fill: var(--accent);
 
   /* States */
-  --file-upload-error-color: var(--color-error);
-  --file-upload-success-color: var(--color-success);
+  --file-upload-error-color: var(--err);
+  --file-upload-success-color: var(--ok);
 }
 ```
 

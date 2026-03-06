@@ -837,7 +837,7 @@ Override form styles using CSS custom properties:
 
 /* Pill-shaped inputs */
 .Input--pill {
-  border-radius: 999px;
+  border-radius: var(--r-f);
   padding-left: var(--space-4);
   padding-right: var(--space-4);
 }
@@ -1444,7 +1444,7 @@ Override form styles using CSS custom properties:
   width: 18px;
   height: 18px;
   border: 2px solid var(--bd-s);
-  border-radius: var(--r-xs);
+  border-radius: var(--r-s);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1557,7 +1557,7 @@ Override form styles using CSS custom properties:
   height: 22px;
   background: var(--bg-s);
   border: 1px solid var(--bd-s);
-  border-radius: 11px;
+  border-radius: var(--r-m);
   position: relative;
   transition: background-color var(--dur-n), border-color var(--dur-n);
   flex-shrink: 0;
