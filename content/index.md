@@ -23,7 +23,7 @@ A framework-agnostic design system built on OKLCH colors, a 4px spacing scale, a
         </div>
         <pre class="home-hero-code-body"><code><span class="t-comment">&lt;!-- One file. That's it. --&gt;</span>
 <span class="t-tag">&lt;link</span> <span class="t-attr">rel</span>=<span class="t-str">"stylesheet"</span>
-      <span class="t-attr">href</span>=<span class="t-str">"standard.css"</span><span class="t-tag">&gt;</span>
+      <span class="t-attr">href</span>=<span class="t-str">"standard-core.css"</span><span class="t-tag">&gt;</span>
 
 <span class="t-tag">&lt;button</span> <span class="t-attr">class</span>=<span class="t-str">"Button Button--primary"</span><span class="t-tag">&gt;</span>
   Ship it

@@ -502,10 +502,136 @@ async function build() {
     await fs.writeFile(path.join(CONFIG.distDir, `styles/${combinedMinName}`), combinedResult.code);
     const combinedMinSize = Buffer.byteLength(combinedResult.code);
     assetMap['docs.css'] = combinedMinName;
-    // Also create a stable /styles/standard.css alias for external consumers (Getting Started guide)
+    // Also create a stable /styles/standard.css alias (full docs + components)
     await fs.writeFile(path.join(CONFIG.distDir, 'styles/standard.css'), combinedResult.code);
     console.log(`  ✓ Combined vendor + docs → ${combinedMinName} (${(combinedOrigSize / 1024).toFixed(1)}KB → ${(combinedMinSize / 1024).toFixed(1)}KB, ${Math.round((1 - combinedMinSize / combinedOrigSize) * 100)}% smaller)`);
-    console.log(`  ✓ Stable alias: styles/standard.css (for external consumers)`);
+    console.log(`  ✓ Stable alias: styles/standard.css (full docs site CSS)`);
+
+    // 1d. Generate consumer-only standard-core.css (tokens + components + patterns, no docs chrome)
+    // Parse @scope markers from docs.css to extract only core sections
+    {
+        const docsCssSource = await fs.readFile('styles/docs.css', 'utf-8');
+        const lines = docsCssSource.split('\n');
+        const coreLines = [];
+        let currentScope = 'core'; // default if no marker
+        let inMixedSection = false;
+        let mixedSubsectionIsCore = true;
+
+        // Docs-only class prefixes in the MOBILE RESPONSIVE mixed section
+        const docsOnlyPrefixes = [
+            '.mobile-search', '.prose', '.page-header', '.container',
+            '.fnav', '.page-footer', '.preview', '.error-'
+        ];
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            const trimmed = line.trim();
+
+            // Check for scope markers
+            const scopeMatch = trimmed.match(/^\/\* @scope: (core|docs|mixed) \*\/$/);
+            if (scopeMatch) {
+                currentScope = scopeMatch[1];
+                inMixedSection = (currentScope === 'mixed');
+                continue; // Don't include the marker comment itself
+            }
+
+            if (currentScope === 'core') {
+                coreLines.push(line);
+            } else if (currentScope === 'mixed' && inMixedSection) {
+                // In the mixed MOBILE RESPONSIVE section: include component responsive rules
+                // but skip docs-chrome responsive rules
+                if (trimmed.startsWith('/* ---')) {
+                    // Start of a subsection — check if it's docs-only
+                    mixedSubsectionIsCore = !docsOnlyPrefixes.some(prefix => {
+                        // Check next ~20 lines for selectors starting with docs-only prefixes
+                        for (let j = i + 1; j < Math.min(i + 25, lines.length); j++) {
+                            const sel = lines[j].trim();
+                            if (sel.startsWith(prefix)) return true;
+                            // Also check for selectors that are docs-specific by name
+                            if (sel.match(/^\.(?:mobile-search|preview-|prose|page-header|page-footer|fnav|error-|container)/)) return true;
+                        }
+                        return false;
+                    });
+                }
+                if (mixedSubsectionIsCore) {
+                    coreLines.push(line);
+                }
+            }
+            // docs scope: skip entirely
+        }
+
+        // Prepend normalize.css (vendor) for consumers
+        let consumerCss = `/*! Standard Design System v${CONFIG.version} — Core (Tokens + Components + Patterns)\n * Consumer build: zero docs chrome, just the design system.\n * Full docs: ${CONFIG.siteUrl}\n * License: MIT\n */\n`;
+
+        // Add normalize for consumers
+        const normalizePath = path.join(CONFIG.distDir, 'vendor/normalize.css');
+        if (await fs.pathExists(normalizePath)) {
+            const normCss = await fs.readFile(normalizePath, 'utf-8');
+            consumerCss += `\n/* normalize.css */\n${normCss}\n`;
+        }
+
+        consumerCss += coreLines.join('\n');
+
+        // Post-process: strip rule blocks that reference docs-only selectors
+        // These leak from core sections like dark mode and print that cover all selectors
+        const docsSelectors = ['.fnav', '.top-bar', '.page-footer', '.page-nav', '.page-header',
+            '.toc-sidebar', '.mobile-search', '.hero-showcase', '.homepage-hero',
+            '.preview-', '.section-grid', '.section-filter', '.see-also',
+            '.nav-tree', '.mobile-toc', '.back-to-top', '.breadcrumbs', '.error-',
+            '.prose', '.container'];
+        const coreCleanLines = consumerCss.split('\n');
+        const cleanedLines = [];
+        let skipBlock = false;
+        let braceCount = 0;
+        for (let i = 0; i < coreCleanLines.length; i++) {
+            const ln = coreCleanLines[i];
+            const trimLn = ln.trim();
+            if (!skipBlock) {
+                // Check if this line starts a rule with a docs-only selector
+                const isDocsRule = docsSelectors.some(sel => trimLn.includes(sel));
+                const opens = (ln.match(/{/g) || []).length;
+                const closes = (ln.match(/}/g) || []).length;
+                if (isDocsRule && opens > 0) {
+                    braceCount = opens - closes;
+                    if (braceCount > 0) skipBlock = true;
+                    continue; // skip this line
+                } else if (isDocsRule && opens === 0 && trimLn.endsWith(',')) {
+                    // Selector in a comma-separated list — skip just this selector line
+                    continue;
+                }
+            }
+            if (skipBlock) {
+                const opens = (ln.match(/{/g) || []).length;
+                const closes = (ln.match(/}/g) || []).length;
+                braceCount += opens - closes;
+                if (braceCount <= 0) {
+                    skipBlock = false;
+                    braceCount = 0;
+                }
+                continue;
+            }
+            cleanedLines.push(ln);
+        }
+        consumerCss = cleanedLines.join('\n');
+
+        const consumerOrigSize = Buffer.byteLength(consumerCss);
+        const consumerResult = await transform(consumerCss, {
+            loader: 'css',
+            minify: true,
+            target: ['chrome111', 'safari17', 'firefox121'],
+        });
+
+        const coreHash = createHash('md5').update(consumerResult.code).digest('hex').slice(0, 8);
+        const coreMinName = `standard-core.${coreHash}.min.css`;
+        await fs.writeFile(path.join(CONFIG.distDir, `styles/${coreMinName}`), consumerResult.code);
+        await fs.writeFile(path.join(CONFIG.distDir, 'styles/standard-core.css'), consumerResult.code);
+        assetMap['core.css'] = coreMinName;
+
+        const consumerMinSize = Buffer.byteLength(consumerResult.code);
+        const savings = Math.round((1 - consumerMinSize / combinedMinSize) * 100);
+        console.log(`  ✓ Consumer core → ${coreMinName} (${(consumerOrigSize / 1024).toFixed(1)}KB → ${(consumerMinSize / 1024).toFixed(1)}KB minified)`);
+        console.log(`  ✓ Stable alias: styles/standard-core.css (${savings}% smaller than full — for external consumers)`);
+    }
 
     // Minify JS
     const jsPath = path.join(CONFIG.distDir, 'scripts/docs.js');

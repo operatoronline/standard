@@ -15,7 +15,7 @@ Add Standard's CSS to any HTML page. That's the entire setup.
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My App</title>
-    <link rel="stylesheet" href="https://standard.operator.onl/styles/standard.css">
+    <link rel="stylesheet" href="https://standard.operator.onl/styles/standard-core.css">
 </head>
 <body>
     <button class="Button Button--primary">Get Started</button>
@@ -24,6 +24,8 @@ Add Standard's CSS to any HTML page. That's the entire setup.
 ```
 
 That single `<link>` gives you every token, every component, dark mode, and responsive behavior. No JavaScript required for styling.
+
+> **Which file?** `standard-core.css` (~63KB) contains only what your app needs — tokens, all 32 components, layouts, dark mode, and print styles. The full `standard.css` (~168KB) adds documentation-site chrome and is used by this site itself.
 
 ---
 

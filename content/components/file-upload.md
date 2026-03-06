@@ -9,8 +9,7 @@ Upload files via drag-and-drop or file browser. Supports single and multiple fil
 File Upload uses Standard's base styles and JavaScript for drag-and-drop interactions.
 
 ```html
-<link rel="stylesheet" href="/css/standard.css">
-<script src="/js/standard.js" defer></script>
+<link rel="stylesheet" href="https://standard.operator.onl/styles/standard-core.css">
 ```
 
 ---
